@@ -50,7 +50,7 @@ delta = sqrt(t(mu_1 - mu_2) %*% ginv(S) %*% (mu_1 - mu_2));
 err.prob <- pnorm (q = c(-delta / 2), mean = 0.00, sd = 1.00);
 print(err.prob);
 
-# 
+# Discriminant Analysis with specific function from the package MASS -- COMPARE IT previous results
 
 Z = data.frame(
   x_1 = c(60,71,60,80,85,85,80,60,70,76,70),

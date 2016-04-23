@@ -59,3 +59,11 @@ diag(L %*% t(L));
 mu = colMeans(X);
 mu = matrix(rep(mu, n), nrow = n, ncol = p, byrow = TRUE);
 t(t(L) %*% ginv(S) %*% t(X - mu));
+
+# Factor Analysis with specific function from the package psych -- COMPARE IT previous results
+
+install.packages("psych"); # if required
+
+library(psych);
+result <- principal(X, nfactors = 2, covar = TRUE, rotate = "none");
+print(result);

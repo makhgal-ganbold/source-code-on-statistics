@@ -125,3 +125,16 @@ for (k in 1:R) {
   C_col = rbind(C_col, t);
 }
 print(C_col);
+
+# Correspondence Analysis with specific function from the package ca
+
+install.packages("ca"); # if required
+
+library(ca);
+
+prop.table(tab, 1) # row percentages
+prop.table(tab, 2) # column percentages
+
+result <- ca(tab);
+print(result); # basic results
+summary(result);

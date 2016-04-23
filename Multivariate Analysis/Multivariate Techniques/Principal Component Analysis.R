@@ -8,13 +8,7 @@
 
 library(MASS)
 
-# Simulation
-
-# mu = c(0, 0); Sigma = matrix(c(3,0.5,0.5,1), nrow = 2, ncol = 2);
-# X = mvrnorm(10, mu, Sigma);
-# X = round(X, digits = 2);
-
-# data
+# Data
 
 X = matrix(c(3.11, 1.14, -0.10, -1.42, 2.17, 0.59, 0.70, 0.43, 2.55, 0.31, -2.95, -2.32, -1.07, 0.08, -0.32, 0.47, 1.19, 0.10, -1.62, -1.87), nrow = 10, ncol = 2, byrow = TRUE);
 

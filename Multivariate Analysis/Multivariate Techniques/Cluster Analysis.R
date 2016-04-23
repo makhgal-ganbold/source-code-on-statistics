@@ -38,25 +38,25 @@ X <- scale(X); # standardize variables
 # Hierarchical Agglomerative
 
 d <- dist(X, method = "euclidean"); # distance matrix
-fit <- hclust(d, method = "ward");
-plot(fit); # display dendogram
-groups <- cutree(fit, k = 5); # cut tree into 5 clusters
-rect.hclust(fit, k = 5, border = "red"); # draw dendogram with red borders around the 5 clusters 
+cl <- hclust(d, method = "ward");
+plot(cl); # display dendrogram
+groups <- cutree(cl, k = 5); # cut tree into 5 clusters
+rect.hclust(cl, k = 5, border = "red"); # draw dendogram with red borders around the 5 clusters 
 
 # K-Means Cluster Analysis
 
-fit <- kmeans(X, 5); # 5 cluster solution
-aggregate(X, by = list(fit$cluster), FUN = mean); # get cluster means
-X <- data.frame(X, fit$cluster); # append cluster assignment
+cl <- kmeans(X, 5); # 5 cluster solution
+aggregate(X, by = list(cl$cluster), FUN = mean); # get cluster means
+X <- data.frame(X, cl$cluster); # append cluster assignment
 
 # Plotting Cluster Solutions
 
-fit <- kmeans(X, 5); # K-Means Clustering with 5 clusters
+cl <- kmeans(X, 5); # K-Means Clustering with 5 clusters
 
 library(cluster);
-clusplot(X, fit$cluster, color = TRUE, shade = TRUE, labels = 2, lines = 0); # Cluster Plot against 1st 2 principal components
+clusplot(X, cl$cluster, color = TRUE, shade = TRUE, labels = 2, lines = 0); # Cluster Plot against 1st 2 principal components
 
 # Comparing 2 cluster solutions
 
 library(fpc);
-cluster.stats(d, fit1$cluster, fit2$cluster);
+cluster.stats(d, cl1$cluster, cl2$cluster);

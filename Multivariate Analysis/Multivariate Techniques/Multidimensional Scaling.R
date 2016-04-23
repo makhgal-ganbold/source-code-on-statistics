@@ -68,3 +68,8 @@ attach(Coordinates);
 plot(X1, X2);
 text(X1, X2, label, pos=4);
 detach(Coordinates);
+
+# Multidimensional Scaling with specific function -- COMPARE IT previous results
+
+mds <- cmdscale(d, eig = TRUE, k = 2);
+print(mds);
