@@ -3,12 +3,14 @@
 
 set.seed(1); beta = c(1, 2); n = 10;
 
-Z = cbind(rep(1, n), round(runif(n = n, min = 0, max = 1) * 10, digits = 1));
+Z = cbind(rep(1, n), round(runif(n = n, min = 0, max = 10), digits = 1));
 print(Z);
-epsilon = round(rnorm(n = n, mean = 0, sd = 1), digits = 0);
+epsilon = round(rnorm(n = n, mean = 0, sd = 1), digits = 1);
 
 X = Z %*% beta + epsilon;
 print(X);
+
+cbind(Z[,2],X);
 
 # Regression Analysis with built-in (stats package) function
 
