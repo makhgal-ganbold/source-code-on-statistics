@@ -1,5 +1,10 @@
+#
+# Linear Regression
+# Author: galaa
+# Created on 2016/05/09 12:00:00
+#
 
-# Generate random data
+# Generate random data for Linear Regression Model X = 1 + 2 * t + epsilon
 
 set.seed(1); beta = c(1, 2); n = 10;
 
@@ -18,8 +23,8 @@ result <- lm(X ~ Z[,2]);
 print(result);
 summary(result);
 confint(result, level = 0.95);
-residuals(result);
 fitted(result);
+residuals(result);
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -57,7 +62,7 @@ print(SE);
 
 # Standard Error of Parameter Estimation
 
-for(i in 1:2){
+for(i in 1:k){
   print(sqrt(A_inv[i,i]) * SE);
 }
 
