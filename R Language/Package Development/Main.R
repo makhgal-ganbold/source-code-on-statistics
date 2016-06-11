@@ -37,12 +37,22 @@ create("izbali");
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-# Build Documentation
+# Compile documentation and Reload the package
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 setwd("./izbali");
 document();
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#
+# Test the package
+#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+help(edf);
+
+edf(x = 0, X = c(-1,0,1));
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
@@ -52,14 +62,3 @@ document();
 
 setwd("..");
 build("izbali");
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-#
-# Reload and test the package
-#
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-library(izbali);
-help(edf);
-
-edf(x = 0, X = c(-1,0,1));
