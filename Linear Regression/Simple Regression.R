@@ -15,6 +15,7 @@ epsilon = round(rnorm(n = n, mean = 0, sd = 1), digits = 1);
 X = Z %*% beta + epsilon;
 print(X);
 
+cbind(X,Z);
 cbind(Z[,2],X);
 
 # Regression Analysis with built-in (stats package) function
@@ -28,7 +29,7 @@ residuals(result);
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# Detailed calculation
+# Detailed computation
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -37,8 +38,7 @@ residuals(result);
 A = t(Z) %*% Z;
 Y = t(Z) %*% X;
 
-library(MASS);
-A_inv = ginv(A);
+A_inv = solve(A);
 beta_hat = A_inv %*% Y;
 print(beta_hat);
 
@@ -62,8 +62,8 @@ print(SE);
 
 # Standard Error of Parameter Estimation
 
-for(i in 1:k){
-  print(sqrt(A_inv[i,i]) * SE);
+for (j in 1:k) {
+  print(SE * sqrt(A_inv[j,j]));
 }
 
 # R-Squared (Coefficeint of Determination)
@@ -77,8 +77,8 @@ print(1 - (SSE / (n - k)) / (SST / (n - 1)));
 
 # t statistic and its p-value (two tailed)
 
-for(i in 1:k){
-  t = beta_hat[i] / (sqrt(A_inv[i,i]) * SE);
+for (j in 1:k) {
+  t = beta_hat[j] / (sqrt(A_inv[j,j]) * SE);
   print(t);
   print(pt(t, df = n - k, lower.tail = FALSE) * 2);
 }
@@ -87,9 +87,9 @@ for(i in 1:k){
 
 gamma = 0.95;
 t_gamma = qt(p = (1 + gamma) / 2, df = n - k, lower.tail = TRUE);
-for(i in 1:k){
-  m = t_gamma * sqrt(A_inv[i,i]) * SE;
-  print(c(beta_hat[i] - m, beta_hat[i] + m));
+for (j in 1:k) {
+  m = t_gamma * sqrt(A_inv[j,j]) * SE;
+  print(c(beta_hat[j] - m, beta_hat[j] + m));
 }
 
 # F statistic and its p-value
