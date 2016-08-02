@@ -1,7 +1,7 @@
 #' A edf function
 #'
-#' This function calculates value of left continuous empirical distribution function at given point
-#' @param x: function argument as numeric
+#' This function computes a value of the left continuous empirical distribution function at a given point
+#' @param x: argument as numeric
 #' @param X: empirical data as vector
 #' @keywords empirical distribution function
 #' @export
