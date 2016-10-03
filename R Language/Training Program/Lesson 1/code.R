@@ -64,6 +64,18 @@ print(X)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+# Export data / Өгөгдөл экспортлох
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+write.table(x = X,
+  file = "data_export.csv", append = FALSE,
+  sep = ",", na = "NA", dec = ".",
+  row.names = TRUE, col.names = TRUE
+)
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 # Working with MySQL Database / Өгөгдлийн сантай ажиллах
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
