@@ -40,19 +40,19 @@ lm(y ~ X)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# томъёогоор
+# Detailed computation
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# түүврийн хэмжээ
+# sample size
 
 n = length(y)
 
-# тогтмол хүчин зүйлийг нэмж өгөх
+# add constant term
 
 X <- cbind(rep(x = 1, times = n), X)
 
-# загварын параметрүүдийн үнэлэлт
+# parameter estimation
 
 b.hat = solve(t(X) %*% X) %*% t(X) %*% y
 
