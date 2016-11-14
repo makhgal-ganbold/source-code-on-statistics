@@ -48,7 +48,7 @@ sctest(y ~ X, type = "Chow", point = 20)
 
 f <- factor(c(rep(1, 20), rep(2, 5)))
 m0 <- lm(y ~ X)
-m1 <- lm(y ~ fac/(X))
+m1 <- lm(y ~ f/(X))
 anova(m0, m1)
 
 # Detailed computation
