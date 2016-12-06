@@ -73,7 +73,7 @@ fm = lm(y ~ X2 + X3 + X4)
 # install.packages("car") ## if required
 library(car) ## linearHypothesis()
 
-## linear hypothesis; the followings are equivalent
+## linear hypothesis; chi-squared test; the followings are equivalent
 
 linearHypothesis(model = fm, hypothesis.matrix = R, rhs = r, test = "Chisq")
 linearHypothesis(model = fm, c("1 * X2 - 2 * X3 = 1", "X4 = 2"), test = "Chisq")
