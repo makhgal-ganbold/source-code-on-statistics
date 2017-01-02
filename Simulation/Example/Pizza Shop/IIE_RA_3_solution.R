@@ -4,13 +4,13 @@
 
 rm(list = ls()) # ажлын огторгуйг цэвэрлэх
 
-set.seed(1) # сийдийг бэхлэх
+# set.seed(1) # сийдийг бэхлэх
 
 ## Үндсэн параметрүүд
 
 the.number.of.person.at.make.table = 3 # <= 3
 oven.size = 1 # <= 3
-the.number.of.delivery.person = 5
+the.number.of.delivery.person = 6
 
 ## Шаардагдах тархалтуудыг загварчлах
 
@@ -87,7 +87,7 @@ simulate.count.and.size = function (demands = c()) {
 
   type = factor(x = ifelse(runif(n = length(demands)) > 0.4, 1, 2), levels = c(1, 2), labels = c("delivery", "carry-out"), ordered = FALSE)
 
-  delivery.duration = ifelse(as.numeric(type) == 1, rtriangular(n = 1, a = 3, c = 5, b = 12), 0)
+  delivery.duration = rep(0, times = length(demands)); delivery.demands = which(as.numeric(type) == 1); delivery.duration[delivery.demands] = rtriangular(n = length(delivery.demands), a = 3, c = 5, b = 12)
 
   # нийт захиалга: цаг, хэмжээ, тоо, захиалгын төрөл, хүргэлтийн хугацаа
 
@@ -292,8 +292,7 @@ print(pizzas)
 
 ## Хэрчиж савлах, захиалгыг гаргах хэсгийг загварчлах
 
-# Дараах хэдэн мөрийг ажиллуулахын тулд # тэмдэгтийг арилгана уу
-# data = scan(file = "IIE_SM_3.dat") # Захиалгыг багцалж бэлдэхэд зарцуулагдах хугацаа гэж үзэв. Жич: Захиалгын хэмжээтэй хамааралгүйгээр өгчээ. Мөн файлын замыг анхаар!
+# data = scan(file = "~/Dropbox/Job/Research/PhD/Хичээл/Симуляцийн аргууд/Simulation Contest/IIE_SM_3.dat") # Захиалгыг багцалж бэлдэхэд зарцуулагдах хугацаа гэж үзэв. Жич: Захиалгын хэмжээтэй хамааралгүйгээр өгчээ.
 # hist(data) # тайлбар дээр "алдаатай" гэсэн нь хоёр тархалтын холимог маягаар илэрч буй бололтой
 # data = data[which(data < 6)]
 # hist(data) # тархалтыг  a = 1, c = 3, b = 6 параметрүүдтэй гурвалжин тархалт гэж үзье
