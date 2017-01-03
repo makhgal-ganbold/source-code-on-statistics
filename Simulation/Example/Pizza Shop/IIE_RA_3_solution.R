@@ -4,13 +4,13 @@
 
 rm(list = ls()) # ажлын огторгуйг цэвэрлэх
 
-# set.seed(1) # сийдийг бэхлэх
+set.seed(1) # сийдийг бэхлэх
 
 ## Үндсэн параметрүүд
 
 the.number.of.person.at.make.table = 3 # <= 3
 oven.size = 1 # <= 3
-the.number.of.delivery.person = 6
+the.number.of.delivery.person = 7
 
 ## Шаардагдах тархалтуудыг загварчлах
 
@@ -22,7 +22,7 @@ rtriangular = function (n, a, c, b) {
 
 # hist(rtriangular(n = 500, a = 0.5, c = 0.7, b = 0.8)) # rtriangular() функцийг шалгах
 
-## Захиалга орж ирэх хугацааны эгшинг загварчлах
+## Захиалга орж ирэх хугацааны эгшинг загварчлах: захиалгын эрчимд тохируулан захиалга хоорондын хугацааг тодорхойлно
 
 simulate.demands = function () {
 
@@ -49,11 +49,7 @@ simulate.demands = function () {
 
 demands = simulate.demands()
 
-print(demands)
-
-rm(simulate.demands) # хэрэгцээгүй обьектийг устгах
-
-# ls() # обьектүүдийн жагсаалт
+# print(demands)
 
 ## Захиалгын зарим мэдээлэл: пиццаны тоо ба хэмжээ, захиалгын төрөл (delivery эсвэл carry-out), хүргэлтийн хугацаа
 
@@ -97,13 +93,9 @@ simulate.count.and.size = function (demands = c()) {
 
 demands = simulate.count.and.size(demands)
 
-rm(simulate.count.and.size) # хэрэгцээгүй обьектийг устгах
+# print(demands)
 
-# ls() # обьектүүдийн жагсаалт
-
-print(demands)
-
-## Пиццаны зарим мэдээлэл
+## Пиццаны зарим мэдээлэл: пицца нэг бүрийн хэмжээ болон хийхэд зарцуулагдах хугацаа (3 үе шат нэг бүрчлэн)
 
 simulate.pizza.making = function (demands = data.frame()) {
 
@@ -146,13 +138,9 @@ simulate.pizza.making = function (demands = data.frame()) {
 
 pizzas = simulate.pizza.making(demands)
 
-rm(simulate.pizza.making) # хэрэгцээгүй обьектийг устгах
+# print(pizzas)
 
-# ls() # обьектүүдийн жагсаалт
-
-print(pizzas)
-
-## Пиццаг бэлдэх ажлыг загварчлах
+## Пиццаг бэлдэх ажлыг загварчлах: пицца хийх ширээнд ажиллах хүний тооноос (1-ээс 3 хүртэл) хамаарна
 
 pizza.making.one.person = function () {
 
@@ -232,13 +220,9 @@ pizzas = switch(the.number.of.person.at.make.table,
   pizza.making.three.person()
 )
 
-rm(pizza.making.one.person, pizza.making.three.person)
+# print(pizzas)
 
-print(pizzas)
-
-ls()
-
-## Зуухны хэсгийг загварчлах
+## Зуухны хэсгийг загварчлах: пицца нэг бүрийн зуухны оруулах хэсэгт нэвтрэх эгшин болон зуухны гаргах хэсэгт шилжих эгшин
 
 oven = function () {
 
@@ -286,23 +270,29 @@ oven = function () {
 
 oven()
 
-rm(oven)
+# print(pizzas)
 
-print(pizzas)
+## Хэрчиж савлах, захиалгыг гаргах хэсгийг загварчлах: IIE_SM_3.dat файл дахь өгөгдлийг шинжилж улмаар зохих тархалтын тусламжтайгаар энэ хэсэгт зарцуулагдах хугацааг тодорхойлно
 
-## Хэрчиж савлах, захиалгыг гаргах хэсгийг загварчлах
-
-# data = scan(file = "~/Dropbox/Job/Research/PhD/Хичээл/Симуляцийн аргууд/Simulation Contest/IIE_SM_3.dat") # Захиалгыг багцалж бэлдэхэд зарцуулагдах хугацаа гэж үзэв. Жич: Захиалгын хэмжээтэй хамааралгүйгээр өгчээ.
-# hist(data) # тайлбар дээр "алдаатай" гэсэн нь хоёр тархалтын холимог маягаар илэрч буй бололтой
-# data = data[which(data < 6)]
-# hist(data) # тархалтыг  a = 1, c = 3, b = 6 параметрүүдтэй гурвалжин тархалт гэж үзье
-# rm(data)
+# data = scan(file = "IIE_SM_3.dat") # Захиалгыг багцалж бэлдэхэд зарцуулагдах хугацаа гэж үзэв. Жич: Захиалгын хэмжээтэй хамааралгүйгээр өгчээ. Файн замыг анхаар.
+# hist(data) # хоёр ширхэг гурвалжин тархалтын холимог гэж үзье
+# data.1 = data[which(data < 6)]
+# data.2 = data[which(data >= 6)]
+# hist(data.1) # тархалтын энэ хэсгийг a = 1, c = 3, b = 6 параметрүүдтэй гурвалжин тархалт гэж үзье
+# hist(data.2) # тархалтын энэ хэсгийг a = 6, c = 7.5, b = 9 параметрүүдтэй гурвалжин тархалт гэж үзье
+# c(length(data.1), length(data.2))/length(data) # тархалтуудын холимгийн харьцаа ойролцоогоо 0.8 ба 0.2
+# rm(data, data.1, data.2)
 
 cut.and.box = function () {
 
   cut.and.box = rep(NA, times = nrow(demands))
   for (i in as.numeric(row.names(demands))) {
-    cut.and.box[i] = max(pizzas[["baked.time"]][which(pizzas[["demand.id"]] == i)]) + rtriangular(n = 1, a = 1, c = 3, b = 6)
+    cut.and.box[i] = max(pizzas[["baked.time"]][which(pizzas[["demand.id"]] == i)]) + # захиалга дахь пиццануудаас хамгийн сүүлийн пиццаны зуухнаас гарах эгшин
+      ifelse(
+        runif(1) < 0.8,
+        rtriangular(n = 1, a = 1, c = 3, b = 6),
+        rtriangular(n = 1, a = 6, c = 7.5, b = 9)
+      )
   }
   demands$cut.and.box <<- cut.and.box
 
@@ -310,11 +300,9 @@ cut.and.box = function () {
 
 cut.and.box()
 
-rm(cut.and.box)
+# print(demands)
 
-print(demands)
-
-## Хүргэлтийн хэсгийг загварчлах
+## Хүргэлтийн хэсгийг загварчлах: захиалгыг хүргэхэд зарцуулагдах хугацааг тодорхойлно, хүргэлтийн ажилчдын тоо хувьсах боломжтой байх шаардлагатай
 
 delivery = function () {
 
@@ -335,15 +323,17 @@ delivery = function () {
 
 delivery()
 
-rm(delivery)
+# print(demands)
 
-print(demands)
-
-## Захиалгыг гүйцэтгэхэд зарцуулсан нийт хугацаа ба түүний зарим статистик үзүүлэлтүүд
+## Захиалгыг гүйцэтгэхэд зарцуулсан нийт хугацааг олох
 
 demands$elapsed.time = demands[["delivery.time"]] - demands[["time"]]
 
+## Эцсийн үр дүнгийн товчоо ба зарим статистик үзүүлэлтүүд
+
 print(demands)
+
+print(pizzas)
 
 tapply(demands[["elapsed.time"]], demands[["type"]], mean)
 tapply(demands[["elapsed.time"]], demands[["type"]], sd)
