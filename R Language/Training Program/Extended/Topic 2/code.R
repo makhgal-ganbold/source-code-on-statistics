@@ -55,7 +55,7 @@ print(qualative.data)
 ## Датафрэйм
 X = data.frame(
   name = c("Erdene", "Khaliun", "Od"),
-  sex = factor(x = c(1, 2, 1), levels = c(1, 2), labels = c("male", "female"), ordered = TRUE),
+  sex = factor(x = c(1, 2, 1), levels = c(1, 2), labels = c("male", "female"), ordered = FALSE),
   age = c(21, 19, 20),
   row.names = c(3, 2, 1),
   stringsAsFactors = FALSE
