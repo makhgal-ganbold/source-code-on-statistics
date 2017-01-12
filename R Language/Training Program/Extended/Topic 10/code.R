@@ -3,7 +3,7 @@
 # Topic 10 - Statistical Tests
 # Author: galaa (www.galaa.mn)
 # Copyright (c) 2017 Makhgal
-# Created on 2017/01/ 13:35:25
+# Created on 2017/01/12 13:35:25
 #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -41,6 +41,9 @@ t.test(X$weight ~ X$feed)
 
 result = aov(weight ~ feed, data = chickwts)
 summary(result)
+
+table(chickwts[["feed"]])
+boxplot(chickwts[["weight"]] ~ chickwts[["feed"]])
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
