@@ -1,13 +1,10 @@
 #
 # Training Program for R Langauge
-# Topic 9 - 
+# Topic 9 - Descriptive Statistics and Diagrams
 # Author: galaa (www.galaa.mn)
 # Copyright (c) 2017 Makhgal
-# Created on 2017/01/ 10:05:45
+# Created on 2017/01/12 10:05:45
 #
-
-X = rnorm(n = 15)
-print(X)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -23,7 +20,7 @@ X = data.frame(
   g2 = factor(rbinom(n = 15, size = 1, prob = 0.75))
 )
 
-## 
+## Төвийн хэмжээсүүд
 
 mean(X$x1)
 
@@ -81,7 +78,7 @@ min(X$x1); max(X$x1)
 sapply(X[1:2], min)
 sapply(X[1:2], max)
 
-# sapply(X[1:2], range)
+sapply(X[1:2], range)
 
 # Квантилууд
 
@@ -127,13 +124,17 @@ sum(is.na(Z))
 
 sum(is.na(Z$z1))
 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 ## Диаграмууд
 
-X = rnorm(100, 0, 1);                # random numbers
-value = hist(X);                     # histogram
-print(value);                        # value
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# Гистограм
+## Гистограм
+
+X = rnorm(100, 0, 1);                # random numbers
+value = hist(X, freq = FALSE);                     # histogram
+print(value$breaks);                        # value
 
 hist(X, freq = FALSE,
    breaks = seq(-4, 4, by = 1),
@@ -150,12 +151,14 @@ curve(
    col = "#008080", lwd = 2       # color and linewidth
 )
 
-# Хайрцган диаграм
+## Хайрцган диаграм
 
 X = c(7.27, 6.71, 6.68, 6.25, 6.32, 6.33, 6.37, 6.47, 6.11, 6.28, 6.34, 6.37, 6.05, 6.12, 6.08, 6.4, 6.34, 6.13, 6.1, 5.99, 5.75, 5.5, 5.47, 5.5, 4.88)
-boxplot(X, border = "#008080", col = "#00BFBF", horizontal = TRUE)
-
-# 
+boxplot(X, 
+  border = "#008080",
+  col = "#00BFBF",
+  horizontal = TRUE
+)
 
 install.packages("Lock5Data")      # install package
 library(Lock5Data)                 # load package
@@ -168,7 +171,7 @@ with(ColaCalcium,
   )
 )
 
-# Q-Q диаграм
+## Q-Q диаграм
 
 X <- rnorm(100, 0, 1)
 qqnorm(X,                     # one sample QQPlot
@@ -192,7 +195,7 @@ dev.print(
 
 ## Бусад диаграмууд
 
-# цэгэн диаграм
+# Цэгэн диаграм
 
 X = data.frame(
   boil.temp = c(90.27778, 90.16667, 92.16667, 92.44444, 93.00000, 93.27778, 93.83333, 93.94444, 94.11111, 94.05556, 95.33333, 95.88889, 98.61111, 98.11111, 99.27778, 99.94444, 100.11111),
