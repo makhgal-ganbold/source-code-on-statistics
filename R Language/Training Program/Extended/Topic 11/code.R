@@ -20,18 +20,23 @@ X <- data.frame(
 )
 cor(x = X, method = "pearson")
 
+cor(dose, surv)
+
+cor(rank(dose), rank(surv))
+
 cor(x = X, method = "spearman")
 
 ## Хамааралгүй байх тухай таамаглалыг шалгах
 
 install.packages("Hmisc")
 library(Hmisc) # rcorr()
-rcorr(x = as.matrix(X), type = "pearson")
+rcorr(x = as.matrix(X), type = "spearman")
 
 ## Тухайн корреляцийн коэффициент
 
 airquality.NA <- na.omit(airquality)[,1:4]
 print(airquality.NA)
+nrow(airquality.NA)
 
 install.packages("ppcor")
 library(ppcor) # pcor() pcor.test()
