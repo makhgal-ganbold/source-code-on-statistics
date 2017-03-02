@@ -60,13 +60,17 @@ qf(c(0.05), df1 = q, df2 = n-1, lower.tail = FALSE);
 
 ## Таамаглал 7: Хоёр дунджийн тухай таамаглал
 
-library(MASS);
 X_1 = matrix(c(0.16, -1.72, 3.00, 4.65, 2.42, 0.37, 0.61, -0.38, 2.95, -0.14, 1.54, -2.29, 0.81, -2.81, 0.55, -2.20, 0.65, -1.12, 1.32, -1.20), nrow = 10, ncol = 2, byrow = TRUE);
 X_2 = matrix(c(0.96, 0.73, 2.56, 1.91, -0.06, 0.31, -0.03, -3.40, 1.48, 2.74, 1.75, 0.40, 1.17, 1.58, 1.20, -0.34), nrow = 8, ncol = 2, byrow = TRUE);
-p = length(X_1[1,]);
-n_1 = length(X_1[,1]); n_2 = length(X_2[,1]);
+p = dim(X_1)[2];
+n_1 = dim(X_1)[1]; n_2 = dim(X_2)[1];
 x_m_1 = colMeans(X_1); x_m_2 = colMeans(X_2);
 S_1 = cov(X_1); S_2 = cov(X_2);
-S = (n_1 * S_1 + n_2 * S_2) / (n_1 + n_2);
-n_1 * n_2 * (n_1 * n_2 - 2) / (p * (n_1 + n_2) ^ 2) * t(x_m_1 - x_m_2) %*% ginv(S) %*% (x_m_1 - x_m_2);
-qf(c(0.05), df1 = p, df2 = n_1 + n_2 - p - 1, lower.tail = FALSE);
+S = ((n_1 - 1) * S_1 + (n_2 - 1) * S_2) / (n_1 + n_2 - 2);
+n_1 * n_2 / (n_1 + n_2) * (n_1 + n_2 - p - 1) / (p * (n_1 + n_2 - 2)) * t(x_m_1 - x_m_2) %*% solve(S) %*% (x_m_1 - x_m_2);
+qf(0.05, df1 = p, df2 = n_1 + n_2 - p - 1, lower.tail = FALSE);
+
+# ICSNP багц дахь HotellingsT2() функцээр (дээрх детальчилсан тооцооныхтой адил үр дүн өгөхийг ажиглана уу)
+install.packages("ICSNP")
+library(ICSNP)
+HotellingsT2(X = X_1, Y = X_2, test = "f")
