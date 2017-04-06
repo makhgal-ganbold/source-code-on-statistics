@@ -34,9 +34,11 @@ S = cov(X);
 
 # Spectral decomposition
 
-Lambda = eigen(S)$values;
+eig = eigen(S)
 
-Gamma = eigen(S)$vectors;
+Lambda = eig$values;
+
+Gamma = eig$vectors;
 
 # Factor Loading
 
@@ -54,6 +56,8 @@ diag(S - L %*% t(L));
 
 diag(L %*% t(L));
 
+diag(S)
+
 # Factor Score (unrotated)
 
 mu = colMeans(X);
@@ -67,3 +71,13 @@ install.packages("psych"); # if required
 library(psych);
 result <- principal(X, nfactors = 2, covar = TRUE, rotate = "none");
 print(result);
+
+#
+
+round(Lambda[1], digits = 2) # SS loadings
+round(Lambda[1] / sum(Lambda[1:2]), digits = 2) # Proportion Explained
+round(-L, digits = 2) # Unstandardized loadings (pattern matrix) based upon covariance matrix
+round(diag(L %*% t(L)), digits = 3) # h2
+round(diag(S - L %*% t(L)), digits = 4) # u2
+h2 = diag(L %*% t(L)); round(h2 / diag(S), digits = 2) # H2
+u2 = diag(S - L %*% t(L)); round(u2 / diag(S), digits = 4) # U2
