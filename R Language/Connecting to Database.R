@@ -4,27 +4,27 @@
 # Created on 2016/03/19 07:49:41
 #
 
-# library dependence
+## library dependence
 
 library(RMySQL); # requires Java
 
-# create connection
+## create connection
 
 connection <- dbConnect(MySQL(),
   user = "root",
   password = "",
-  host = "localhost"
+  host = "localhost" # 127.0.0.1
 );
 
-# create new database
+## create new database
 
 dbSendQuery(connection, "CREATE DATABASE r");
 
-# attach database
+## attach database
 
 dbSendQuery(connection, "USE r");
 
-# create connection (database specific)
+## create connection (database specific)
 
 connection <- dbConnect(MySQL(),
   user = "root",
@@ -33,12 +33,12 @@ connection <- dbConnect(MySQL(),
   dbname = "r"
 );
 
-# remove existing table
+## remove existing table
 
 dbSendQuery(connection, "
   DROP TABLE IF EXISTS children");
 
-# create new table
+## create new table
 
 dbSendQuery(connection, "
   CREATE TABLE children (
@@ -47,11 +47,11 @@ dbSendQuery(connection, "
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
 );
 
-# table list
+## table list
 
 dbListTables(connection);
 
-# modify table structure
+## modify table structure
 
 dbSendQuery(connection, "
   ALTER TABLE children
@@ -61,7 +61,7 @@ dbSendQuery(connection, "
   "
 );
 
-# insert data
+## insert data
 
 dbSendQuery(connection, "
   INSERT INTO children
@@ -72,13 +72,13 @@ dbSendQuery(connection, "
   "
 );
 
-# id of last inserted row
+## id of last inserted row
 
 last_id = fetch(dbSendQuery(connection,
   "SELECT LAST_INSERT_ID();"
 ));
 
-# edit existing data
+## edit existing data
 
 dbSendQuery(connection, "
   UPDATE children
@@ -89,7 +89,7 @@ dbSendQuery(connection, "
   ;"
 );
 
-# load data
+## load data
 
 child = fetch(dbSendQuery(connection, "
   SELECT
@@ -101,15 +101,15 @@ child = fetch(dbSendQuery(connection, "
   ;"
 ));
 
-# print data
+## print data
 
 print(child);
 
-# connection list
+## connection list
 
 dbListConnections(dbDriver(drv = "MySQL"));
 
-# disconnect
+## disconnect
 
 dbDisconnect(connection); # specific connection
 lapply(dbListConnections(dbDriver(drv = "MySQL")), dbDisconnect); # all
