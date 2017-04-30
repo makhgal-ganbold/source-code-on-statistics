@@ -21,13 +21,21 @@ d <- dist(X, method = "euclidean");
 
 print(d);
 
-## B matrix calculation
+heatmap(x = as.matrix(d)) # with dendrogram
+
+heatmap(x = as.matrix(d), Rowv = NA, symm = TRUE, trace="none") # without dendrogram
+
+## ------------------------------------------------------------------------------
+## Detailed Computation
+## ------------------------------------------------------------------------------
+
+## B matrix computation
 
 d2 <- as.matrix(d)^2;
 d2i. <- d2j. <- colMeans(d2);
 d2.. <- mean(d2i.);
 
-n = length(X[,1]);
+n = dim(as.matrix(d))[1]
 
 B <- matrix(nrow = n, ncol = n);
 for (i in 1:n) {
@@ -41,18 +49,16 @@ print(B);
 
 ## Eigen values and eigen vectors (spectral decomposition) of B matrix
 
-Lambda = eigen(B)$values;
+eig = eigen(B)
 
-Gamma = eigen(B)$vectors;
+Lambda = eig$values;
+
+Gamma = eig$vectors;
 
 ## Ratio
 
 p = 2;
-t = 0;
-for (i in 1:p) {
-  t = t + Lambda[i];
-}
-t = t / sum(Lambda[1:n-1]);
+t = sum(Lambda[1:p]) / sum(Lambda[1:n-1]) * 100;
 print(t);
 
 ## New coordinates on p-dimensional space
@@ -65,13 +71,16 @@ Coordinates = data.frame(
 ## Plot
 
 attach(Coordinates);
-plot(X1, X2);
-text(X1, X2, label, pos=4);
+plot(X1, X2, asp = TRUE);
+text(X1, X2, label, pos = 4);
 detach(Coordinates);
 
 ## ------------------------------------------------------------------------------
 ## Multidimensional Scaling with specific function -- COMPARE IT previous results
 ## ------------------------------------------------------------------------------
 
-mds <- cmdscale(d, eig = TRUE, k = 2)
+mds <- cmdscale(d, k = 2, eig = TRUE)
 print(mds)
+
+plot(mds$points, xlab = "X", ylab = "Y", main = "Title", sub ="subtitle", asp = TRUE)
+text(mds$points[,1], mds$points[,2], c("UB", "Arkhangai", "Bayan-Ulgii", "Bayankhongor", "Bulgan", "Govi-Altai", "Govisumber", "Darkhan-Uul", "Dornod", "Dornogovi", "Dundgovi", "Zavkhan", "Uvurkhangai", "Umnugovi", "Sukhbaatar", "Selenge", "Tuv", "Khovd", "Khentii", "Khuvsgul", "Uvs", "Orkhon"), pos = 4)

@@ -26,18 +26,30 @@ print(X)
 X <- na.omit(X) # listwise deletion of missing value
 X <- scale(X) # standardize variables
 
+## ------------------------
 ## Hierarchical Agglomerative
+## ------------------------
 
 d <- dist(X, method = "euclidean") # distance matrix
 cl <- hclust(d, method = "ward.D")
-plot(cl) # display dendrogram
 cl$height
-groups <- cutree(cl, k = 5) # cut tree into 5 clusters
+
+plot(cl) # display dendrogram
 rect.hclust(cl, k = 5, border = "red") # draw dendogram with red borders around the 5 clusters; DON'T CLOSE PREVIOUS PLOT 
+
+groups <- cutree(cl, k = 5) # cut tree into 5 clusters
+
+## ------------------------
+## K-Means Cluster Analysis
+## ------------------------
+
+## Alternate Data
+
+# X = matrix(c(5,3,-1,1,1,-2,-3,-2),  nrow = 4,  ncol = 2,  byrow = TRUE)
 
 ## K-Means Cluster Analysis
 
-cl <- kmeans(X, 5) # 5 cluster solution
+cl <- kmeans(X, 2) # 5 cluster solution
 aggregate(X, by = list(cl$cluster), FUN = mean) # get cluster means
 cl$centers
 cl$cluster # cluster membership
@@ -59,7 +71,9 @@ cluster.stats(d, cl1$cluster, cl2$cluster)
 cluster.stats # view function source code
 ?cluster.stats # documentation
 
+## ------------------------
 ## Single Linkage Algorithm
+## ------------------------
 
 set.seed(17)
 
