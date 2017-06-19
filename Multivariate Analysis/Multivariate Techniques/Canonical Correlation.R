@@ -27,7 +27,6 @@ S.XX = cov(X); S.YY = cov(Y); S.XY = cov(X,Y)
 library(expm) # sqrtm()
 K = sqrtm(solve(S.XX)) %*% S.XY %*% sqrtm(solve(S.YY))
 
-require(MASS) # svd()
 K. = svd(K)
 print(K.)
 
@@ -37,14 +36,14 @@ k = rankMatrix(K)
 rho = sqrt(
   eigen(
     K %*% t(K)
-  )$values[1:k] 
+  )$values[1:k]
 )
 print(rho)
 
 ## Projection Vectors
 
-a = sqrtm(ginv(S.XX)) %*% K.$u
-b = sqrtm(ginv(S.YY)) %*% K.$v
+a = sqrtm(solve(S.XX)) %*% K.$u
+b = sqrtm(solve(S.YY)) %*% K.$v
 
 ## Canonical Variables
 
@@ -52,6 +51,12 @@ eta = t( t(a) %*% t(X) )
 varphi = t( t(b) %*% t(Y) )
 
 cor(eta, varphi) # Canonical Correlation Coefficient
+cor(eta[,1], varphi[,2])
+
+cov(eta) # $cov(\eta)=I_k$
+cov(varphi)
+
+plot(eta[,2], varphi[,2], asp = 1) # scatter plot
 
 ## -------------------------------------------------------------------------------------
 ## Canonical Correlation Analysis with specific function cancor() from the package stats
