@@ -18,6 +18,13 @@ Y = matrix(
 )
 print(Y)
 
+## Centering
+
+colMeans(X); colMeans(Y)
+
+X = scale(x = X, center = TRUE, scale = FALSE)
+Y = scale(x = Y, center = TRUE, scale = FALSE)
+
 ## Covariation
 
 S.XX = cov(X); S.YY = cov(Y); S.XY = cov(X,Y)
@@ -56,17 +63,18 @@ cor(eta[,1], varphi[,2])
 cov(eta) # $cov(\eta)=I_k$
 cov(varphi)
 
-plot(eta[,2], varphi[,2], asp = 1) # scatter plot
+plot(eta[,1], varphi[,1], asp = 1) # scatter plot
+
+## -------------------------------------------------------------------------------------
+## Canonical Correlation Analysis with specific function cc() from the package CCA
+## -------------------------------------------------------------------------------------
+
+# install.packages("CCA") # if required
+library(CCA) # cc()
+cc(X, Y)
 
 ## -------------------------------------------------------------------------------------
 ## Canonical Correlation Analysis with specific function cancor() from the package stats
 ## -------------------------------------------------------------------------------------
 
 cancor(x = X, y = Y) # ! it uses QR Decomposition of Data Matrices
-
-## -------------------------------------------------------------------------------------
-## Canonical Correlation Analysis with specific function cc() from the package CCA
-## -------------------------------------------------------------------------------------
-
-require(CCA) # cc()
-cc(X, Y)

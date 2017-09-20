@@ -72,10 +72,10 @@ print(result)
 
 # explanation of return value
 
-round(Lambda[1], digits = 2) # SS loadings
-round(Lambda[1] / sum(Lambda), digits = 2) # SProportion Var
+round(Lambda[1:2], digits = 2) # SS loadings
+round(Lambda[1:2] / sum(Lambda), digits = 2) # SProportion Var
 round(cumsum(Lambda)[1:2] / sum(Lambda), digits = 2) # Cumulative Var
-round(Lambda[1] / sum(Lambda[1:2]), digits = 2) # Proportion Explained
+round(Lambda[1:2] / sum(Lambda[1:2]), digits = 2) # Proportion Explained
 round(-L, digits = 2) # Unstandardized loadings (pattern matrix) based upon covariance matrix
 round(diag(L %*% t(L)), digits = 3) # h2
 round(diag(S - L %*% t(L)), digits = 4) # u2
