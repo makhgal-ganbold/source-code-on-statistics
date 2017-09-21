@@ -80,9 +80,18 @@ HotellingsT2(X = X_1, Y = X_2, mu = c(0, -1), test = "f")
 
 ## Таамаглал 8: Ковариацууд тэнцүү байх тухай таамаглал
 
+Sigma_1 = matrix(data = c(4,1,1,2), ncol = 2); Sigma_2 = matrix(data = c(3,1,1,2), ncol = 2)
+set.seed(17)
+X_1 = MASS::mvrnorm(n = 75, mu = c(0,0), Sigma = Sigma_1); X_2 = MASS::mvrnorm(n = 50, mu = c(0,0), Sigma = Sigma_2)
 
+S = (((n_1 = nrow(X_1)) - 1) * (S_1 = cov(X_1)) + ((n_2 = nrow(X_2)) - 1) * (S_2 = cov(X_2))) / (n = n_1 + n_2 - (k = 2))
+M = n * log(det(S)) - ( (n_1-1)*log(det(S_1)) + (n_2-1)*log(det(S_2)) )
+u = (1/(n_1-1) + 1/(n_2-1) - 1 / (n_1 + n_2 - 1)) * (2*(p = ncol(X_1))^2 + 3*p - 1) / (6*(p+1)*(k-1))
+t = (1 - u) * M; print(t)
+df = (k - 1) * p * (p + 1) / 2; print(df)
+p.value = pchisq(q = t, df = df, lower.tail = FALSE); print(p.value)
 
 # biotools багц дахь boxM() функцээр (дээрх детальчилсан тооцооныхтой адил үр дүн өгөхийг ажиглана уу)
 install.packages("biotools") ## sudo apt-get install bwidget tcl-dev tk-dev -y
 library(biotools)
-boxM(data, grouping)
+boxM(data = rbind(X_1,X_2), grouping = c( rep(1, times = 75), rep(2, times = 50) ))
