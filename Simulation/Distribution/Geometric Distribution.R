@@ -20,3 +20,5 @@ for (i in 1:100) { # санамсаргүй 100 утга
 }
 print(X) # үр дүнг хэвлэх
 table(X) # давтамж олох
+
+chisq.test(x = table(X), p = dgeom(x = sort(unique(X)), prob = p), rescale.p = TRUE) # chi-square test

@@ -80,9 +80,9 @@ HotellingsT2(X = X_1, Y = X_2, mu = c(0, -1), test = "f")
 
 ## Таамаглал 8: Ковариацууд тэнцүү байх тухай таамаглал
 
-Sigma_1 = matrix(data = c(4,1,1,2), ncol = 2); Sigma_2 = matrix(data = c(3,1,1,2), ncol = 2)
 set.seed(17)
-X_1 = MASS::mvrnorm(n = 75, mu = c(0,0), Sigma = Sigma_1); X_2 = MASS::mvrnorm(n = 50, mu = c(0,0), Sigma = Sigma_2)
+X_1 = MASS::mvrnorm(n = 75, mu = c(0,0), Sigma = matrix(data = c(4,1,1,2), ncol = 2))
+X_2 = MASS::mvrnorm(n = 50, mu = c(1,1), Sigma = matrix(data = c(3,1,1,2), ncol = 2))
 
 S = (((n_1 = nrow(X_1)) - 1) * (S_1 = cov(X_1)) + ((n_2 = nrow(X_2)) - 1) * (S_2 = cov(X_2))) / (n = n_1 + n_2 - (k = 2))
 M = n * log(det(S)) - ( (n_1-1)*log(det(S_1)) + (n_2-1)*log(det(S_2)) )
@@ -95,3 +95,47 @@ p.value = pchisq(q = t, df = df, lower.tail = FALSE); print(p.value)
 install.packages("biotools") ## sudo apt-get install bwidget tcl-dev tk-dev -y
 library(biotools)
 boxM(data = rbind(X_1,X_2), grouping = c( rep(1, times = 75), rep(2, times = 50) ))
+
+## Таамаглал 10: Бүлгүүд нэг төрлийн байх тухай таамаглал буюу олон хэмжээст дисперсийн шинжилгээ (MANOVA)
+
+# Өгөгдөл
+
+X = matrix(data = c(9, 3, 6, 2, 9, 7, 0, 4, 2, 0, 3, 8, 1, 9, 2, 7), ncol = 2, byrow = TRUE) # хоёр хэмжээст тоон өгөгдөл
+group = as.factor(rep(x = 1:3, times = c(3,2,3))) # бүлэг, фактор хэлбэртэй өгөхийг анхаар
+print(cbind(X, group)) # өгөгдөл хэвлэх
+
+# Дэлгэрэнгүй тооцоо
+
+p = ncol(X) # векторын хэмжээс
+k = length(unique(group)) # бүлгийн тоо
+n.group = as.vector(table(group)) # бүлэг тус бүрийн хэмжээ
+n = sum(n.group) # нийт түүврийн хэмжээ
+
+mean.overal = colMeans(X) # нийт түүврийн дундаж
+mean.groups = apply(X, 2, tapply, group, mean) # бүлэг тус бүрийн дундаж
+
+A = cov(X) * (n - 1) # нийт квадратуудын нийлбэр
+B = matrix(
+  data = rowSums(apply(cbind(mean.groups, n.group), 1, function (x) {(y = x[1:p] - mean.overal) %*% t(y) * x[p+1]})),
+  ncol = p
+) # бүлэг хоорондын квадратуудын нийлбэр
+W =  A - B # бүлгийн дотоод квадратуудын нийлбэр
+
+Lambda = det(W) / det(B + W); print(Lambda) # Wilks' Lambda
+lambda = eigen(solve(W) %*% B, only.values = TRUE)$values; print(lambda)
+
+sum(lambda / (1 + lambda)) # Pillai
+sum(lambda) # Hotelling-Lawley
+prod(rep(1, times = length(lambda)) / (1 + lambda)) # Wilks == Wilk's Lambda
+max(lambda) # Roy
+
+F.stat = (n-k-1)/(k-1)*(1-sqrt(Lambda))/sqrt(Lambda); print(F.stat) # шинжүүрийн статистикийн туршилтын утга
+p.value = pf(q = F.stat, df1 = 2*(k-1), df2 = 2*(n-k-1), lower.tail = FALSE); print(p.value) # магадлалын утга
+
+# stats багц дахь manova() функцээр (дээрх детальчилсан тооцооныхтой адил үр дүн өгөхийг ажиглана уу)
+
+output = summary(manova(X ~ group), test = "Wilks") # "Pillai", "Wilks", "Hotelling-Lawley", "Roy"
+print(output)
+output$SS$group # == B
+output$SS$Residuals # == W
+output$Eigenvalues # == lambda
