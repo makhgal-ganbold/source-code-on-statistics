@@ -4,35 +4,34 @@
 # Created on 2016/03/19 07:49:41
 #
 
-## Таамаглал 1: Дунджийн тухай, Ковариацийн матриц мэдэгдэх үед
+## Таамаглал 1: Дунджийн тухай, Ковариацын матриц мэдэгдэх үед
 
-library(MASS);
 mu_0 = c(2, -1);
 Sigma = matrix(c(2/3, 0, 0, 2/3), 2, 2);
 X = matrix(c(2.91, -1.84, 2.85, -1.10, 1.90, 0.32, 1.51, -1.37, 1.73, -1.50, 2.83, -0.42, 2.03, -1.20, 1.97, -0.60, 2.14, -1.27, 1.95, 0.54), nrow = 10, ncol = 2, byrow = TRUE);
 n = length(X[,1]);
 x_m = colMeans(X);
-n/2 * t(x_m - mu_0) %*% ginv(Sigma) %*% (x_m - mu_0);
-qchisq(c(0.05), df=2, lower.tail=FALSE);
+n/2 * t(x_m - mu_0) %*% solve(Sigma) %*% (x_m - mu_0);
+qchisq(c(0.01, 0.05, 0.1), df=2, lower.tail=FALSE);
 
-## Таамаглал 2: Дунджийн тухай, Ковариацийн матриц мэдэгдэхгүй үед
+## Таамаглал 2: Дунджийн тухай, Ковариацын матриц мэдэгдэхгүй үед
 
 # F шинжүүрээр
 mu_0 = c(2, -1);
 X = matrix(c(2.91, -1.84, 2.85, -1.10, 1.90, 0.32, 1.51, -1.37, 1.73, -1.50, 2.83, -0.42, 2.03, -1.20, 1.97, -0.60, 2.14, -1.27, 1.95, 0.54), nrow = 10, ncol = 2, byrow = TRUE);
 p = dim(X)[2]; n = dim(X)[1];
 x_m = colMeans(X); S = cov(X);
-(n-p)/p * n/(n-1) * t(x_m - mu_0) %*% solve(S) %*% (x_m - mu_0);
+T2 = (n-p)/p * n/(n-1) * t(x_m - mu_0) %*% solve(S) %*% (x_m - mu_0); print(T2) # туршилтын утга
 qf(p = 0.05, df1 = p, df2 = n - p, lower.tail = FALSE)
+p.value = pf(q = T2, df1 = p, df2 = n - p, lower.tail = FALSE); print(p.value)
 
-# ICSNP багц дахь HotellingsT2() функцээр (дээрх детальчилсан тооцооныхтой адил үр дүн өгөхийг ажиглана уу)
+# ICSNP багц дахь HotellingsT2() функцээр (дээрх дэлгэрэнгүй тооцооныхтой адил үр дүн өгөхийг ажиглана уу)
 install.packages("ICSNP")
 library(ICSNP)
 HotellingsT2(X, mu = mu_0, test = "f")
 
-## Таамаглал 3: Ковариацийн матрицийн тухай
+## Таамаглал 3: Ковариацын матрицын тухай
 
-library(MASS);
 library(psych);
 Sigma_0 = matrix(c(2/3, 0, 0, 2/3), 2, 2);
 X = matrix(c(2.91, -1.84, 2.85, -1.10, 1.90, 0.32, 1.51, -1.37, 1.73, -1.50, 2.83, -0.42, 2.03, -1.20, 1.97, -0.60, 2.14, -1.27, 1.95, 0.54), nrow = 10, ncol = 2, byrow = TRUE);
@@ -40,22 +39,21 @@ p = length(X[1,]);
 n = length(X[,1]);
 x_m = colMeans(X);
 S = cov(X);
-n * tr(ginv(Sigma_0) %*% S) - n * log(det(ginv(Sigma_0) %*% S)) - n * p;
+n * tr(solve(Sigma_0) %*% S) - n * log(det(solve(Sigma_0) %*% S)) - n * p;
 qchisq(c(0.05), df = p*(p+1)/2, lower.tail = FALSE);
 
 ## Таамаглал 6: Шугаман таамаглал
 
-library(MASS);
 mu = c(1, 0);
 Sigma = matrix(c(2, 1, 1, 3), nrow = 2, ncol = 2);
 n = 10;
-X = round(mvrnorm(n, mu, Sigma), digits = 2);
+X = round(MASS::mvrnorm(n, mu, Sigma), digits = 2);
 print(X);
 A = matrix(c(1,2), 1, 2); a = c(1);
 q = length(a);
 x_m = colMeans(X); print(x_m);
 S = cov(X); print(S);
-(n - 1) * t(A %*% x_m - a) %*% ginv(A %*% S %*% t(A)) %*% (A %*% x_m - a);
+(n - 1) * t(A %*% x_m - a) %*% solve(A %*% S %*% t(A)) %*% (A %*% x_m - a);
 qf(c(0.05), df1 = q, df2 = n-1, lower.tail = FALSE);
 
 ## Таамаглал 7: Хоёр дунджийн тухай таамаглал
@@ -70,12 +68,12 @@ S = ((n_1 - 1) * S_1 + (n_2 - 1) * S_2) / (n_1 + n_2 - 2);
 n_1 * n_2 / (n_1 + n_2) * (n_1 + n_2 - p - 1) / (p * (n_1 + n_2 - 2)) * t(x_m_1 - x_m_2) %*% solve(S) %*% (x_m_1 - x_m_2);
 qf(0.05, df1 = p, df2 = n_1 + n_2 - p - 1, lower.tail = FALSE);
 
-# ICSNP багц дахь HotellingsT2() функцээр (дээрх детальчилсан тооцооныхтой адил үр дүн өгөхийг ажиглана уу)
+# ICSNP багц дахь HotellingsT2() функцээр (дээрх дэлгэрэнгүй тооцооныхтой адил үр дүн өгөхийг ажиглана уу)
 install.packages("ICSNP")
 library(ICSNP)
 HotellingsT2(X = X_1, Y = X_2, test = "f")
 
-# Дээрх тохиолдолд хоёр бүлгийн дундаж тэнцүү гэх таамглалыг шалгагдана. Харин хоёр бүлгийн дунджийн ялгавар компонент нэг бүрээрээ харгалзан жишээлбэл 0 ба -1-тэй тэнцүү гэх таамаглалыг шалгахын тулд дараах маягийн кодыг бичнэ.
+# Дээрх тохиолдолд хоёр бүлгийн дундаж тэнцүү гэсэн таамглал шалгана. Харин хоёр бүлгийн дунджийн ялгавар компонент нэг бүрээрээ харгалзан жишээлбэл 0 болон -1-тэй тэнцүү гэсэн таамаглал шалгахын тулд дараах код бичнэ.
 HotellingsT2(X = X_1, Y = X_2, mu = c(0, -1), test = "f")
 
 ## Таамаглал 8: Ковариацууд тэнцүү байх тухай таамаглал
@@ -91,7 +89,7 @@ t = (1 - u) * M; print(t)
 df = (k - 1) * p * (p + 1) / 2; print(df)
 p.value = pchisq(q = t, df = df, lower.tail = FALSE); print(p.value)
 
-# biotools багц дахь boxM() функцээр (дээрх детальчилсан тооцооныхтой адил үр дүн өгөхийг ажиглана уу)
+# biotools багц дахь boxM() функцээр (дээрх дэлгэрэнгүй тооцооныхтой адил үр дүн өгөхийг ажиглана уу)
 install.packages("biotools") ## sudo apt-get install bwidget tcl-dev tk-dev -y
 library(biotools)
 boxM(data = rbind(X_1,X_2), grouping = c( rep(1, times = 75), rep(2, times = 50) ))
