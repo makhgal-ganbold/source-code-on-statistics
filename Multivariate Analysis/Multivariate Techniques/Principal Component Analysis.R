@@ -36,7 +36,7 @@ eig = eigen(cov(X))
 eig[["values"]] # lambda
 eig[["vectors"]] # Gamma
 
-Lambda = diag(pca$sdev)^2
+Lambda = diag(pca$sdev)^2 # Lambda = diag(eig$values)
 Gamma = pca$rotation
 
 ## Coordinates on (PC1,PC2)
@@ -61,7 +61,7 @@ Gamma %*% Lambda
 
 ## Correlation of X and Y
 
-cor(X,Y)
+cor(X,Y) # cor(X, pca$x)
 
 i = 1; j = 1;
 Gamma[i,j]*(Lambda[j,j]/S_square[i,i])^0.5
