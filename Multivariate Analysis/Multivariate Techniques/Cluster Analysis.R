@@ -35,7 +35,7 @@ cl <- hclust(d, method = "ward.D")
 cl$height
 
 plot(cl) # display dendrogram
-rect.hclust(cl, k = 5, border = "red") # draw dendogram with red borders around the 5 clusters; DON'T CLOSE PREVIOUS PLOT 
+rect.hclust(cl, k = 5, border = "red") # draw dendogram with red borders around the 5 clusters; DON'T CLOSE PREVIOUS PLOT
 
 groups <- cutree(cl, k = 5) # cut tree into 5 clusters
 
@@ -49,7 +49,7 @@ groups <- cutree(cl, k = 5) # cut tree into 5 clusters
 
 ## K-Means Cluster Analysis
 
-cl <- kmeans(X, 2) # 5 cluster solution
+cl <- kmeans(X, 2) # 2 cluster solution
 aggregate(X, by = list(cl$cluster), FUN = mean) # get cluster means
 cl$centers
 cl$cluster # cluster membership
