@@ -27,7 +27,7 @@ print(N)
 
 ## Convert Crosstab to dataframe
 
-raw_data = epitools::expand.table(N)
+raw_data <- epitools::expand.table(N)
 # print(raw_data)
 
 ## Chi-square Test for independence
@@ -36,46 +36,46 @@ chisq.test(x = N)
 
 ## Sample Size & Row and Column Sums
 
-n.. = sum(N)
-m = nrow(N)
-n = ncol(N)
-sum_row = rowSums(N)
-sum_col = colSums(N)
+n.. <- sum(N)
+m <- nrow(N)
+n <- ncol(N)
+sum_row <- rowSums(N)
+sum_col <- colSums(N)
 
 ## Joint Distribution
 
-P = N / n..; print(P)
+P <- N / n..; print(P)
 
 ## Row and Column Mass -- Marginal Distributions
 
-p.mar_row = sum_row / n..; P.mar_row = diag(p.mar_row); print(p.mar_row) ## Row Mass
-p.mar_col = sum_col / n..; P.mar_col = diag(p.mar_col); print(p.mar_col) ## Column Mass
+p.mar_row <- sum_row / n..; P.mar_row <- diag(p.mar_row); print(p.mar_row) ## Row Mass
+p.mar_col <- sum_col / n..; P.mar_col <- diag(p.mar_col); print(p.mar_col) ## Column Mass
 
 ## Row and Column Percentages -- Conditional Distributions
 
-P.con_row = prop.table(N, 1); print(P.con_row) # row percentages
-P.con_col = prop.table(N, 2); print(P.con_col) # column percentages
+P.con_row <- prop.table(N, 1); print(P.con_row) # row percentages
+P.con_col <- prop.table(N, 2); print(P.con_col) # column percentages
 
 ## Row Chi-square Distances to Centroid -- Chi-square Distances between Conditional Distributions and Marginal Distribution
 
-ChiDist_row = c()
+ChiDist_row <- c()
 for (i in 1:m) {
-  ChiDist_row[i] = sqrt(t(P.con_row[i,] - p.mar_col) %*% solve(P.mar_col) %*% (P.con_row[i,] - p.mar_col))
+  ChiDist_row[i] <- sqrt(t(P.con_row[i,] - p.mar_col) %*% solve(P.mar_col) %*% (P.con_row[i,] - p.mar_col))
 }
 print(ChiDist_row)
 
 ## Column Chi-square Distances to Centroid -- Chi-square Distances between Conditional Distributions and Marginal Distribution
 
-ChiDist_col = c()
+ChiDist_col <- c()
 for (j in 1:n) {
-  ChiDist_col[j] = sqrt(t(P.con_col[,j] - p.mar_row) %*% solve(P.mar_row) %*% (P.con_col[,j] - p.mar_row))
+  ChiDist_col[j] <- sqrt(t(P.con_col[,j] - p.mar_row) %*% solve(P.mar_row) %*% (P.con_col[,j] - p.mar_row))
 }
 print(ChiDist_col)
 
 ## Chi-square Distance to Independence & Inertia and Decomposition of Chi-square Distance
 
-C = expm::sqrtm(solve(P.mar_row)) %*% (P - p.mar_row %*% t(p.mar_col)) %*% expm::sqrtm(solve(P.mar_col)); print(C)
-r = Matrix::rankMatrix(C)[1]; print(r)
+C <- expm::sqrtm(solve(P.mar_row)) %*% (P - p.mar_row %*% t(p.mar_col)) %*% expm::sqrtm(solve(P.mar_col)); print(C)
+r <- Matrix::rankMatrix(C)[1]; print(r)
 sum(diag(t(C) %*% C))
 sum(diag(C %*% t(C)))
 
@@ -92,16 +92,16 @@ plot(inertia) ## plot
 
 ## Weighted Projections of Rows and Columns & Its properties
 
-SVD = svd(C); Lambda = diag(SVD$d); Gamma = SVD$u; Delta = SVD$v
+SVD <- svd(C); Lambda <- diag(SVD$d); Gamma <- SVD$u; Delta <- SVD$v
 
-S = t(expm::sqrtm(solve(P.mar_row)) %*% Gamma %*% Lambda); print(t(S)) # principal coordinates
-V = t(expm::sqrtm(solve(P.mar_col)) %*% Delta %*% Lambda); print(t(V)) # principal coordinates
+S <- t(expm::sqrtm(solve(P.mar_row)) %*% Gamma %*% Lambda); print(t(S)) # principal coordinates
+V <- t(expm::sqrtm(solve(P.mar_col)) %*% Delta %*% Lambda); print(t(V)) # principal coordinates
 
 S %*% p.mar_row # == 0
 V %*% p.mar_col # == 0
 
-S_std = t(Gamma) %*% expm::sqrtm(solve(P.mar_row)); print(t(S_std)) # standard coordinates
-V_std = t(Delta) %*% expm::sqrtm(solve(P.mar_col)); print(t(V_std)) # standard coordinates
+S_std <- t(Gamma) %*% expm::sqrtm(solve(P.mar_row)); print(t(S_std)) # standard coordinates
+V_std <- t(Delta) %*% expm::sqrtm(solve(P.mar_col)); print(t(V_std)) # standard coordinates
 
 S_std %*% P.mar_row %*% t(S_std) # == identity matrix
 V_std %*% P.mar_col %*% t(V_std) # == identity matrix
@@ -115,23 +115,23 @@ diag(Lambda)[1:r]^2
 
 ## Contributions
 
-C_row = c()
+C_row <- c()
 for (k in 1:r) {
-  t = c()
+  t <- c()
   for (i in 1:m) {
-    t = cbind(t, p.mar_row[[i]] * S[k,i]^2 / diag(Lambda)[k]^2)
+    t <- cbind(t, p.mar_row[[i]] * S[k,i]^2 / diag(Lambda)[k]^2)
   }
-  C_row = rbind(C_row, t)
+  C_row <- rbind(C_row, t)
 }
 print(C_row)
 
-C_col = c()
+C_col <- c()
 for (k in 1:r) {
-  t = c()
+  t <- c()
   for (j in 1:n) {
-    t = cbind(t, p.mar_col[[j]] * V[k,j]^2 / diag(Lambda)[k]^2)
+    t <- cbind(t, p.mar_col[[j]] * V[k,j]^2 / diag(Lambda)[k]^2)
   }
-  C_col = rbind(C_col, t)
+  C_col <- rbind(C_col, t)
 }
 print(C_col)
 
@@ -146,5 +146,5 @@ library(ca)
 output_ca <- ca(N)
 print(output_ca) # basic results
 summary(output_ca)
-output_plot = plot(output_ca, arrows = c(TRUE, TRUE))
+output_plot <- plot(output_ca, arrows = c(TRUE, TRUE))
 plot(output_ca, lines = c(TRUE, TRUE), mass = c(TRUE, TRUE), contrib = c("absolute", "absolute"))

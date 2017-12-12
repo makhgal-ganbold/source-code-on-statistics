@@ -21,9 +21,11 @@ d <- dist(X, method = "euclidean");
 
 print(d);
 
-heatmap(x = as.matrix(d)) # with dendrogram
+col <- colorRampPalette(c("black", "green"))(10)
 
-heatmap(x = as.matrix(d), Rowv = NA, symm = TRUE, trace="none") # without dendrogram
+heatmap(x = as.matrix(d), col = col) # with dendrogram
+
+heatmap(x = as.matrix(d), Rowv = NA, symm = TRUE, trace="none", col = col) # without dendrogram
 
 ## ------------------------------------------------------------------------------
 ## Detailed Computation
@@ -40,7 +42,7 @@ n = dim(as.matrix(d))[1]
 B <- matrix(nrow = n, ncol = n);
 for (i in 1:n) {
   for (j in 1:n) {
-    B[i,j] <- -1 / 2 * 
+    B[i,j] <- -1 / 2 *
       ( d2[i,j] - d2i.[i] - d2j.[j] + d2.. );
   }
 }
