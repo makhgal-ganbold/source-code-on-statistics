@@ -1,5 +1,5 @@
 #
-# Speed Up R code
+# Speed Up R code - for vs. replicate
 # Author: galaa
 # Created on 2017/10/12 21:58:00
 #
