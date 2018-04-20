@@ -2,7 +2,7 @@
 # Training Program for R Langauge
 # Topic 3 - Operators, Functions and Environment
 # Author: galaa (www.galaa.mn)
-# Copyright (c) 2016-2017 Makhgal
+# Copyright (c) 2016-2018 Makhgal
 # Created on 2016/09/30 06:30:25
 #
 
@@ -22,15 +22,21 @@ c (1, 2, 3) + 1
 
 ## Утга оноох оператор
 
-x <- 2; 3 -> y; x ^ y
+x <- 2
+3 -> y
+x ^ y
 
 ## Харьцуулах оператор
 
-x = 1; y = 2; x < y
+x <- 1
+y <- 2
+x < y
 
 ## Логик оператор
 
-x = c (TRUE, FALSE, 0, 2); y = c (FALSE, TRUE, FALSE, TRUE); x & y
+x <- c (TRUE, FALSE, 0, 2)
+y <- c (FALSE, TRUE, FALSE, TRUE)
+x & y
 
 ## Инфикс оператор
 
@@ -46,19 +52,27 @@ x = c (TRUE, FALSE, 0, 2); y = c (FALSE, TRUE, FALSE, TRUE); x & y
 
 '%-%' (1, 3)
 
+## Үйлдлийн дараалал
+
+1 + 2 * 3
+(1 + 2) * 3
+{1 + 2} * 3
+(1 + 2 * {2 - 1}) * 3
+# {1 + (2 + 3} - 4) ## ERROR
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 ## Functions / Функц
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-## Фунц зарлах
+## Функц зарлах
 
-decrease = function (number, by = 1) {
+decrease <- function (number, by = 1) {
   number - by
 }
 
-## Функцийг дуудах
+## Функц дуудах
 
 decrease(5, 2)
 
@@ -70,7 +84,7 @@ decrease(3)
 
 ## ... аргумент
 
-average = function (...) {
+average <- function (...) {
   mean(...)
 }
 
@@ -85,30 +99,52 @@ multiple_values <- function () {
 
 multiple_values()
 
+## Бүлэг тушаал
+
+x <- -1:1
+
+{
+  z <- x
+  z[z < 0] <- 0
+  z
+}
+
+## Нэргүй функц
+
+(function (x, y) {
+  z <- x + y
+  return(z)
+})(1, 2)
+
+apply(X, MARGIN = 2, FUN = function (x) {
+  x[x < 0] <- 0
+  mean(x)
+})
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-## Environment / Хүрээлэл
+## Environment / Хүрээ
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-## Хүрээллийн нэр
+## Хүрээний нэр
 
 environment()
 
-## Обьектүүдийн нэрс
+## Объектуудын нэрс
 
 ls()
 
-## Бүх обьектийг устгах
+## Бүх объектыг устгах
 
 rm(list = ls())
 
 ## "локал" хувьсагч
 
-x = TRUE
+x <- TRUE
 
-func.local.variable = function () {
-  x = FALSE
+func.local.variable <- function () {
+  x <- FALSE
   return(x)
 }
 
@@ -116,9 +152,9 @@ func.local.variable()
 
 ## "глобал" хувьсагч
 
-x = TRUE
+x <- TRUE
 
-func.global.variable = function () {
+func.global.variable <- function () {
   return(x)
 }
 
@@ -126,11 +162,11 @@ func.global.variable()
 
 ## "глобал" хувьсагчид утга оноох
 
-x = TRUE # глобал хувьсагч
+x <- TRUE # глобал хувьсагч
 
 environment()
 
-func.assign.global.variable = function () {
+func.assign.global.variable <- function () {
   print(environment())
   x <- TRUE # локал хувьсагч
   x <<- FALSE # эх хүрээлэл дэх глобал хувьсагчид утга онооно
@@ -141,13 +177,13 @@ func.assign.global.variable()
 
 print(x)
 
-## "глобал" хувьсагчийн утгыг авах
+## "глобал" хувьсагчийн утга авах
 
-x = TRUE
+x <- TRUE
 
 environment()
 
-func.get.global.variable = function () {
+func.get.global.variable <- function () {
   print(environment())
   x <- FALSE
   print(x) # FALSE
