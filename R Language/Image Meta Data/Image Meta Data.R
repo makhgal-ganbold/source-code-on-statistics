@@ -36,6 +36,12 @@ objects(image.meta.infos)
 
 image.date <- na.omit(as.Date(gsub(pattern = ":", replacement = "-", x = image.meta.infos$DateTimeOriginal)))
 
+## Дээрх тушаалын товч хувилбар (YouTube дээрх видео хичээл дээр бичсэн кодоо дараа нь хянахдаа үүнийг өөрчилж бичив)
+
+image.date <- na.omit(image.meta.infos$DateTimeOriginal)
+
+## Өгөгдлөө датафрейм хэлбэрт шилжүүлэх
+
 image.date <- data.frame(
   year = ordered(x = as.integer(substr(x = image.date, start = 1, stop = 4)), levels = 1997:2018),
   month = ordered(x = as.integer(substr(x = image.date, start = 6, stop = 7)), levels = 1:12)
