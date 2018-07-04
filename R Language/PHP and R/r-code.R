@@ -1,0 +1,5 @@
+command.line.arguments <- commandArgs(trailingOnly = TRUE)
+sample.size <- as.integer(command.line.arguments[1])
+print(sample.size)
+X <- stats::rnorm(sample.size)
+print(X)
