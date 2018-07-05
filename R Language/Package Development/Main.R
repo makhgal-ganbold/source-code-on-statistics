@@ -10,11 +10,7 @@
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# install.packages("devtools", repos = "https://cran.rstudio.com");
-# install.packages("roxygen2");
-
-library(devtools);
-library(roxygen2);
+# install.packages(c("devtools", "roxygen2"), repos = "https://cran.rstudio.com")
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
@@ -22,10 +18,11 @@ library(roxygen2);
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-setwd("/home/galaa/R/x86_64-pc-linux-gnu-library/3.2");
-create("izbali");
+devtools::create("izbali")
 
-# Edit DESCRIPTION
+setwd("./izbali")
+
+# Edit DESCRIPTION file
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
@@ -33,7 +30,7 @@ create("izbali");
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# Create file "edf.R" in folder "R"
+# Create "edf.R" file in "R" folder
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
@@ -41,18 +38,15 @@ create("izbali");
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-setwd("./izbali");
-document();
+devtools::document()
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-# Test the package
+# Chech the package
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-help(edf);
-
-edf(x = 0, X = c(-1,0,1));
+devtools::check()
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
@@ -60,5 +54,4 @@ edf(x = 0, X = c(-1,0,1));
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-setwd("..");
-build("izbali");
+devtools::build()

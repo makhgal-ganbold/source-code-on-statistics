@@ -2,22 +2,21 @@
 % Please edit documentation in R/edf.R
 \name{edf}
 \alias{edf}
-\title{A edf function}
+\title{edf function}
 \usage{
 edf(x, X)
 }
 \arguments{
-\item{x:}{function argument as numeric}
+\item{x}{numeric, function argument}
 
-\item{X:}{empirical data as vector}
+\item{X}{vector, empirical data}
+}
+\value{
+numeric, left continuous empirical distribution function value
 }
 \description{
-This function calculates value of left continuous empirical distribution function at given point
+Computes the value of the left continuous empirical distribution function at a given point.
 }
 \examples{
-edf(x = 0, X = c(-1,0,1));
+edf(x = 0, X = c(- 1, 0, 1));
 }
-\keyword{distribution}
-\keyword{empirical}
-\keyword{function}
-
