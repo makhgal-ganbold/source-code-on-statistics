@@ -6,21 +6,21 @@
 
 #
 
-n = 500
+n <- 500
 
 #
 
-simulation = function() {
+simulation <- function() {
   u = runif(n = 2)
   u = sort(u)
   return(u)
 }
-Z = t(replicate(n = n, simulation()))
+Z <- t(replicate(n = n, simulation()))
 plot(Z, asp = TRUE)
 
 #
 
-X = matrix(
+X <- matrix(
   data = apply(
     X = Z,
     MARGIN = 1,
@@ -35,11 +35,11 @@ plot(X, asp = TRUE)
 
 #
 
-c0 = c(3,1)
-c1 = c(5,3)
-c2 = c(2,5)
+c0 <- c(3,1)
+c1 <- c(5,3)
+c2 <- c(2,5)
 
-C = cbind(c1 - c0, c2 - c0)
+C <- cbind(c1 - c0, c2 - c0)
 
-Y = t(C %*% t(X) + c0)
+Y <- t(C %*% t(X) + c0)
 plot(Y, asp = TRUE)
