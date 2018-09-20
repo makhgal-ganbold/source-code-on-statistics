@@ -27,15 +27,15 @@ switch(.Platform$OS.type,
     # type = "FORK" төрлийн кластерийн хувьд эх хүрээнүүд дэх өмнө зарлагдсан хувьсагчдад шууд хандаж чадна.
     # Иймд хувьсагчийн утга дамжуулах зорилгоор нэмэлт үйлдэл гүйцэтгэх шаардлагагүй болно.
     ## Кластер үүсгэх, Linux/Mac үйлдлийн системүүдийн хувьд
-    parallel.computing.clusters <- parallel::makeCluster(the.number.of.useful.cores, type = "FORK")
+    parallel.computing.cluster <- parallel::makeCluster(the.number.of.useful.cores, type = "FORK")
     # Кластер үүсгэсний дараа хувьсагчийн утга дамжуулах бол дор үзүүлсэн байдлаар clusterExport() функц ашиглана.
   },
   "windows" = {
     ## Кластер үүсгэх, бүх үйлдлийн системийн хувьд (Windows-ийг оролцуулан)
-    parallel.computing.clusters <- parallel::makeCluster(the.number.of.useful.cores) # type = "PSOCK" буюу Parallel Socket Cluster
+    parallel.computing.cluster <- parallel::makeCluster(the.number.of.useful.cores) # type = "PSOCK" буюу Parallel Socket Cluster
     ## Хувьсагчийн утга дамжуулах
     root <- 0.5
-    parallel::clusterExport(parallel.computing.clusters, "root")
+    parallel::clusterExport(parallel.computing.cluster, "root")
     # Дээрх тушаалаар кластерийн дотоод хүрээнд ижил нэртэй боловч уг хувьсагчаас тусдаа хувьсагч үүсч утга нь дамжина.
     # Тиймээс үүний дараа уг хувьсагчийн утгыг өөрчлөх нь кластер дахь хувьсагчийн утганд нөлөөгүй.
     # Харин PSOCK буюу Parallel Socket Cluster-ын хувьд эх хүрээний хувьсагчийн утга автоматаар дамжихгүй.
@@ -49,12 +49,12 @@ switch(.Platform$OS.type,
 # Зэрэгцээ тооцоолол явагдаж байгааг өөрөөр хэлбэл тооцоолуурын цөмүүд "бүгд" ашиглагдаж байгааг тодорхой харуулахын тулд харьцангуй их ачаалал өгөхүйц код бичив.
 # Task Manager, System Monitor зэрэг зохих програмаар CPU ашиглалтаа харна уу. Урьдчилаад нээсэн байвал тохиромжтой.
 
-parallel::parLapply(parallel.computing.clusters,
+parallel::parLapply(parallel.computing.cluster,
   1:50,
   function(x) mean(runif(n = 5e6)^root * x)
 )
 
-parallel::parSapply(parallel.computing.clusters,
+parallel::parSapply(parallel.computing.cluster,
   as.character(1:50),
   function(s) {
     x <- as.numeric(s)
@@ -67,4 +67,4 @@ parallel::parSapply(parallel.computing.clusters,
 ## Кластер устгах
 ## ----------------------------------------------------------------
 
-parallel::stopCluster(parallel.computing.clusters)
+parallel::stopCluster(parallel.computing.cluster)

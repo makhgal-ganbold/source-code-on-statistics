@@ -42,7 +42,7 @@ devtools::document()
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #
-# Chech the package
+# Check the package
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
