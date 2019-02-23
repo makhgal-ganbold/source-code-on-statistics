@@ -1,9 +1,9 @@
 #
 # Training Program for R Langauge
-# Topic 10 - Statistical Tests
+# Topic B3 - Statistical Tests
 # Author: galaa (www.galaa.mn)
 # Copyright (c) 2017 Makhgal
-# Created on 2017/01/12 13:35:25
+# Created on 2017/01/12
 #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

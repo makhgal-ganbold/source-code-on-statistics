@@ -1,9 +1,9 @@
 #
 # Training Program for R Langauge
-# Topic 12 - Cluster Analysis, Discriminant Analysis
+# Topic B5 - Cluster Analysis, Discriminant Analysis
 # Author: galaa (www.galaa.mn)
 # Copyright (c) 2017 Makhgal
-# Created on 2017/01/13 05:00:00
+# Created on 2017/01/13
 #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

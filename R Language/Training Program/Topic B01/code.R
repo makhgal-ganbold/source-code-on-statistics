@@ -1,9 +1,9 @@
 #
 # Training Program for R Langauge
-# Topic 6 - Working with Data
+# Topic B1 - Working with Data
 # Author: galaa (www.galaa.mn)
 # Copyright (c) 2016-2017 Makhgal
-# Created on 2016/10/04 07:01:15
+# Created on 2016/10/04
 #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -223,7 +223,7 @@ df[!complete.cases(df),]
 
 mean(c(1,NA,3), na.rm = TRUE)
 
-## Зайлуулах 
+## Зайлуулах
 
 df = na.omit(df)
 
@@ -247,11 +247,11 @@ df = data.frame(
   b = c(0.8, 1.4)
 )
 
-reshape(df, 
-  direction = "long", 
-  varying = list(2:3), 
-  times = list("a", "b"), 
-  timevar = "category", 
+reshape(df,
+  direction = "long",
+  varying = list(2:3),
+  times = list("a", "b"),
+  timevar = "category",
   v.names = "value"
 )
 
@@ -263,8 +263,8 @@ df <- data.frame(
   value = c(1.2,1.5,0.8,1.4)
 )
 
-reshape(df, 
-  direction = "wide", 
-  idvar = "type", 
+reshape(df,
+  direction = "wide",
+  idvar = "type",
   timevar = "category"
 )

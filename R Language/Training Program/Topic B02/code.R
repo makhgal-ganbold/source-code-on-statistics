@@ -1,9 +1,9 @@
 #
 # Training Program for R Langauge
-# Topic 9 - Descriptive Statistics and Diagrams
+# Topic B2 - Descriptive Statistics and Diagrams
 # Author: galaa (www.galaa.mn)
 # Copyright (c) 2017 Makhgal
-# Created on 2017/01/12 10:05:45
+# Created on 2017/01/12
 #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -14,7 +14,7 @@
 
 set.seed(17)
 X = data.frame(
-  x1 = rnorm(n = 15, mean = 0, sd = 1), 
+  x1 = rnorm(n = 15, mean = 0, sd = 1),
   x2 = runif(n = 15, min = 0, max = 1),
   g1 = factor(rbinom(n = 15, size = 1, prob = 0.5)),
   g2 = factor(rbinom(n = 15, size = 1, prob = 0.75))
@@ -154,7 +154,7 @@ curve(
 ## Хайрцган диаграм
 
 X = c(7.27, 6.71, 6.68, 6.25, 6.32, 6.33, 6.37, 6.47, 6.11, 6.28, 6.34, 6.37, 6.05, 6.12, 6.08, 6.4, 6.34, 6.13, 6.1, 5.99, 5.75, 5.5, 5.47, 5.5, 4.88)
-boxplot(X, 
+boxplot(X,
   border = "#008080",
   col = "#00BFBF",
   horizontal = TRUE

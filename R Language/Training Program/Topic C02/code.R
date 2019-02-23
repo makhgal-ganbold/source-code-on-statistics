@@ -1,9 +1,9 @@
 #
 # Training Program for R Langauge
-# Topic 7 - Working with Text and Date/Time
+# Topic C2 - Working with Text and Date/Time
 # Author: galaa (www.galaa.mn)
 # Copyright (c) 2017 Makhgal
-# Created on 2017/01/10 23:11:35
+# Created on 2017/01/10
 #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

@@ -124,12 +124,13 @@ fitness <- function(x) {
 result <- GA::ga(
   type = "permutation",
   fitness = fitness,
-  min = rep.int(x = 1, times = 21), max = rep.int(x = 21, times = 21),
-  popSize = 100, pcrossover = 0.8, pmutation = 0.1,
-  maxiter = 1000
+  lower = rep.int(x = 1, times = 21), upper = rep.int(x = 21, times = 21),
+  popSize = 100, pcrossover = 0.8, pmutation = 0.25,
+  maxiter = 10000
 )
 
 summary(result)
+-result@fitnessValue
 result@solution
 plot(result)
 plot(-result@summary[,1], type = "l", ylab = "Distance", xlab = "Generation")
@@ -148,11 +149,3 @@ result <- solution$ga
 
 # save(solution, file = "Solution of Travelling Salesman Problem.RData", compression_level = 9)
 load(file = "Solution of Travelling Salesman Problem.RData")
-
-# Шийд
-
-sol.seq <- c(17, 16, 7, 12, 6, 21, 8, 11, 10, 3, 1, 15, 9, 5, 14, 18, 2, 13, 19, 20, 4)
-provinces[sol.seq]
-sol.dist <- c(43, 313, 323, 193, 334, 226, 187, 300, 379, 208, 191, 379, 390, 195, 450, 243, 291, 172, 98, 180, 59, 336)
-sum(sol.dist)
--fitness(sol.seq) # == 5490 km

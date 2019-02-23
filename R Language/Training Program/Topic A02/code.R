@@ -1,9 +1,9 @@
 #
 # Training Program for R Langauge
-# Topic 2 - Data Types, Input and Export Data
+# Topic A2 - Data Types, Input and Export Data
 # Author: galaa (www.galaa.mn)
-# Copyright (c) 2016-2018 Makhgal
-# Created on 2016/09/20 12:30:25
+# Copyright (c) 2016-2019 Makhgal
+# Created on 2016/09/20
 #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -70,7 +70,7 @@ X <- data.frame(
 )
 print(X)
 
-# Дата фрэймийг файлаас оруулах
+# Датафрэймийг файлаас оруулах
 X <- read.table(file = "data_dataframe.csv",
   header = TRUE, sep = ",", dec = ".", na.strings = "NA",
   row.names = "ID",
@@ -94,10 +94,22 @@ mixed.values <- list(
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-X["name"]
+mixed.values[4]
+qualative.data[2]
 
-X[["name"]]
-X$name
+X[1,3]
+X[1,]
+X[,3]
+X[c(1,2),2:3]
+
+X["Name"]
+
+X[["Name"]]
+X$Name
+
+mixed.values["statistical.packages"]
+mixed.values[["statistical.packages"]]
+mixed.values$statistical.packages
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -118,6 +130,7 @@ object <- "R is a programming language and software environment for statistical 
 
 # Объект хадгалах
 save(object, file = "object.RData")
+saveRDS(object, file = "object.Rds")
 
 # Объект устгах болон шалгах
 rm(object)
@@ -125,6 +138,7 @@ print(object)
 
 # Объект ачаалах болон шалгах
 load(file = "object.RData")
+object <- readRDS(file = "object.Rds")
 print(object)
 
 ## save.image() функц

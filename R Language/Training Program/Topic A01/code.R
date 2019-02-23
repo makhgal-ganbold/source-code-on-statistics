@@ -1,9 +1,9 @@
 #
 # Training Program for R Langauge
-# Topic 1 - Introduction
+# Topic A1 - Introduction
 # Author: galaa (www.galaa.mn)
-# Copyright (c) 2017 Makhgal
-# Created on 2017/01/07 09:07:30
+# Copyright (c) 2017-2019 Makhgal
+# Created on 2017/01/07
 #
 
 ## Sample Mean
@@ -57,6 +57,8 @@ require(RMySQL)
 # Unload package
 detach(package:RMySQL)
 
-update.packages()
+# Update packages
+update.packages(ask = FALSE)
 
+# Remove installed packages
 remove.packages("RMySQL")

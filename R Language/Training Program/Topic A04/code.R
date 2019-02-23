@@ -1,9 +1,9 @@
 #
 # Training Program for R Langauge
-# Topic 4 - Flow Control
+# Topic A4 - Flow Control
 # Author: galaa (www.galaa.mn)
-# Copyright (c) 2016-2018 Makhgal
-# Created on 2016/09/30 06:30:25
+# Copyright (c) 2016-2019 Makhgal
+# Created on 2016/09/30
 #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

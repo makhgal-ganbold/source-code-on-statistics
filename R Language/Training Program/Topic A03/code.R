@@ -1,9 +1,9 @@
 #
 # Training Program for R Langauge
-# Topic 3 - Operators, Functions and Environment
+# Topic A3 - Operators, Functions and Environment
 # Author: galaa (www.galaa.mn)
-# Copyright (c) 2016-2018 Makhgal
-# Created on 2016/09/30 06:30:25
+# Copyright (c) 2016-2019 Makhgal
+# Created on 2016/09/30
 #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -60,6 +60,14 @@ x & y
 (1 + 2 * {2 - 1}) * 3
 # {1 + (2 + 3} - 4) ## ERROR
 
+## Оператор болон хаалтны хэрэглээ
+
+n <- 1    # assign with space
+n<-1      # assign without space
+n < - 1   # comparison with space
+n<(-1)    # comparison without space
+n<{-1}    # comparison without space
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 ## Functions / Функц
@@ -89,6 +97,12 @@ average <- function (...) {
 }
 
 average(c(-1, 0, 1))
+
+average <- function (x, ...) {
+  mean(x, ...)
+}
+
+average(c(-1, 0, 1), na.rm = TRUE)
 
 ## Функцийн утга ба return() функц
 

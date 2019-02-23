@@ -1,9 +1,9 @@
 #
 # Training Program for R Langauge
-# Topic 5 - Error Handling and Other
+# Topic C1 - Error Handling and Other
 # Author: galaa (www.galaa.mn)
 # Copyright (c) 2016-2017 Makhgal
-# Created on 2016/10/01 22:00:45
+# Created on 2016/10/01
 #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

@@ -1,9 +1,9 @@
 #
 # Training Program for R Langauge
-# Topic 8 - Working with File and Directory
+# Topic C3 - Working with File and Directory
 # Author: galaa (www.galaa.mn)
 # Copyright (c) 2017 Makhgal
-# Created on 2017/01/11 00:03:45
+# Created on 2017/01/11
 #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

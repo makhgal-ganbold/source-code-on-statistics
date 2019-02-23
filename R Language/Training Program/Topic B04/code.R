@@ -1,9 +1,9 @@
 #
 # Training Program for R Langauge
-# Topic 11 - Correlation and Regression
+# Topic B4 - Correlation and Linear Regression Model
 # Author: galaa (www.galaa.mn)
 # Copyright (c) 2017 Makhgal
-# Created on 2017/01/12 23:44:15
+# Created on 2017/01/12
 #
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -16,7 +16,7 @@
 
 X <- data.frame(
   dose = c(117.5, 117.5, 235, 235, 470, 470, 470, 705, 705, 940, 940, 940, 1410, 1410),
-  surv = c(44, 55, 16, 13, 4, 1.96, 6.12, 0.5, 0.32, 0.11, 0.015, 0.019, 0.7, 0.006) 
+  surv = c(44, 55, 16, 13, 4, 1.96, 6.12, 0.5, 0.32, 0.11, 0.015, 0.019, 0.7, 0.006)
 )
 cor(x = X, method = "pearson")
 
@@ -45,7 +45,7 @@ pcor(airquality.NA)
 ## Нэр заасан хувьсагчдаар тухайн корреляцийг тооцоолох
 
 pcor.test(
-  airquality.NA$Ozone, airquality.NA$Solar.R, 
+  airquality.NA$Ozone, airquality.NA$Solar.R,
   airquality.NA[,c("Wind", "Temp")]
 )
 
