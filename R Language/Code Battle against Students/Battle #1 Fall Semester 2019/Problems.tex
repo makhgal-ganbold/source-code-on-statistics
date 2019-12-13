@@ -1,11 +1,9 @@
 \documentclass[11pt]{letter}
 \usepackage[utf8x]{inputenc}
 \usepackage[mongolian]{babel}
-\usepackage[a4paper,margin=1.25cm]{geometry}
+\usepackage[a4paper,margin=2cm,bottom=2.5cm]{geometry}
 \usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue,anchorcolor=blue]{hyperref}
 \usepackage{listings,xcolor,parskip}
-
-\pagestyle{empty}
 
 \lstset{
   language=R,
@@ -40,22 +38,22 @@
 \begin{enumerate}
 \item Өгсөн тоо төгс тоо эсэхийг шалгана уу. Тоо өөрөөсөө бусад хуваагчдынхаа нийлбэртэй тэнцүү бол түүнийг төгс тоо гэнэ.
 \par
-\lstinline[otherkeywords={is.perfect}]|is.perfect(x)| функц зохионо. \lstinline|x| төгс тоо бол \lstinline|TRUE|, эсрэг тохиолдолд \lstinline|FALSE| утга буцаана. Функцийг дараах тестээр шалгана.
+\lstinline[otherkeywords={is.perfect}]|is.perfect(x)| функц зарлана. \lstinline|x| төгс тоо бол \lstinline|TRUE|, эсрэг тохиолдолд \lstinline|FALSE| утга буцаана. Функцийг дараах тестээр шалгана.
 \begin{lstlisting}[otherkeywords={is.perfect,expect_true,expect_false}]
 testthat::expect_true(is.perfect(496))
 testthat::expect_false(is.perfect(25))
 \end{lstlisting}
 Эх сурвалж: \href{https://www.britannica.com/science/perfect-number}{www.britannica.com/science/perfect-number}
-\item $e$ тоо олох програм зохионо уу. $$e=\frac{1}{1!}+\frac{1}{2!}+\frac{1}{3!}+\frac{1}{4!}+\ldots+\frac{1}{n!}$$
+\item $e$ тоо олох програм зохионо уу. $$e=1+\frac{1}{1!}+\frac{1}{2!}+\frac{1}{3!}+\frac{1}{4!}+\ldots+\frac{1}{n!}$$
 \par
-\lstinline[otherkeywords={number.e}]|number.e(x)| функц зохионо. Тооцоонд дээрх томъёог ашиглана. Функцийг дараах тестээр шалгана.
+\lstinline[otherkeywords={number.e}]|number.e(n)| функц зарлана. Тооцоонд дээрх томъёог ашиглана. Функцийг дараах тестээр шалгана.
 \begin{lstlisting}[otherkeywords={number.e,expect_equivalent}]
-testthat::expect_equivalent(object = number.e(), expected = 2.7182818284590452353602874713527)
+testthat::expect_equivalent(object = number.e(10), expected = 2.7182818284590452353602874713527)
 \end{lstlisting}
 Эх сурвалж: \href{https://www.mathsisfun.com/numbers/e-eulers-number.html}{www.mathsisfun.com/numbers/e-eulers-number.html}
-\item $1,2,3,\ldots,N$ тоонуудын цифрүүдийн нийлбэрийг олно уу.
+\item $1,2,3,\ldots,n$ тоонуудын цифрүүдийн нийлбэрийг олно уу.
 \par
-\lstinline[otherkeywords={digit.sum}]|digit.sum(x)| функц зохионо. Функцийг дараах тестээр шалгана.
+\lstinline[otherkeywords={digit.sum}]|digit.sum(n)| функц зарлана. Функцийг дараах тестээр шалгана.
 \begin{lstlisting}[otherkeywords={digit.sum,expect_equivalent}]
 testthat::expect_equivalent(object = digit.sum(13), expected = 55)
 testthat::expect_equivalent(object = digit.sum(20), expected = 102)
@@ -63,7 +61,7 @@ testthat::expect_equivalent(object = digit.sum(20), expected = 102)
 Эх сурвалж: \href{https://rechneronline.de/digit-sum/}{rechneronline.de/digit-sum/}
 \item $A(n,m)$ хэмжээст хүснэгт өгчээ. Сондгой дугаартай мөрүүдийн арифметик дунджийг олно уу.
 \par
-\lstinline[otherkeywords={odd.rowMeans}]|odd.rowMeans(x)| функц зохионо. \lstinline|x| аргумент матриц хэлбэртэй байна. Харин функцийн буцаах утга вектор хэлбэртэй байна. Функцийг дараах тестээр шалгана.
+\lstinline[otherkeywords={odd.rowMeans}]|odd.rowMeans(x)| функц зарлана. \lstinline|x| аргумент матриц хэлбэртэй байна. Харин функцийн буцаах утга вектор хэлбэртэй байна. Функцийг дараах тестээр шалгана.
 \begin{lstlisting}[keywords={c},otherkeywords={odd.rowMeans,read.table,expect_silent,expect_equivalent}]
 testthat::expect_silent({
   X <- read.table(text = "
@@ -72,12 +70,19 @@ testthat::expect_silent({
     8 1 7 3
     7 8 4 9
     5 2 9 7")
+  Y <- read.table(text = "
+    9
+    8
+    8
+    7
+    5")
 })
 testthat::expect_equivalent(object = odd.rowMeans(X), expected = c(6.25, 4.75, 5.75))
+testthat::expect_equivalent(object = odd.rowMeans(Y), expected = c(9, 8, 5))
 \end{lstlisting}
 \item Өгсөн тэмдэгт мөр палиндром эсэхийг шалгана уу.
 \par
-\lstinline[otherkeywords={is.palindrome}]|is.palindrome(x)| функц зохионо. \lstinline|x| тэмдэгт мөр палиндром бол \lstinline|TRUE|, эсрэг тохиолдолд \lstinline|FALSE| утга буцаана. Функцийг дараах тестээр шалгана.
+\lstinline[otherkeywords={is.palindrome}]|is.palindrome(x)| функц зарлана. \lstinline|x| тэмдэгт мөр палиндром бол \lstinline|TRUE|, эсрэг тохиолдолд \lstinline|FALSE| утга буцаана. Функцийг дараах тестээр шалгана.
 \begin{lstlisting}[otherkeywords={is.palindrome,expect_true,expect_false}]
 testthat::expect_true(is.palindrome("civic"))
 testthat::expect_true(is.palindrome("madam"))
