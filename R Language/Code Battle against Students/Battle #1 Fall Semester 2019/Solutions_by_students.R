@@ -18,7 +18,15 @@ testthat::expect_false(is.perfect(25))
 
 # 2 -----------------------------------------------------------------------
 
+number.e <- function(n){
+  a <- 0
+  for (i in 1:n) {
+    a <- a+1/factorial(i)
+  }
+  return(1+a)
+}
 
+testthat::expect_equivalent(object = number.e(10), expected = 2.7182818284590452353602874713527)
 
 # 3 -----------------------------------------------------------------------
 
@@ -46,3 +54,16 @@ testthat::expect_equivalent(object = digit.sum(20), expected = 102)
 
 # 5 -----------------------------------------------------------------------
 
+is.palindrome <- function(x){
+  str <- unlist(strsplit(as.character(x), ""))
+  reverse <- unlist(rev(str))
+  xx <- as.character(paste(reverse, collapse = ""))
+  return(x==xx)
+}
+
+testthat::expect_true(is.palindrome("civic"))
+testthat::expect_true(is.palindrome("madam"))
+testthat::expect_true(is.palindrome("refer"))
+testthat::expect_false(is.palindrome("abc"))
+testthat::expect_false(is.palindrome("baba"))
+testthat::expect_false(is.palindrome("Madam"))
