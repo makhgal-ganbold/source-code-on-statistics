@@ -2,10 +2,10 @@
 
 Ахисан түвшний сургууль элсэн орох байдал
 
-admit - хамааран хувьсагч, элсэн орсон эсэх
-gre - Graduate Record Exam Score буюу төгсөлтийн шалгалтын оноо
-gpa - Grade Point Average буюу суралцах хугацааны дундаж үнэлгээ
-rank - Төгссөн сургуулийн зэрэглэл
+1. admit : хамааран хувьсагч, элсэн орсон эсэх
+2. gre : Graduate Record Exam Score буюу төгсөлтийн шалгалтын оноо
+3. gpa : Grade Point Average буюу суралцах хугацааны дундаж үнэлгээ
+4. rank : Төгссөн сургуулийн зэрэглэл
 
 Эх сурвалж [stats.idre.ucla.edu/r/dae/logit-regression](https://stats.idre.ucla.edu/r/dae/logit-regression/)
 
