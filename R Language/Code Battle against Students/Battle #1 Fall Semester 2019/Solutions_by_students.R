@@ -50,7 +50,23 @@ testthat::expect_equivalent(object = digit.sum(20), expected = 102)
 
 # 4 -----------------------------------------------------------------------
 
+testthat::expect_silent({
+  X <- read.table(text = "
+                  9 5 6 5
+                  8 6 1 9
+                  8 1 7 3
+                  7 8 4 9
+                  5 2 9 7")
+  Y <- read.table(text = "
+                  9
+                  8
+                  8
+                  7
+                  5")
+})
 
+testthat::expect_equivalent(object = odd.rowMeans(X), expected = c(6.25, 4.75, 5.75))
+testthat::expect_equivalent(object = odd.rowMeans(Y), expected = c(9, 8, 5))
 
 # 5 -----------------------------------------------------------------------
 
