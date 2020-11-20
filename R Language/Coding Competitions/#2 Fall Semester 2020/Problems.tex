@@ -1,0 +1,61 @@
+\documentclass[11pt]{letter}
+\usepackage[utf8x]{inputenc}
+\usepackage[mongolian]{babel}
+\usepackage[a4paper,margin=2cm,bottom=2.5cm]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue,anchorcolor=blue]{hyperref}
+\usepackage{listings,xcolor,parskip,amsmath}
+
+\lstset{
+  language=R,
+  basicstyle={\ttfamily},
+  %backgroundcolor=\color{black!15},
+  keywordstyle=\color{blue!85},
+  commentstyle=\color{red!85},
+  stringstyle=\color{black!75},
+  breakatwhitespace=true,
+  breaklines=true,
+  frame=l,
+  framesep=5pt,framerule=1pt,
+  xleftmargin=7pt,xrightmargin=0pt,
+  rulecolor=\color{blue!65},
+  keepspaces=true,
+  showstringspaces=false,
+  columns=flexible,
+  numbers=none,
+  tabsize=3,
+  morekeywords={in},
+  otherkeywords={},
+  deletendkeywords={},
+  deletekeywords={R}
+}
+
+\begin{document}
+\begin{center}
+\bfseries
+\Large Coding Competition in R \\
+\large \#2 Fall Semester 2020
+\end{center}
+\begin{enumerate}
+\item Өгсөн эерэг бүхэл тооны бичиглэлд орсон цифрүүдийн хамгийн их цифрийг нь олж буцаах функц зохио.
+\par
+\lstinline[otherkeywords={maximal.digit}]|maximal.digit(n)| функц зарлана. Функцийг дараах тестээр шалгана.
+\begin{lstlisting}[otherkeywords={maximal.digit,expect_equal}]
+testthat::expect_equal(maximal.digit(6), 6)
+testthat::expect_equal(maximal.digit(1745738), 8)
+testthat::expect_equal(maximal.digit(4131233), 4)
+\end{lstlisting}
+\item Өгсөн $n\geq1$ бүхэл дугаарын хувьд $$\dfrac{1}{1\cdot2}+\dfrac{1}{2\cdot3}+\ldots+\dfrac{1}{n(n+1)}$$ цувааны нийлбэр олох функц зохио.
+\par
+\lstinline[otherkeywords={sum.series}]|sum.series(n)| функц зарлана. Функцийг дараах тестээр шалгана.
+\begin{lstlisting}[otherkeywords={sum.series,expect_equal}]
+testthat::expect_equal(sum.series(10), 0.9090909)
+testthat::expect_equal(sum.series(999), 0.999)
+\end{lstlisting}
+\item Өгсөн дөрвөн оронтой тоо азтай тоо эсэхийг шалга. Эхний хоёр цифрийн нийлбэр нь сүүлийн хоёр цифрийн нийлбэртэй тэнцүү байдаг тоог азтай тоо гэж үзнэ.
+\par \lstinline[otherkeywords={is.lucky.number}]|is.lucky.number(n)| функц зарлана. \lstinline|n| тоо азтай тоо бол \lstinline|TRUE|, эсрэг тохиолдолд \lstinline|FALSE| утга буцаана. Функцийг дараах тестээр шалгана.
+\begin{lstlisting}[otherkeywords={is.lucky.number,expect_true,expect_false}]
+testthat::expect_true(object = is.lucky.number(7566))
+testthat::expect_false(object = is.lucky.number(3881))
+\end{lstlisting}
+\end{enumerate}
+\end{document}
