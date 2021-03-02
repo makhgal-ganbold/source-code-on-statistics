@@ -22,14 +22,12 @@ k <- length(x)
 a <- 1:k
 P <- rep(0, times = k)
 
-b <- c()
-L <- c()
-H <- c()
+b <- L <- H <- NULL
 for (i in 1:k) {
   b <- c(b, p[i] - 1/k)
   if (b[i] < 0) {
     L <- c(L, i)
-  } else {
+  } else if (b[i] > 0) {
     H <- c(H, i)
   }
 }
@@ -61,17 +59,18 @@ while (abs(max(b)) > .Machine$double.eps) {
 
 set.seed(17) # seed
 n <- 1000 # sample size
-X <- c() # sample
+X <- NULL # sample
 for (j in 1:n) {
   # Step 1
   u <- runif(n = 1)
+  i <- 1 + floor(k * u)
   # Step 2
-  i <- sample.int(n = k, size = 1)
-  # Step 3
-  if (u <= P[i]) {
+  v <- runif(n = 1)
+  if (v <= P[i]) {
     X[j] <- x[i]
   } else {
     X[j] <- x[a[i]]
   }
 }
 table(X) / length(X) # contingency table
+chisq.test(x = table(X), p = p) # goodness of fit test
