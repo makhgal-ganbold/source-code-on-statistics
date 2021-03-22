@@ -10,7 +10,7 @@
 
 lambda <- 1 # distribution parameter
 h <- function (x) {
-  lambda * exp(- lambda * x)
+  exp(- lambda * x)
 }
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -19,19 +19,18 @@ h <- function (x) {
 
 set.seed(11) # seed
 n <- 100 # sample size
-X <- c() # sample
-for (i in 1:n) {
+replicate(n = n, expr = {
   repeat {
     # Step 1
     u <- runif(n = 2)
     # Step 2
     x <- u[2] / u[1]
     if (u[1] <= sqrt(h(x))) {
-      X[i] <- x
-      break
+      return(x)
     }
   }
-}
+}) ->
+  X # random sample
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Confirmation
