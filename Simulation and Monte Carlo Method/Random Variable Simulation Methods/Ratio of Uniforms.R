@@ -9,9 +9,20 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 lambda <- 1 # distribution parameter
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Helper function
+# # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 h <- function (x) {
   exp(- lambda * x)
 }
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Parameters of Uniform distributions
+# # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+b <- 1; d <- 2/lambda*exp(-1); c <- 0
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Simulation
@@ -22,10 +33,11 @@ n <- 100 # sample size
 replicate(n = n, expr = {
   repeat {
     # Step 1
-    u <- runif(n = 2)
+    u1 <- runif(n = 1, max = b)
+    u2 <- runif(n = 1, min = c, max = d)
     # Step 2
-    x <- u[2] / u[1]
-    if (u[1] <= sqrt(h(x))) {
+    x <- u2 / u1
+    if (u1 <= sqrt(h(x))) {
       return(x)
     }
   }
