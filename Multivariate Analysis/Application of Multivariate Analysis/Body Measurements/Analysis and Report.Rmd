@@ -1,0 +1,339 @@
+---
+title: "Олон хэмжээст өгөгдлийн статистик шинжилгээ хичээлийн нэмэлт жишээ"
+subtitle: "Монгол эмэгтэйчүүдийн биеийн хэмжээний зарим хэмжээс"
+author: "Г.Махгал"
+date: "2019 оны 2 сарын 2"
+header-includes:
+   - \usepackage[mongolian]{babel}
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    fig_caption: yes
+    citation_package: biblatex
+bibliography: bibliography.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, eval = TRUE, fig.align='center', fig.height = 3, fig.env = "figure", fig.pos="ht", fig.ext='pdf')
+options(xtable.comment = FALSE)
+```
+
+```{r load data}
+X <- na.omit(read.csv(file = "data.csv"))
+```
+
+# Өгөгдөл
+
+Өгөгдлийг файлаас уншиж, орхигдсон утгуудыг зайлуулаад датафрейм хэлбэртэй объект болгон `X` гэсэн нэрээр ажлын огторгуйд хадгалав. Датафреймын эхний хэдэн мөрийг хүснэгт \ref{table:some-rows-of-data} дээр харуулав.
+
+```{r some rows of data by xtable,results='asis'}
+Z <- as.matrix(X[1:6,])
+colnames(Z) <- c("Нас", "Өндөр", "Цээжний тойрог", "Бүсэлхийн тойрог", "Өгзөгний тойрог")
+xtable::xtable(x = Z, caption = "Өгөгдлийн эхний 6 мөр", label = "table:some-rows-of-data", display = rep(c("d", "f"), times = c(2, 4)), digits = 1, booktabs = TRUE)
+rm(Z)
+```
+
+```{r some rows of data by kable}
+#knitr::kable(head(X), caption = "\\label{table:some-rows-of-data}Өгөгдлийн эхний 6 мөр", row.names = TRUE, col.names = c("Нас", "Өндөр", "Цээжний тойрог", "Бүсэлхийн тойрог", "Өгзөгний тойрог"), table.envir = "table", longtable = TRUE, booktabs = TRUE, position = "center")
+```
+
+```{r variable names}
+var.names <- colnames(X)
+```
+
+`X` датафрейм `r nrow(X)` мөр болон `r var.names` гэсэн `r ncol(X)` баганатай.
+
+`X$age` дискрет хувьсагчийн нягтыг харуулсан диаграммыг
+```{r age distribution, echo=TRUE, fig.cap="\\label{figure:age-hist}Нас хувьсагчийн утгуудын давтамж"}
+plot(table(X$age), type = "h", ylab = "Frequency")
+```
+тушаалаар байгуулсаныг зураг \ref{figure:age-hist} дээр харуулав. Бусад дөрвөн хувьсагчдын хувьд хайрцган диаграмм байгуулъя. Үүний тулд дараах байдлаар өргөн бүтэцтэй өгөгдлөө урт бүтцэд шилжүүлээд томьёололд тулгуурласан `boxplot()` функц ашиглана.
+```{r boxplot, echo=TRUE, fig.height=4, fig.cap="\\label{figure:boxplot}Өндөр болон тойрог хэмжээний хувьсагчдын хайрцган диаграмм"}
+X.long <- tidyr::gather(data = X, key = category, value = value, height, chest_line, waist_line, hip_line)
+boxplot(formula = value ~ category, data = X.long)
+```
+Зураг \ref{figure:boxplot} дээрх хайрцган диаграммыг харвал `chest_line` болон `hip_line` хувьсагчид алдаатай утга агуулжээ. Эдгээрийг дараах байдлаар шүүж цэвэрлэж болно.
+```{r clean data, echo=TRUE}
+X <- subset(x = X, subset = chest_line > 50 & hip_line > 50)
+```
+Ингээд өмнөх хайрцган диаграммыг ахин байгуулсаныг зураг \ref{figure:boxplot-again} дээрээс харна уу.
+```{r boxplot re-draw,ref.label="boxplot", fig.cap="\\label{figure:boxplot-again}Алдаатай утгуудыг зайлуулсаны дараах өндөр болон тойрог хэмжээний хувьсагчдын хайрцган диаграмм"}
+```
+Ингэснээр түүврийн хэмжээ `r nrow(X)` боллоо.
+
+# Олон хэмжээст хэвийн тархалт
+
+`r var.names[-1]` хувьсагчдыг олон хэмжээст хэвийн тархалттай гэж тооцъё.
+
+## Тархалтын параметр
+
+```{r mean covariance and correlation}
+m <- colMeans(x = X[-1])
+S <- cov(X[-1])
+R <- cov2cor(S)
+```
+
+`r var.names[-1]` хувьсагчдын түүврийн дундаж утгын вектор $$m=(`r round(m, digits = 2)`)^T$$ харин түүврийн ковариацийн матриц $$S=\left(
+```{r,results='asis'}
+print(xtable::xtable(S, align = NULL, digits = 2), floating = FALSE, tabular.environment="array", hline.after = NULL, include.rownames = FALSE, include.colnames = FALSE)
+```
+\right)$$ болон корреляцийн матриц $$R=\left(
+```{r,results='asis'}
+print(xtable::xtable(R, align = NULL, digits = 2), floating = FALSE, tabular.environment="array", hline.after = NULL, include.rownames = FALSE, include.colnames = FALSE)
+```
+\right)$$ байна. Мөн корреляцийн матрицийг диаграммаар харуулж болдог бөгөөд үүний тулд
+```{r color coded matrix of correlations, echo=TRUE, fig.cap="\\label{figure:corrplot}Корреляцийн матриц диаграммаар"}
+ggcorrplot::ggcorrplot(
+  corr = R,
+  legend.title = "Correlation", lab = TRUE, hc.order = TRUE, type = "lower"
+)
+```
+хэлбэртэй тушаал өгч болно. Байгуулсан диаграммыг зураг \ref{figure:corrplot} дээр харуулав.
+
+## Ковариацийн матрицийн тухай таамаглал
+
+```{r ,ref.label="hypothesis testing for covariance"}
+```
+Корреляцийн матрицын бүтцээс `r var.names[-{1:2}]` хувьсагчдыг л хамтад нь авч судалбал зохих буюу `r var.names[1]` санамсаргүй хувьсагч болон `r var.names[-1]` санамсаргүй вектор хамааралгүй гэсэн таамаглал гарч байна. Өөрөөр хэлбэл [@makhgal2017, мөрдлөгөө 2.1] ёсоор `r var.names[-1]` хувьсагчдын ковариацийн матрицийг
+$$\Sigma_0=\left(
+```{r,results='asis'}
+print(xtable::xtable(Sigma_0, align = NULL, digits = 2), floating = FALSE, tabular.environment="array", hline.after = NULL, include.rownames = FALSE, include.colnames = FALSE)
+```
+\right)$$
+хэлбэртэй гэсэн $H_0:\Sigma=\Sigma_0$ таамаглал дэвшүүлж байна. Энэ нь [@makhgal2017, \S 2.11.2] дэх 3 дугаар таамаглал юм.
+
+> Энэ таамаглал нь биеийн өндрийн хэмжээг цээж, бүсэлхий, өгзөгний тойрогт ямар ч нөлөөгүй гэсэн утга агуулгатай юм.
+
+```{r hypothesis testing for covariance}
+p <- 4
+n <- nrow(X)
+Sigma_0 <- S
+Sigma_0[1,-1] <- 0
+Sigma_0[-1,1] <- 0
+stat <- n * psych::tr(solve(Sigma_0) %*% S) - n * log(det(solve(Sigma_0) %*% S)) - n * p
+critical.value <- qchisq(0.05, df = p*(p+1)/2, lower.tail = FALSE)
+```
+Таамаглалыг 0.05 итгэх түвшинд шалгахын тулд 5 дугаар лекц дээр үзсэн R хэл дээрх кодыг авч ашиглая. Шинжүүрийн статистикийн туршилтын утга `r round(stat, digits = 2)` нь 0.05 итгэх түвшинд харгалзах шинжүүрийн няцаах утга `r round(critical.value, digits = 2)`-аас их байгаа тул $H_0$ таамаглалыг няцаана.
+
+```{r remove unnecessary variables}
+rm(Sigma_0, critical.value, stat)
+```
+
+> Иймд биеийн өндрийн хэмжээг цээж, бүсэлхий, өгзөгний тойрогт нөлөөтэй гэж үзэх үндэслэлтэй ажээ.
+
+## Нөхцөлт тархалт
+
+Санамсаргүй хувьсагчдыг
+$$X=\left(
+\begin{array}{c}
+X_1 \\ X_2
+\end{array}
+\right)=\left(
+\begin{array}{c}
+\left(
+\begin{array}{c}
+X_1
+\end{array}
+\right) \\ \left(
+\begin{array}{c}
+X_2 \\ X_3 \\ X_4
+\end{array}
+\right)
+\end{array}
+\right)=\left(
+\begin{array}{c}
+\text{height} \\ \text{chest\_line} \\ \text{waist\_line} \\ \text{hip\_line}
+\end{array}
+\right)$$
+байдлаар авч $$E(X_2|X_1=x_1)=\mu_{2.1}+\Sigma_{21}\Sigma_{11}^{-1}x_1$$ нөхцөлт дундаж улмаар $$\operatorname{cov}(X_2|X_1=x_1)=\Sigma_{22.1} = \Sigma_{22}-\Sigma_{21}\Sigma_{11}^{-1}\Sigma_{12}$$
+нөхцөлт ковариацийн матрицийг авч үзэх буюу өндрийн нөлөөг зайлуулсан үед тойрог хэмжээнүүдийн холбоо хамаарлыг судалъя.
+
+### Нөхцөлт дундаж
+
+Нөхцөлт дундаж
+$$E(X_2|X_1=x_1)=\mu_{2.1}+\Sigma_{21}\Sigma_{11}^{-1}x_1=\mu_2-\Sigma_{21}\Sigma_{11}^{-1}\mu_1+\Sigma_{21}\Sigma_{11}^{-1}x_1=\mu_2+\Sigma_{21}\Sigma_{11}^{-1}(x_1-\mu_1)$$
+хэлбэртэй байхыг сануулъя.
+$$E(X_2|X_1=x_1)=\left(
+\begin{array}{c}
+`r round(m[2], digits = 2)` \\ `r round(m[3], digits = 2)` \\ `r round(m[4], digits = 2)`
+\end{array}
+\right)+\left(
+```{r,results='asis'}
+print(xtable::xtable(S[-1,1,drop=FALSE], align = NULL, digits = 2), floating = FALSE, tabular.environment="array", hline.after = NULL, include.rownames = FALSE, include.colnames = FALSE)
+```
+\right)\left(
+```{r,results='asis'}
+print(xtable::xtable(S[1,1,drop=FALSE], align = NULL, digits = 2), floating = FALSE, tabular.environment="array", hline.after = NULL, include.rownames = FALSE, include.colnames = FALSE)
+```
+\right)^{-1}(x_1-`r round(m[1], digits = 2)`)$$
+Үүнийг цааш эмхэтгэвэл
+$$E(X_2|X_1=x_1)=\left(
+\begin{array}{c}
+`r round(S[2,1]/S[1,1], digits = 2)`\cdot x_1+`r round(m[2] - S[2,1]/S[1,1]*m[1], digits = 2)` \\
+`r round(S[3,1]/S[1,1], digits = 2)`\cdot x_1+`r round(m[3] - S[3,1]/S[1,1]*m[1], digits = 2)` \\
+`r round(S[4,1]/S[1,1], digits = 2)`\cdot x_1+`r round(m[4] - S[4,1]/S[1,1]*m[1], digits = 2)`
+\end{array}
+\right)$$
+болно. Энд олдсон нөхцөлт математик дунджуудад харгалзах шулууныг зураг \ref{figure:conditional-expectations} дээр зурж харуулав. 
+```{r expected conditions, fig.width=3, fig.cap="\\label{figure:conditional-expectations}Цээж (улаан), бүсэлхий (ногоон), өгзөгний тойрог (цэнхэр) хувьсагчдын биеийн өндрийн нөхцөл дэх математик дундаж"}
+plot(c(60,100), type = "n", asp = 1, xlim = c(140,180), ylim = c(70,110), xlab = "height", ylab = "others")
+abline(a = m[2] - S[2,1]/S[1,1]*m[1], b = S[2,1]/S[1,1], col = "red")
+abline(a = m[3] - S[3,1]/S[1,1]*m[1], b = S[3,1]/S[1,1], col = "green")
+abline(a = m[4] - S[4,1]/S[1,1]*m[1], b = S[4,1]/S[1,1], col = "blue")
+```
+
+### Нөхцөлт ковариац
+
+`height` буюу өндөр хувьсагчийг бэхэлсэн үед үлдэх гурван хувьсагчийн тухайн ковариац болон корреляцийг олъё.
+```{r partial covariance}
+S.partial <- S[-1,-1,drop=FALSE] - S[-1,1,drop=FALSE] %*% solve(S[1,1,drop=FALSE]) %*% S[1,-1,drop=FALSE]
+```
+\begin{eqnarray*}
+\operatorname{cov}(X_2|X_1=x_1) & = & \left(
+```{r,results='asis'}
+print(xtable::xtable(S[-1,-1,drop=FALSE], align = NULL, digits = 2), floating = FALSE, tabular.environment="array", hline.after = NULL, include.rownames = FALSE, include.colnames = FALSE)
+```
+\right)-\left(
+```{r,results='asis'}
+print(xtable::xtable(S[-1,1,drop=FALSE], align = NULL, digits = 2), floating = FALSE, tabular.environment="array", hline.after = NULL, include.rownames = FALSE, include.colnames = FALSE)
+```
+\right)\left(
+```{r,results='asis'}
+print(xtable::xtable(S[1,1,drop=FALSE], align = NULL, digits = 2), floating = FALSE, tabular.environment="array", hline.after = NULL, include.rownames = FALSE, include.colnames = FALSE)
+```
+\right)^{-1}\left(
+```{r,results='asis'}
+print(xtable::xtable(S[1,-1,drop=FALSE], align = NULL, digits = 2), floating = FALSE, tabular.environment="array", hline.after = NULL, include.rownames = FALSE, include.colnames = FALSE)
+```
+\right) \\
+& = & \left(
+```{r,results='asis'}
+print(xtable::xtable(S.partial, align = NULL, digits = 2), floating = FALSE, tabular.environment="array", hline.after = NULL, include.rownames = FALSE, include.colnames = FALSE)
+```
+\right)
+\end{eqnarray*}
+$$\operatorname{cor}(X_2|X_1=x_1) = \left(
+```{r,results='asis'}
+print(xtable::xtable(cov2cor(S.partial), align = NULL, digits = 2), floating = FALSE, tabular.environment="array", hline.after = NULL, include.rownames = FALSE, include.colnames = FALSE)
+```
+\right)$$
+Тухайн корреляцийн диаграммыг зураг \ref{figure:partialcorrplot} дээр харуулав.
+```{r color coded matrix of partial correlations, fig.height=2.25, fig.cap="\\label{figure:partialcorrplot}height хувьсагчийн нөлөөг зайлуулсан үеийн тухайн корреляцийн матриц диаграммаар"}
+ggcorrplot::ggcorrplot(
+  corr = cov2cor(S.partial),
+  legend.title = "Correlation", lab = TRUE, hc.order = TRUE, type = "lower"
+)
+```
+Үүнийг зураг \ref{figure:corrplot} дээрх диаграммтай харьцуулбал `hip_line` болон `waist_line` буюу бэлхүүс болон өгзөгний тойрог гэсэн хувьсагчдын корреляц үл ялиг өссөн нь анзаарагдаж байна.
+
+```{r remove unnecessary variables 2}
+rm(S.partial)
+```
+
+[@makhgal2017, код 2.3] аргаар олсон тухайн корреляцийг хүснэгт \ref{table:partial-correlations} дээр жагсаав.
+```{r partial correlations, results='asis'}
+xtable::xtable(x = ppcor::pcor(x = X[-1])$estimate, caption = "Тухайн корреляцийн коэффициент", label = "table:partial-correlations", digits = 2, booktabs = TRUE)
+```
+Үүнийг тухайлбал цээжний тойргийн хэмжээ ба бүсэлхийн тойргийн хэмжээ хоёр бусад хоёр хувьсагч буюу өндөр болон өгзөгний тойргийн нөлөөг зайлуулсан үеийн хамаарлыг харуулсан корреляцийн коэффициент 0.72 байна гэж ойлгоно. Эндээс өндрийн хэмжээ ердийн корреляцтай харьцуулахад мэдэгдэхүйц өсч аль аль хувьсагчтай сул хамааралтай гэж харагдаж байгаа нь анхаарууштай юм.
+
+## Дунджуудын ялгаврын тухай таамаглал
+
+```{r}
+res <- ICSNP::HotellingsT2(X = X[X$height >= mean(X$height),3:5], Y = X[X$height < mean(X$height),3:5], mu = c(0, 0, 0), test = "f")
+```
+
+Өмнө авч үзсэн нөхцөлт дундажтай холбоотой үр дүнгээс харвал өндөр нэмэгдэхэд тойрог хэмжээнүүдэд тодорхой өөрчлөлт гарч буй мэт харагдаж байсан. Үүнийг батлахын тулд түүврийн дунджаас өндөр болон нам хүмүүсээс бүрдэх хоёр бүлэг `r var.names[3:5]` вектор хувьсагчийн дунджаараа ялгаатай гэж харуулахад хангалттай. Үүний тулд [@makhgal2017, \S 2.11.2] хэсэг дэх таамаглал 7-г $\Delta\mu=0$ үед шалгана. Шинжүүрийн статистикийн туршилтын утга `r round(res$statistic, 2)`, магадлалын утга $`r res$p.value`$ байна.
+
+```{r}
+rm(res)
+```
+
+## Олон хэмжээст дисперсийн шинжилгээ
+
+```{r}
+age.group <- cut(x = X$age, breaks = seq(from = 20, to = 60, by = 10), include.lowest = TRUE)
+res <- summary(manova(as.matrix(X[,3:5]) ~ age.group), test = "Wilks")
+```
+
+Тойрог хэмжээнүүд наснаас хамаарах эсэхийг шалгаж үзье. Гэхдээ үүнд олон хэмжээст дисперсийн шинжилгээ ашиглана. Үүний тулд өгөгдлөө насаар нь `r levels(age.group)` гэж бүлэглэв. Энэ тохиолдолд тэг таамаглал нь `r levels(age.group)` бүлгүүд дээрх `r var.names[3:5]` хувьсагчдаас тогтох санамсаргүй векторын математик дундаж адил тэнцүү гэсэн утгатай байна.
+
+```{r eval=FALSE,echo=TRUE}
+summary(manova(as.matrix(X[,3:5]) ~ age.group), test = "Wilks")
+```
+
+Дээрх байдлаар уг таамаглалыг шалгахад магадлалын утга нь $`r res$stats[1,6]`$ гэж гарч байгаа тул тэг таамаглалыг няцаах бүрэн үндэслэлтэй гэж дүгнэнэ. Үнэхээр ч зураг \ref{figure:boxplot-age.group-chest.line}, \ref{figure:boxplot-age.group-waist.line} болон \ref{figure:boxplot-age.group-hip.line} дээрх хайрцган диаграммуудыг харвал нас ахих тусам уг хувьсагчдын утга өсөх хандлагатай буюу нэг төрлийн бус ажээ.
+
+```{r boxplot age.group chest.line, fig.cap="\\label{figure:boxplot-age.group-chest.line}Цээжний тойргийн хэмжээний тархалт насны бүлгээр"}
+boxplot(formula = chest_line ~ age.group, data = X)
+```
+
+```{r boxplot age.group waist_line, fig.cap="\\label{figure:boxplot-age.group-waist.line}Бүсэлхийн тойргийн хэмжээний тархалт насны бүлгээр"}
+boxplot(formula = waist_line ~ age.group, data = X)
+```
+
+```{r boxplot age.group hip.line, fig.cap="\\label{figure:boxplot-age.group-hip.line}Өгзөгний тойргийн хэмжээний тархалт насны бүлгээр"}
+boxplot(formula = hip_line ~ age.group, data = X)
+```
+
+# Гол хэсгийн шинжилгээ
+
+`r var.names[2:5]` хувьсагчид дээр гол хэсгийн шинжилгээ хийе.
+
+```{r PCA,eval=TRUE,echo=TRUE}
+pca <- prcomp(x = X[,2:5])
+```
+
+Ковариацын матрицын хувийн утгууд ойролцоогоор `r round(pca$sdev ** 2, 2)` бөгөөд зураг \ref{figure:pca-eigen-values} дээр диаграммаар үзүүлэв.
+
+```{r,echo=TRUE,fig.cap="\\label{figure:pca-eigen-values}Ковариацын матрицын хувийн утгууд"}
+plot(x = 1:4, y = pca$sdev ** 2, type = "b", xlab = "", ylab = "Eigen values", xaxt = "n")
+axis(side = 1, at=1:4, labels=1:4)
+```
+
+Харин хувийн утгуудын хуримтлагдах нийлбэрийг зураг \ref{figure:pca-cumulative-eigen-values} дээр диаграммаар харуулав.
+
+```{r,echo=FALSE,fig.cap="\\label{figure:pca-cumulative-eigen-values}Ковариацын матрицын хувийн утгуудын хуримтлагдах нийлбэр"}
+plot(x = 1:4, y = cumsum(pca$sdev ** 2), type = "b", xlab = "", ylab = "Eigen values", xaxt = "n", ylim = c(0,sum(pca$sdev ** 2)))
+axis(side = 1, at=1:4, labels=1:4)
+```
+
+Улмаар $\psi_q=\dfrac{\lambda_1+\ldots+\lambda_q}{\lambda_1+\ldots+\lambda_4}$ хэмжигдэхүүний утгыг $q=1,\ldots,4$ үед тооцоолон зууны хувиар илэрхийлбэл харгалзан `r round(cumsum(pca$sdev ^ 2) / sum(pca$sdev ^ 2) * 100, 2)` үр дүн гарч байна. Иймд эхний хоёр гол хэсгийг авбал зохимжтой ажээ. Энэ тохиолдолд уг гол хэсгүүд анхны өгөгдөл дэх нийт дисперсийн `r round(sum(pca$sdev[1:2] ^ 2) / sum(pca$sdev ^ 2) * 100, 2)` хувийг илэрхийлнэ.
+
+```{r echo=FALSE}
+R_PCA <- cor(X[,2:5], pca$x[,1:2])
+```
+
+Эцэст нь эхний хоёр гол хэсэг ба анхны дөрвөн хувьсагч хоорондын корреляц
+$$\left(
+```{r,results='asis'}
+print(xtable::xtable(R_PCA, align = NULL, digits = 2), floating = FALSE, tabular.environment="array", hline.after = NULL, include.rownames = FALSE, include.colnames = FALSE)
+```
+\right)$$
+дээр үндэслэн байгуулсан диаграммыг зураг \ref{figure:pca-correlation} дээр үзүүллээ.
+
+```{r,echo=FALSE,fig.cap="\\label{figure:pca-correlation}Хувьсагчид ба эхний хоёр гол хэсэг хоорондын корреляц",fig.height=3.75,fig.width=3.75}
+alpha <- seq(0, 2 * pi, length.out = 360)
+plot(cos(alpha), sin(alpha), type = "l", asp = TRUE, xlab = "PC1", ylab = "PC2")
+points(R_PCA, asp = 1)
+text(cor(X[,2:5], pca$x[,1:2]), labels = var.names[2:5], pos = 4)
+rm(alpha)
+```
+
+Диаграммаас тойрог хэмжээний гурван хувьсагч бүгд зөвхөн эхний гол хэсэгтэй өндөр холбоо хамааралтай бол харин өндөр гэсэн хувьсагч зөвхөн хоёр дахь гол хэсэгтэй л холбоо хамааралтай байгааг харж болно. Иймд энд цээж, бүсэлхий, өгзөгний тойрог гурвыг нийлүүлсэн нэг хүчин зүйл бас өндрийн хэмжээ гэсэн хувьсагчтай шууд холбогдох өөр нэг хүчин зүйл буюу нийтдээ хоёр үндсэн хүчин зүйл байна гэж дүгнэж болно.
+
+# Факторын шинжилгээ
+
+Гол хэсгийн шинжилгээний үр дүнд үндэслэн биеийн хэмжээний дөрвөн хувьсагч хоёр хүчин зүйлээр тодорхойлогдоно гэсэн дүгнэлт гаргасан. Иймд тус дөрвөн хувьсагч хоёр фактораас хамаарахыг батлах зорилготой нотолгооны факторын шинжилгээ хийнэ.
+
+Эхлээд биеийн хэмжээний 
+
+```{r}
+p <- 5
+k <- 2
+
+(p - k) ^ 2 / 2 - (p + k) / 2
+```
+
+# Ашигласан материал
