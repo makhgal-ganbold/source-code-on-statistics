@@ -4,6 +4,7 @@
 # https://foresightbi.com.ng/microsoft-power-bi/dirty-data-samples-to-practice-on/
 
 # "badly-structured-sales-data.xlsx" файл дахь өгөгдөлд 1. Order Date 2. Segment 3. Ship Mode 4. Amount (энэ нэрийг зохиов) гэсэн дөрвөн санамсаргүй хувьсагч байна.
+# Мөн тус өгөгдлийг Order Date хувьсагчаар гэх мэтчилэн эрэмбэлвэл зохимжтой юм.
 
 # Өгөгдөл ачаалах ---------------------------------------------------------
 
@@ -18,7 +19,7 @@ sales <- readxl::read_excel(
 
 View(sales)
 
-# Өгөгдөл эмхлэх ----------------------------------------------------------
+# Өгөгдлийн бүтэц зохион байгуулалт ---------------------------------------
 
 order_date <- NULL; segment <- NULL; ship_mode <- NULL; amount <- NULL # шинээр эмхэлж буй өгөгдлийг хадгалах векторууд
 
@@ -37,10 +38,27 @@ for (i in 1:nrow(sales)) { # Order Date дагуу гүйх давталт
   }
 }
 
-order_date <- as.Date(as.POSIXct(order_date, origin = "1970-01-01")) # UNIX Timestamp хэлбэрт орсон огноог буцаан хувиргах
+# Хувьсагчийн төрөл хувиргалт ---------------------------------------------
+
+# UNIX Timestamp хэлбэрт орсон огноог буцаан хувиргах
+order_date <- as.Date(as.POSIXct(order_date, origin = "1970-01-01"))
+
+# чанарын хувьсагчдыг фактор төрөл уруу хувиргах
+segment <- factor(x = segment, levels = c("home/office", "corporate", "consumer"), ordered = TRUE)
+ship_mode <- factor(x = ship_mode, levels = c("standard class", "second class", "same day", "first class"), ordered = TRUE)
+
+# Хүснэгтлэх буюу датафрейм болгох ----------------------------------------
 
 tidy_data <- data.frame(order_date, segment, ship_mode, amount) # шинээр зохиосон векторуудыг агуулсан, эмхэлсэн өгөгдөл бүхий датафрейм үүсгэх
 
+# Өгөгдөл эрэмбэлэх -------------------------------------------------------
+
+tidy_data <- tidy_data[order(tidy_data$order_date, segment, ship_mode),] # өгөгдөл эрэмбэлэх
+
 View(tidy_data) # эмхэлсэн өгөгдлөө харах
 
+# Файлд хадгалах ----------------------------------------------------------
+
 write.csv(x = tidy_data, file = "tidy-sales-data.csv", row.names = FALSE) # Гарсан үр дүнг CSV форматаар экспортлох
+
+saveRDS(object = tidy_data, file = "tidy-sales-data.Rds") # R програмын форматаар хадгалах
