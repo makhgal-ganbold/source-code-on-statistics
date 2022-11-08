@@ -1,76 +1,158 @@
 #
-# Principal Component Analysis
-# Author: galaa
-# Created on 2016/03/19 07:49:41
+# Олон хэмжээст өгөгдлийн статистик шинжилгээ
+#
+# Гол хэсгийн шинжилгээ
+#
+# (c) 2020, 2022 Г.Махгал
 #
 
-## Data
+# Энгийн жишээ ------------------------------------------------------------
 
-X <- matrix(data = c(3.11, 1.14, -0.10, -1.42, 2.17, 0.59, 0.70, 0.43, 2.55, 0.31, -2.95, -2.32, -1.07, 0.08, -0.32, 0.47, 1.19, 0.10, -1.62, -1.87), nrow = 10, ncol = 2, byrow = TRUE, dimnames = list("obs." = 1:10, "RV" = c("X1", "X2")))
+# Өгөгдөл
 
-## Scatterplot with Regression line
+X2 <- subset(
+  "x" = datasets::iris,
+  "subset" = Species == "setosa",
+  "select" = c("Sepal.Length", "Sepal.Width")
+)
+plot(X2, asp = 1)
 
-car::scatterplot(X2 ~ X1, regLine = TRUE, smooth = FALSE, boxplots = 'xy', data = X)
+# Шинжилгээ
 
-## Alternate Data
+pca <- princomp(x = X2, fix_sign = FALSE)
+plot(x = pca$scores[,1:2], asp = 1)
 
-# X <- matrix(c(9.775, 10.070, 9.852, 9.862, 9.737, 10.000, 10.163, 9.901, 9.833, 9.718, 9.116, 9.690, 9.766, 9.718, 9.843, 9.794, 9.980, 9.940, 10.132, 9.891, 9.690, 9.921, 9.681, 9.804, 9.662, 9.804, 9.990, 10.000, 9.728, 9.671, 9.434, 9.606, 9.709, 9.872, 9.794, 9.398, 9.814, 9.891, 9.921, 9.615, 9.461, 10.000, 10.142, 9.794, 9.891, 9.276, 9.643, 9.833, 9.823, 9.843, 9.653, 9.775, 9.634, 10.225, 9.818, 9.970, 9.780, 9.906, 9.852, 10.055, 9.916, 9.926, 9.794, 9.592, 8.905, 9.542, 9.704, 9.747, 9.685, 9.770, 9.921, 9.886, 10.030, 10.076, 9.483, 9.945, 9.648, 9.556, 9.737, 9.574, 10.142, 9.985, 9.790, 9.799, 9.421, 9.629, 9.560, 9.970, 9.804, 9.294, 9.906, 9.794, 9.916, 9.443, 9.333, 10.010, 9.940, 9.639, 9.886, 9.149, 9.461, 9.713, 9.790, 9.799, 9.611, 9.667, 9.506, 10.352, 8.662, 9.013, 8.734, 8.885, 8.838, 9.031, 8.945, 8.711, 8.840, 8.726, 7.782, 8.617, 8.739, 8.716, 8.909, 8.793, 8.961, 9.023, 9.017, 8.778, 8.258, 8.805, 8.795, 8.626, 8.776, 8.586, 8.838, 8.933, 9.054, 8.816, 8.520, 8.351, 8.619, 8.951, 9.027, 8.225, 8.757, 8.679, 8.675, 8.552, 8.778, 8.965, 8.675, 8.739, 8.969, 8.003, 8.403, 8.897, 8.783, 8.891, 8.562, 8.686, 8.578, 9.264, 7.533, 7.663, 7.533, 7.707, 7.449, 7.843, 7.619, 7.576, 7.533, 7.407, 6.873, 7.130, 7.619, 7.890, 7.366, 7.663, 7.752, 7.707, 7.843, 7.619, 7.326, 7.576, 7.576, 7.286, 7.619, 7.407, 7.707, 7.533, 7.843, 7.663, 7.326, 7.576, 7.449, 7.407, 7.491, 7.407, 7.707, 7.663, 7.797, 7.407, 7.407, 7.752, 7.619, 7.576, 7.797, 6.873, 7.246, 7.707, 7.576, 7.797, 7.449, 7.366, 7.491, 7.797, 6.793, 7.082, 6.983, 7.003, 6.757, 7.003, 7.082, 6.849, 6.925, 6.720, 5.896, 6.510, 6.983, 7.102, 6.702, 6.925, 7.184, 7.082, 7.163, 6.925, 6.684, 6.964, 6.887, 6.631, 7.022, 6.757, 7.463, 6.906, 7.267, 6.868, 6.631, 6.812, 6.649, 6.527, 6.887, 6.579, 7.042, 7.062, 6.906, 6.250, 6.545, 6.964, 7.143, 7.003, 7.062, 6.234, 6.477, 7.184, 6.925, 7.082, 6.631, 6.631, 6.964, 7.225, 6.252, 6.445, 6.285, 6.495, 5.692, 6.182, 6.299, 6.224, 6.210, 6.177, 4.990, 6.061, 6.210, 6.210, 5.823, 6.280, 6.420, 6.455, 6.405, 6.182, 5.961, 6.196, 6.173, 5.864, 6.376, 6.101, 6.366, 6.304, 6.582, 6.021, 5.995, 6.109, 5.906, 5.889, 6.347, 5.873, 6.304, 6.308, 6.356, 5.661, 5.965, 6.270, 6.386, 6.289, 6.313, 5.119, 5.570, 6.391, 6.270, 6.347, 5.991, 5.848, 6.196, 6.425, 6.028, 6.054, 6.013, 6.203, 5.466, 5.925, 6.039, 5.933, 5.916, 5.978, 4.711, 5.785, 5.995, 5.972, 5.477, 6.056, 6.087, 6.092, 6.105, 5.927, 5.681, 5.946, 5.785, 5.621, 6.000, 5.803, 6.109, 6.043, 6.299, 5.846, 5.858, 5.793, 5.650, 5.585, 6.141, 5.627, 6.074, 6.017, 6.052, 5.315, 5.739, 5.976, 6.125, 6.023, 5.974, 4.802, 5.321, 6.118, 5.967, 5.974, 5.708, 5.617, 5.883, 6.121), nrow = 54, ncol = 7, byrow = FALSE)
+# Нэмэлт жишээ ------------------------------------------------------------
 
-## Descriptive Statistics
+image <- imager::load.image("https://upload.wikimedia.org/wikipedia/commons/f/fa/Grayscale_8bits_palette_sample_image.png")
 
-colMeans(X)
-cov(X)
-cor(X[,1], X[,2])
+X <- as.matrix(image)
+plot(imager::as.cimg(X), main = "Оригинал зураг", interpolate = FALSE, axes = FALSE)
 
-## PCA by using the built-in function prcomp
+dim(X)
+pca <- princomp(x = t(X))
 
-pca <- prcomp(X, center = TRUE, scale. = FALSE)
-objects(pca)
+which.max(cumsum(pca$sdev ^ 2) / sum(pca$sdev ^ 2) > 0.99)
 
-## Eigen Values and Eigen Vectors
+(function (pca, n) {
+  Y <- pca$scores
+  Y[,-{1:n}] <- 0
+  X <- pca$loadings %*% t(Y) + pca$center
+  plot(imager::as.cimg(X), main = paste("Нийт гол хэсгийн", round(n / ncol(pca$scores) * 100, 1), "хувь"), interpolate = FALSE, axes = FALSE)
+})(pca, 45)
 
-eig <- eigen(cov(X))
-eig[["values"]] # lambda
-eig[["vectors"]] # Gamma
+# Нэмэлт жишээ ------------------------------------------------------------
 
-Lambda <- diag(eig$values) # Lambda <- diag(pca$sdev) ** 2
-Gamma <- eig[["vectors"]] # Gamma <- pca$rotation
+pca <- princomp(x = datasets::iris[-5])
+plot(x = pca$scores, asp = 1, pch = unclass(iris$Species), col = c("red", "green", "blue")[unclass(iris$Species)])
 
-## Coordinates on (PC1,PC2)
+pca <- FactoMineR::PCA(datasets::iris[-5], ncp = 4, scale.unit = FALSE, graph = FALSE)
+factoextra::fviz_pca_ind(
+  X = pca,
+  geom.ind = "point",
+  col.ind = iris$Species, # color by groups
+  palette = c("red", "green", "blue"),
+  addEllipses = TRUE,
+  legend.title = "Species"
+)
 
-pca$x
+# Нарийвчилсан жишээ ------------------------------------------------------
 
-Z <- scale(X, center = TRUE, scale = FALSE) # X-mu = X-EX # centering
-Y <- t(t(Gamma) %*% t(Z))
-dimnames(Y) <- list("obs." = 1:10, "PC" = c("PC1", "PC2"))
-Y
+# Өгөгдөл
 
-cov(Y) # Lambda
+X4 <- subset(
+  "x" = datasets::iris,
+  "subset" = Species == "setosa",
+  "select" = c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")
+)
+head(X4)
+apply(X = X4, MARGIN = 2, FUN = var)
+plot(X4, asp = 1)
 
-## Y_i
+# Шинжилгээ
 
-t(Gamma[,1] %*% t(Z))
-t(Gamma[,2] %*% t(Z))
+pca <- princomp(x = X4)
+pca.FMR <- FactoMineR::PCA(X = X4, scale.unit = FALSE, ncp = 4, graph = FALSE)
 
-## Covariance between X and Y
+# Проекцын векторууд буюу хувийн векторууд
 
-cov(X, Y)
-Gamma %*% Lambda
+all.equal(abs(pca.FMR$svd$V), abs(pca$loadings[,]), check.attributes = FALSE)
 
-## Correlation of X and Y
+# Эхний хоёр гол хэсэг дээрх проекц
 
-cor(X, Y) # cor(X, pca$x)
+pca$scores
+pca.FMR$ind$coord
+all.equal(abs(pca.FMR$ind$coord), abs(pca$scores), check.attributes = FALSE)
 
-i <- 1; j <- 1
-Gamma[i,j] * (Lambda[j,j] / cov(X)[i,i]) ** 0.5
+plot(pca$scores[,1:2], asp = 1)
+factoextra::fviz_pca_ind(X = pca.FMR)
 
-## Projections
+# Хувийн утга буюу гол хэсгийн дисперс
 
-Y[, 2] <- 0
-Y # projections on PC1
-projection <- t(Gamma %*% t(Y)) # remember: Gamma is ortogonal
-round(projection, digits = 2) # projections on (X1,X2)
+pca$sdev ** 2
+(pca$sdev ** 2) / sum(pca$sdev ** 2)
+cumsum(pca$sdev ** 2) / sum(pca$sdev ** 2) * 100
+pca.FMR$eig
 
-## Linear model
+plot(pca$sdev ** 2, type = "b")
+factoextra::fviz_eig(X = pca.FMR, addlabels = TRUE)
 
-lm(X[,2] ~ X[,1])
+# Анхны хувьсагч ба гол хэсэг хоорондын корреляц
+
+cor(x = X4, y = pca$scores)
+pca.FMR$var$cor
+corrplot::corrplot(corr = cor(x = X4, y = pca$scores)[,1:2])
+
+# Сингуляр утгын задаргаа
+
+svd <- svd(scale(X4, scale = FALSE))
+svd$v
+eig <- eigen(x = cov(X4))
+eig$vectors
+pca$loadings
+
+# Гол хэсэг дээрх санамсаргүй хувьсагчдын проекц
+
+t(diag(pca$sdev) %*% t(svd$v))
+pca.FMR$var$coord
+
+factoextra::fviz_pca_var(X = pca.FMR)
+
+# Гол хэсэг дээрх хувьсагчдын оролцоо
+
+all.equal(t(t(pca.FMR$var$coord ^ 2) / pca.FMR$eig[,1]) * 100, pca.FMR$var$contrib)
+
+# prcomp() функц ба шинжилгээний онолын дагуух үр дүнгүүдийн харьцуулалт -----
+
+# Өгөгдөл
+
+X4 <- datasets::iris3[,c("Sepal L.", "Sepal W.", "Petal L.", "Petal W."), "Setosa"]
+
+# prcomp() функц
+
+pca <- prcomp(x = X4)
+
+# Онолын дагуух тооцоолол
+
+Y <- t(t(eigen(cov(X4))$vectors) %*% t(scale("x" = X4, "center" = TRUE, "scale" = FALSE)))
+
+# Хоёр үр дүнгийн харьцуулалт буюу prcomp() функцийн буцаах утгын тайлбар
+
+all.equal(pca$sdev, apply(X = Y, MARGIN = 2, FUN = sd))
+all.equal(pca$rotation, eigen(cov(X4))$vectors, check.attributes = FALSE)
+all.equal(pca$center, colMeans(X4))
+pca$scale
+all.equal(pca$x, Y, check.attributes = FALSE)
+
+# prcomp() функцийн үр дүн онолын шинж чанарыг хангаж буй нь
+
+# 1
+all(colMeans(pca$x) < .Machine$double.eps)
+# 2 ба 3
+all.equal(cov(pca$x), diag(eigen(cov(X4))$values), check.attributes = FALSE)
+# 4
+apply(X = pca$x, MARGIN = 2, FUN = var) # сөрөг бус бөгөөд буурсан утгууд гарахыг ажиглана
+# 5
+all.equal(sum(pca$sdev^2), sum(diag(cov(X4))))
+# 6
+all.equal(prod(pca$sdev^2), det(cov(X4)))
