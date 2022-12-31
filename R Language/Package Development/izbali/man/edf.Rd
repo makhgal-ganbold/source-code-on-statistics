@@ -7,9 +7,9 @@
 edf(x, X)
 }
 \arguments{
-\item{x}{numeric, function argument}
+\item{x}{numeric scalar, function argument}
 
-\item{X}{vector, empirical data}
+\item{X}{numeric vector, empirical data}
 }
 \value{
 numeric, left continuous empirical distribution function value
@@ -18,5 +18,5 @@ numeric, left continuous empirical distribution function value
 Computes the value of the left continuous empirical distribution function at a given point.
 }
 \examples{
-edf(x = 0, X = c(- 1, 0, 1));
+edf(x = 0, X = c(- 1, 0, NA, 1));
 }
