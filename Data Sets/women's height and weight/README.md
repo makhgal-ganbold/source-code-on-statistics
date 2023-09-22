@@ -2,4 +2,4 @@
 
 Эмэгтэйчүүдийн биеийн өндөр болон жин
 
-© 2019 Г.Махгал (Galaa) [www.galaa.mn](http://galaa.mn/ "Galaa's Personal Page")
+© 2019 Г.Махгал (Galaa) [www.galaa.net](https://www.galaa.net/ "Galaa's Personal Page")

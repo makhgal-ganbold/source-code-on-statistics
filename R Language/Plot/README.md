@@ -10,4 +10,4 @@ Wikipedia дээрх [Multivariate normal distribution](https://en.wikipedia.org
 
 Matlab дээрх код болон R хэл дээр бичсэн код, үүнээс гарсан үр дүн болох PDF файлыг хавсаргаж оруулав. 
 
-© 2018 Г.Махгал (Galaa) [www.galaa.mn](http://galaa.mn/ "Galaa's Personal Page")
+© 2018 Г.Махгал (Galaa) [www.galaa.net](https://www.galaa.net/ "Galaa's Personal Page")

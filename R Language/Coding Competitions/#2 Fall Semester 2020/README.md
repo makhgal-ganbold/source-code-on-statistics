@@ -15,4 +15,4 @@
 * Хэвлэлт: 2 дахь хэвлэлт
 * ISBN: 978-9919-23-463-8
 
-© 2020 Г.Махгал (Galaa) [www.galaa.mn](https://www.galaa.mn/mn "Galaa's Personal Page")
+© 2020 Г.Махгал (Galaa) [www.galaa.net](https://www.galaa.net/ "Galaa's Personal Page")

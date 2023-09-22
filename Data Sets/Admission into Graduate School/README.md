@@ -11,4 +11,4 @@
 
 Татаж авсан огноо 2019-12-16 07:30:00
 
-© 2019 Г.Махгал (Galaa) [www.galaa.mn](http://galaa.mn/ "Galaa's Personal Page")
+© 2019 Г.Махгал (Galaa) [www.galaa.net](https://www.galaa.net/ "Galaa's Personal Page")

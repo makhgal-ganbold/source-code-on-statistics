@@ -8,4 +8,4 @@
 
 Татаж авсан огноо 2017-09-23 14:25:44
 
-© 2018 Г.Махгал (Galaa) [www.galaa.mn](http://galaa.mn/ "Galaa's Personal Page")
+© 2018 Г.Махгал (Galaa) [www.galaa.net](https://www.galaa.net/ "Galaa's Personal Page")

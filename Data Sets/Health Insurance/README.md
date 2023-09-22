@@ -13,4 +13,4 @@
 
 Эх сурвалж [kaggle.com](https://www.kaggle.com/mirichoi0218/insurance)
 
-© 2018 Г.Махгал (Galaa) [www.galaa.mn](http://galaa.mn/ "Galaa's Personal Page")
+© 2018 Г.Махгал (Galaa) [www.galaa.net](https://www.galaa.net/ "Galaa's Personal Page")

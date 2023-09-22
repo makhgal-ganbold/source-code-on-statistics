@@ -2,6 +2,6 @@
 
 2020 оны намрын улиралд COVID-19 вирусын цар тахлын дотоодын дэгдэлтээс үүдсэн хөл хорионы үеэр явуулсан цахим сургалтын онлайн шалгалтын протокол
 
-Эх сурвалж [www.galaa.mn](https://www.galaa.mn/blog/post/218)
+Эх сурвалж [www.galaa.net](https://www.galaa.net/blog/post/218)
 
-© 2021 Г.Махгал (Galaa) [www.galaa.mn](https://www.galaa.mn/ "Galaa's Personal Page")
+© 2021 Г.Махгал (Galaa) [www.galaa.net](https://www.galaa.net/ "Galaa's Personal Page")

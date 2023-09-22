@@ -9,4 +9,4 @@ R хэл дээр зэрэгцээ тооцооллыг харьцангуй х�
 
 зэрэг багтана.
 
-© 2017 Г.Махгал (Galaa) [www.galaa.mn](http://galaa.mn/ "Galaa's Personal Page")
+© 2017 Г.Махгал (Galaa) [www.galaa.net](https://www.galaa.net/ "Galaa's Personal Page")

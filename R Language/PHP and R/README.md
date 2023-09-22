@@ -2,14 +2,14 @@
 
 PHP дээрээс R програмтай холбогдож R хэл дээр бичсэн код ажиллуулах, үр дүнг нь буцаан хүлээж авах 
 
-Нэмэлт тайлбар [эндээс](http://www.galaa.mn/blog/post/179) уншина уу.
+Нэмэлт тайлбар [эндээс](https://www.galaa.net/blog/post/179) уншина уу.
 
 **R хэлний сурах бичиг**
 
-* Нэр: [Статистик програмчлалын R хэл](http://magadlal.mn/books/id-2.html)
+* Нэр: [Статистик програмчлалын R хэл](https://www.magadlal.com/books/id-2.html)
 * Зохиогч: Г.Махгал, Ш.Мөнгөнсүх, 
 * Редактор: Б.Магсаржав
 * Хэвлэгдсэн: 2017
 * ISBN: 978-99978-0-753-3
 
-© 2018 Г.Махгал (Galaa) [www.galaa.mn](http://galaa.mn/ "Galaa's Personal Page")
+© 2018 Г.Махгал (Galaa) [www.galaa.net](https://www.galaa.net/ "Galaa's Personal Page")
