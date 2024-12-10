@@ -52,33 +52,15 @@ print(coordinates)
 
 # Диаграмм
 
-plot(coordinates)
-
-# Зайн матриц эерэг тодорхойлогдсон эсэхийг шалгах
-
-# install.packages("matrixcalc")
-matrixcalc::is.positive.definite(x = distance)
-# Зайн матриц эерэг тодорхойлогдоогүй тул шинжилгээ (classical multidimensional scaling) хийх боломжгүй боллоо.
-# Мөн цэгүүдийн координат олоогүй байгаа тул хэсэгчлэх алгоритм бүхий кластерын шинжилгээ хийх боломжгүй.
-
-# Зайн матриц эерэг тодорхойлогдоогүйг тойрох нэг оролдлого
-
-distance.new <- as.matrix(Matrix::nearPD(x = distance, keepDiag = TRUE, doSym = TRUE, maxit = 1000)$mat)
-
-# Шалгах
-
-matrixcalc::is.positive.definite(x = distance.new)
-# FALSE буюу оролдлого амжилтгүй болов
-
-# Шинэ болон хуучин зай хоорондын дундаж ялгаа
-
-norm(x = distance.new - distance, type = "F") / { n <- dim(distance)[1]; n * (n - 1) / 2 }
+plot(x = coordinates, type = "p", xlab = "Dim.1", ylab = "Dim.2", asp = 1, pch = 19, cex = 0.5)
+text(x = coordinates, labels(d), pos = 3)
 
 ## Нэмэлт шинжилгээ
 
 non.metric.mds <- MASS::isoMDS(d = d, k = 2)
 
-plot(non.metric.mds$points, asp = TRUE)
+plot(x = non.metric.mds$points, type = "p", xlab = "Dim.1", ylab = "Dim.2", asp = 1, pch = 19, cex = 0.5)
+text(x = coordinates, labels(d), pos = 3)
 
 # install.packages("smacof")
 stress.min.mds <- smacof::mds(delta = d, ndim = 2)
