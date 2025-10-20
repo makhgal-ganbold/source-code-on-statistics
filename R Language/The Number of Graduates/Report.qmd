@@ -1,0 +1,377 @@
+---
+title: "Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тооны хандлага"
+subtitle: ""
+abstract: Энэхүү ажлаар Монгол улсын их, дээд сургуулийг байгалийн ухаан, математик, статистикийн мэргэжлээр төгсөгчдийг тоог Үндэсний статистикийн хорооны албан эх сурвалж дээрх өгөгдөлд тулгуурлан авч үзэх бөгөөд улмаар төгсөгчдийн тооны чиг хандлага ба ойрын жилүүдийн прогноз гаргана.
+author: "Г.Махгал"
+date: 2025-10-14
+date-format: "YYYY оны M-р сарын D"
+project:
+  execute-dir: project
+  preview: false
+toc: true
+toc-depth: 3
+toc-title: Агуулга
+number-sections: true
+format:
+  pdf:
+    echo: true
+    pdf-engine: xelatex
+    papersize: a4paper
+    geometry:
+      - left=2cm
+      - right=2cm
+      - top=2cm
+      - bottom=3cm
+    include-in-header:
+      - text: |
+          \usepackage[english,mongolian]{babel}
+          \usepackage{fontspec}
+          % үндсэн текстийн шрифт
+          \setmainfont{Times New Roman}
+          % код хэсгийн шрифт
+          \setmonofont{DejaVu Sans Mono}
+          \AddToHook{env/Highlighting/begin}{\footnotesize}
+          % үндсэн гарчиг
+          \usepackage{titling}
+          \pretitle{\begin{center}\LARGE\bfseries}
+          \posttitle{\par\end{center}\vskip 1em}
+          % сэдвийн зүйлчлэл хэсгийн шрифт
+          \usepackage{titlesec}
+          \titleformat{\section}{\normalfont\Large\bfseries\selectfont}{\thesection}{1em}{}
+          \titleformat{\subsection}{\normalfont\large\bfseries\selectfont}{\thesubsection}{1em}{}
+          \titleformat{\subsubsection}{\normalfont\normalsize\bfseries\selectfont}{\thesubsubsection}{1em}{}
+          % сэдвийн жагсаалт доторх шрифт
+          \usepackage{tocloft}
+          \renewcommand{\cfttoctitlefont}{\Large\bfseries\fontspec{Times New Roman}}
+          \renewcommand{\cftaftertoctitle}{\vskip 1em}
+          \renewcommand{\cftsecfont}{\normalfont\selectfont}
+          \renewcommand{\cftsecpagefont}{\normalfont\selectfont}
+          \renewcommand{\cftsubsecfont}{\normalfont\selectfont}
+          \renewcommand{\cftsubsecpagefont}{\normalfont\selectfont}
+          \renewcommand{\contentsname}{Агуулга}
+    latex-max-runs: 3
+editor: source
+execute:
+  echo: false
+crossref: 
+  fig-title: Зураг
+  fig-prefix: Зураг
+  tbl-title: Хүснэгт
+  tbl-prefix: Хүснэгт
+fig-align: center
+fig-env: "figure"
+fig-height: 4
+fig-width: 6
+fig-pos: "!ht"
+fig-format: pdf
+fig-cap-location: top
+tbl-cap-location: top
+bibliography: references.bib
+csl: ieee.csl
+citeproc: true
+link-citations: true
+---
+
+```{r Ерөнхий тохиргоо}
+#| echo: false
+
+options(xtable.comment = FALSE)
+output_dir <- "_files"
+if (!dir.exists(output_dir)) {
+  dir.create(output_dir)
+}
+```
+
+```{r global variables}
+#| echo: false
+
+conclusion <- NULL
+```
+
+# Өгөгдөл
+
+Үндэсний статистикийн хороо (ҮСХ) нь 1212.mn @nso_1212mn веб сайтаараа дамжуулан Монгол улсын нийгэм, эдийн засгийн үзүүлэлтийг илэрхийлэх тоон мэдээллийг нээлттэй тархаадаг. Тус веб сайт дээр Монгол улсын их, дээд сургуулийг төгсөгчдийн тоог мэргэжлийн салбар бүрээр, жил жилээр нэгтгэн мэдээлжээ. Бид үүнээс байгалийн ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоог авч үзнэ. 
+
+Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоог ҮСХ-ны 1212.mn @nso_education_health_2001 веб сайтаас татаж авав. Тус өгөгдлийг агуулагч хүснэгт DT_NSO_2001_014V1 дугаартай.
+
+ҮСХ-ны 1212.mn дээрээс өгөгдөл татахад NSO1212 багц @NSO1212 ашиглана.
+
+Эхлээд хүснэгтийн мета мэдээллийг татаж авна.
+
+```{r table meta data}
+# Өмнө татсан өгөгдлийг шууд ашиглана.
+if (file.exists("table_info.Rds")) {
+  table_info <- readRDS(file = "table_info.Rds")
+} else {
+  # Мэдээллийг шинэчлэх бол энэ догол мөрд буй кодыг ажиллуулна.
+  NSO1212::get_table_info(
+    tbl_id = "DT_NSO_2001_014V1",
+    simplify = TRUE, try = TRUE, timeout = 10
+  ) ->
+    table_info
+  if (inherits(table_info, "try-error")) {
+    stop("Хүснэгтийн мета мэдээлэл ачаалж чадахгүй байна.")
+  } else {
+    saveRDS(table_info, file = "table_info.Rds")
+  }
+}
+```
+
+Мета мэдээллээс байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлийг юугаар кодолсоныг мэдэж авна.
+
+```{r table internal codes}
+table_info$codes
+```
+
+Тус хүснэгт мэргэжлийн чиглэл илэрхийлэх CODE гэсэн ганц л кодтой ажээ. Энэ кодын утгуудыг `table_info$CODE` датафрейм дээрээс харж болно.
+
+```{r table internal specific code}
+table_info$CODE$item_ids[
+  table_info$CODE$scr_mns == "Байгалийн шинжлэх ухаан, математик, статистик"
+] -> code
+```
+
+Байгалийн шинжлэх ухаан, математик, статистик мэргэжил `r code` гэсэн кодтой байна.
+
+Одоо мэдээлэл шүүж авахад хэрэг болох код зэрэг шаардлагатай бүхэн тодорхой болсон тул өгөгдлөө татаж авна. Үүнд NSO1212 багцын `get_table()` функц ашиглана.
+
+```{r download data}
+if (file.exists("raw_data.Rds")) {
+  raw_data <- readRDS(file = "raw_data.Rds")
+} else {
+  NSO1212::get_table(
+    tbl_id = "DT_NSO_2001_014V1", CODE = c("15"),
+    try = TRUE, timeout = 10
+  ) ->
+    raw_data
+  if (inherits(raw_data, "try-error")) {
+     stop("Хүснэгтийн мета мэдээлэл ачаалж чадахгүй байна.")
+  } else {
+    saveRDS(raw_data, file = "nso.Rds")
+  }
+}
+```
+
+Мөн татан авсан өгөгдлөө "raw_data.csv" файлд хадгалав.
+
+```{r}
+write.csv(raw_data, file = "raw_data.csv")
+```
+
+```{r clean-up scope}
+#| echo: false
+
+rm(code,table_info)
+```
+
+Татаж авсан өгөгдлөөс зөвхөн "Он" ба "Төгсөгчдийн тоо" хоёр баганыг ялгаж аваад бусдыг нь гээнэ. Бас хувьсагчдын нэрсийг `year`, `graduates` болгон солино.
+
+```{r data subsetting}
+data = raw_data[c("Period","DTVAL_CO")]
+names(data) <- c("year","graduates")
+```
+
+Ийнхүү ҮСХ-ноос мэдээлсэн байгалийн шинжлэх ухаан, математик, статистик мэргэжлээр жил бүр төгсөгчдийн тоог агуулсан өгөгдөлтэй боллоо.
+
+# Төгсөгчдийн тоо
+
+ҮСХ-ны нээлттэй өгөгдлийн сервисээс татан авсан өгөгдлийг @tbl-data дээр харууллаа.
+
+```{r}
+#| label: tbl-data
+#| tbl-cap: Байгалийн шинжлэх ухаан, математик, статистик мэргэжлээр жил бүр төгсөгчдийн тоо
+
+knitr::kable(data, col.names = c("Он", "Төгсөгчдийн тоо"))
+```
+
+Мөн тус өгөгдлийг шугаман диаграммаар дүрслэв. Үүнийг @fig-graduates-per-year дээрээс харж болно.
+
+```{r create line plot}
+#| results: hide
+
+Cairo::CairoPDF(
+  file = file.path(output_dir, "fig-graduates-per-year.pdf"),
+  family = "Times New Roman", width = 4, height = 3
+)
+
+plot(
+  x = data$year, y = data$graduates, type = "b",
+  xlab = "Он", ylab = "Төгсөгчдийн тоо",
+)
+
+dev.off()
+```
+
+```{r include line plot}
+#| label: fig-graduates-per-year
+#| fig-cap: Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо
+
+knitr::include_graphics(file.path(output_dir, "fig-graduates-per-year.pdf"))
+```
+
+Шугаман диаграммаас төгсөгчдийн тоо буурах хандлагатай гэсэн таамаглал гарна.
+
+# Төгсөгчдийн тооны хандлага
+
+Өмнөх хэсэгт байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо буурах хандлагатай гэсэн таамаглал дэвшүүлсэн. Одоо түүнийг шалгана. Статистик таамаглал шалгалтын арга зүйн үүднээс хандлага тогтмол гэсэн тэг таамаглалын эсрэг хандлага буурна гэсэн өрсөлдөгч таамаглал дэвшүүлнэ. Улмаар тэг таамаглалыг няцаавал өрсөлдөгч таамаглалыг баталсан явдал болно.
+
+Ийм таамаглалыг корреляц бас регресс гэх мэтчилэн янз бүрийн аргаар шалгаж болохоос корреляцийн коэффициентын тусламжтай шалгах аргыг сонголоо. Энэ тохиолдолд таамаглалыг дараах хэлбэрээр томъёолно.
+
+$$
+\begin{array}{l}
+H_0: \operatorname{cor}(\text{graduates},\text{year}) = 0 \\
+H_1: \operatorname{cor}(\text{graduates},\text{year}) < 0
+\end{array}
+$$
+
+Мөн түүврийн хэмжээ бага бас тархалт нормал биш тул параметрийн бус корреляц @schober2018 ашиглана.
+
+```{r}
+cor.test(
+  data$year, data$graduates,
+  method = "spearman",       # параметрийн бус корреляц
+  alternative = "less"       # корреляц тэгээс бага
+)
+```
+
+$p\text{-value}=0.175<\alpha=0.05$ нь хандлага буурч байна гэсэн тэг таамаглалыг үл няцаана. Өөрөөр хэлбэл тус таамаглал шалгалтаар хандлага буурна гэсэн эффектийг батлах хангалттай үндэслэл илрэхгүй байна.
+
+```{r}
+conclusion <- append(conclusion,
+r"(Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн нийт тоо
+буурч байна гэх үндэслэл илрээгүй.)"
+)
+```
+
+# Төгсөгчдийн тооны загварчлал
+
+Төгсөгчдийн тооны прогноз гаргахын тулд үүнийг оноос хамааруулан загварчлах шаардлагатай. Прогноз гаргахад хугацаан цувааны загвар эсвэл регрессийн загвар ашигладаг. Ийнхүү төгсөгчдийн тоог жилээс хамааруулсан регрессийн загвар авч үзнэ.
+
+Загвар дахь хамааран хувьсагч нь тоо ширхэг илэрхийлсэн тул Пуассоны регресс @roback2021beyond ашиглаж болох юм.
+
+```{r}
+model_poisson <- glm(formula = graduates ~ year, family = poisson(link = "log"), data = data)
+```
+
+Гэхдээ Пуассоны регресс overdispersion @roback2021beyond буюу хэт дисперстэй өгөгдөлд тохирохгүй. Өгөгдөл хэт дисперстэй эсэхийг R програмын AER багц дахь `dispersiontest()` @r_aer функцээр шалгав.
+
+```{r}
+AER::dispersiontest(model_poisson)
+```
+
+Шинжүүр хэт дисперстэй гэсэн өрсөлдөгч таамаглалыг баталжээ.
+
+```{r}
+conclusion <- append(conclusion,
+r"(Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоонд
+хэт дисперстэй тархалтын загвар тохирно.)"
+)
+```
+
+Хэт дисперстэй хувьсагчийг загварчлах нэг тархалт бол урвасан бином тархалт бөгөөд ийнхүү урвасан бином загвар @roback2021beyond ашиглана.
+
+```{r}
+model_nb <- MASS::glm.nb(graduates ~ year, data = data)
+```
+
+Прогноз гаргахад шаардлагатай регрессийн загвар бэлэн болсон тул одоо ойрын хэдэн жилийн төгсөгчдийн тооны прогноз гаргах руу чиглэнэ.
+
+# Төгсөгчдийн тооны прогноз
+
+ҮСХ-ны мэдээ 2023 оноор дуусгавар болсон байсан. Иймээс 2024 оноос эхлэн гурван жилийн прогноз гаргана.
+
+```{r}
+#| label: tbl-nb-prediction
+#| tbl-cap: Төгсөгчдийн тооны ойрын ирээдүйн прогноз
+
+# Ирээдүйн жилүүд
+future_years <- data.frame(year = 2024:2026)
+
+# Ирээдүйн жилүүд дэх төгсөгчдийн тоог загвараар үнэлэх буюу прогнозлох
+future_years$predicted <- predict(model_nb, newdata = future_years, type = "response")
+
+knitr::kable(round(future_years), col.names = c("Он", "Прогноз"))
+```
+
+```{r}
+conclusion <- append(conclusion, sprintf(
+r"(Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо
+2026 онд %d байна гэсэн прогноз гарсан.)", round(future_years$predicted[future_years$year == 2026])))
+```
+
+```{r}
+# Өнгөрсөн болон ирээдүйн жилүүд
+all_years <- data.frame(year = 2019:2026)
+
+# Бүх жил дэх төгсөгчдийн тоог загвараар үнэлэх буюу прогнозлох
+all_years$predicted <- predict(model_nb, newdata = all_years, type = "response")
+```
+
+```{r}
+#| results: hide
+
+Cairo::CairoPDF(
+  file = file.path(output_dir, "fig-nb-prediction.pdf"),
+  family = "Times New Roman", width = 6, height = 4)
+
+plot(
+  data$year, data$graduates,
+  xlim = c(2019, 2026),
+  ylim = range(c(data$graduates, all_years$predicted)),
+  xlab = "Он", ylab = "Төгсөгчид",
+  pch = 16, col = "blue",
+)
+
+lines(all_years$year, all_years$predicted, col = "darkgreen", lwd = 2)
+
+points(
+  future_years$year,
+  predict(model_nb, newdata = future_years, type = "response"),
+  pch = 16, col = "red"
+)
+
+legend(
+  "topright",
+  legend = c("Ажиглалт", "Загвар (2019–2026)", "Прогноз (2024–2026)"),
+  col = c("blue", "darkgreen", "red"),
+  pch = c(16, NA, 16),
+  lty = c(NA, 1, NA),
+  lwd = c(NA, 2, NA)
+)
+
+dev.off()
+```
+
+```{r}
+#| label: fig-nb-prediction
+#| fig-cap: Төгсөгчдийн тоо ба урвасан бином регресс
+
+knitr::include_graphics(file.path(output_dir, "fig-nb-prediction.pdf"))
+```
+
+```{r}
+n_2026 <- round(future_years$predicted[future_years$year == 2026])
+n_2020 <- data$graduates[data$year == 2020]
+ratio <- round(n_2020/n_2026, digits = 1)
+conclusion <- append(conclusion, sprintf(
+r"(Хэдийгээр Спирмэний рангийн корреляцаар байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр 
+төгсөгчдийн нийт тоо буурч байна гэх үндэслэл илрээгүй ч 2026 онд %d байна гэсэн прогнозыг 
+2020 онд байсан %d тоотой харьцуулбал төгсөгчдийн тоо %s дахин буурахаар байна. Иймээс ҮСХ-ноос 
+2024 бас 2025 оны мэдээг нийтэлсэн даруйд тооны хандлагыг ахин шалгах хэрэгтэй.)", n_2026, n_2020, ratio))
+rm(n_2026, n_2020, ratio)
+```
+
+# Дүгнэлт {.unnumbered}
+
+```{r}
+#| results: asis
+
+for (i in seq_along(conclusion)) {
+  cat(paste0(i, ". ", conclusion[i], "\n"))
+}; rm(i)
+```
+
+# Ашигласан материал {.unnumbered}
+
+::: {#refs}
+:::
