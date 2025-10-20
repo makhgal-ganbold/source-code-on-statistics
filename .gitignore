@@ -1,3 +1,9 @@
+# Python virtual environment
+
+.venv
+
+# R Project
+
 .Rproj.user
 .Rhistory
 .RData

@@ -1,0 +1,376 @@
+---
+jupyter: python3
+title: "Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тооны хандлага"
+subtitle: ""
+abstract: Энэхүү ажлаар Монгол улсын их, дээд сургуулийг байгалийн ухаан, математик, статистикийн мэргэжлээр төгсөгчдийг тоог Үндэсний статистикийн хорооны албан эх сурвалж дээрх өгөгдөлд тулгуурлан авч үзэх бөгөөд улмаар төгсөгчдийн тооны чиг хандлага ба ойрын жилүүдийн прогноз гаргана.
+author: "Г.Махгал"
+date: 2025-10-14
+date-format: "YYYY оны M-р сарын D"
+project:
+  execute-dir: project
+  preview: false
+toc: true
+toc-depth: 3
+toc-title: Агуулга
+number-sections: true
+format:
+  pdf:
+    echo: true
+    pdf-engine: xelatex
+    papersize: a4paper
+    geometry:
+      - left=2cm
+      - right=2cm
+      - top=2cm
+      - bottom=3cm
+    include-in-header:
+      - text: |
+          \usepackage[english,mongolian]{babel}
+          \usepackage{fontspec}
+          % үндсэн текстийн шрифт
+          \setmainfont{Times New Roman}
+          % код хэсгийн шрифт
+          \setmonofont{DejaVu Sans Mono}
+          \AddToHook{env/Highlighting/begin}{\footnotesize}
+          % үндсэн гарчиг
+          \usepackage{titling}
+          \pretitle{\begin{center}\LARGE\bfseries}
+          \posttitle{\par\end{center}\vskip 1em}
+          % сэдвийн зүйлчлэл хэсгийн шрифт
+          \usepackage{titlesec}
+          \titleformat{\section}{\normalfont\Large\bfseries\selectfont}{\thesection}{1em}{}
+          \titleformat{\subsection}{\normalfont\large\bfseries\selectfont}{\thesubsection}{1em}{}
+          \titleformat{\subsubsection}{\normalfont\normalsize\bfseries\selectfont}{\thesubsubsection}{1em}{}
+          % сэдвийн жагсаалт доторх шрифт
+          \usepackage{tocloft}
+          \renewcommand{\cfttoctitlefont}{\Large\bfseries\fontspec{Times New Roman}}
+          \renewcommand{\cftaftertoctitle}{\vskip 1em}
+          \renewcommand{\cftsecfont}{\normalfont\selectfont}
+          \renewcommand{\cftsecpagefont}{\normalfont\selectfont}
+          \renewcommand{\cftsubsecfont}{\normalfont\selectfont}
+          \renewcommand{\cftsubsecpagefont}{\normalfont\selectfont}
+          \renewcommand{\contentsname}{Агуулга}
+    latex-max-runs: 3
+editor: source
+execute:
+  echo: false
+crossref: 
+  fig-title: Зураг
+  fig-prefix: Зураг
+  tbl-title: Хүснэгт
+  tbl-prefix: Хүснэгт
+fig-align: center
+fig-env: "figure"
+fig-height: 4
+fig-width: 6
+fig-pos: "!ht"
+fig-format: pdf
+fig-cap-location: top
+tbl-cap-location: top
+bibliography: references.bib
+csl: ieee.csl
+citeproc: true
+link-citations: true
+---
+
+```{python}
+#| echo: false
+
+conclusion = list()
+```
+
+# Шаардлагатай багцууд {-}
+
+Шаардлагатай багцуудыг дараах байдлаар урьдчилан суулгана.
+
+`pip install NSO1212v1 tabulate matplotlib scipy statsmodels`
+
+# Өгөгдөл
+
+Үндэсний статистикийн хороо (ҮСХ) нь 1212.mn @nso_1212mn веб сайтаараа дамжуулан Монгол улсын нийгэм, эдийн засгийн үзүүлэлтийг илэрхийлэх тоон мэдээллийг нээлттэй тархаадаг. Тус веб сайт дээр Монгол улсын их, дээд сургуулийг төгсөгчдийн тоог мэргэжлийн салбар бүрээр, жил жилээр нэгтгэн мэдээлжээ. Бид үүнээс байгалийн ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоог авч үзнэ. 
+
+Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоог ҮСХ-ны 1212.mn @nso_education_health_2001 веб сайтаас татаж авна.
+
+ҮСХ-ны 1212.mn дээрээс өгөгдөл татахад Python хэлний NSO1212v1 багц @NSO1212v1 ашиглана. Багцыг командын мөрөөс `pip install NSO1212v1` тушаалаар суулгана. Тус багц нь ҮСХ-ны 1212 нээлттэй өгөгдлийн API-ийн хувилбар 1-ийг дэмжинэ.
+
+```{python}
+import NSO1212v1 as nso
+```
+
+ҮСХ-ны нээлттэй өгөгдлийн APIv1 нь өгөгдөл татахад зөвхөн хүснэгтийн ID төдийгүй сектор болон дэд секторын ID-ийг ч шаарддаг.
+
+```{python}
+#| tbl-cap: Үндсэн секторууд, тэдгээрийн ID
+
+nso.sectors()[["id","text"]].rename(columns={"id":"ID","text":"Сектор"})
+```
+
+Боловсрол, эрүүл мэндийн салбар "Education, health" id-тай байна.
+
+```{python}
+#| tbl-cap: Дэд секторууд, тэдгээрийн ID
+
+nso.subsectors(sector_id="Education, health")[["id","text"]].rename(columns={"id":"ID","text":"Дэд сектор"})
+```
+
+Их дээд сургууль гэсэн дэд салбарын id нь "Universities, institutes and colleges" байна.
+
+Одоо дээрх дэд салбарт хамаарах хүснэгтүүдийн жагсаалтыг авна.
+
+```{python}
+#| tbl-cap: Хүснэгтүүд, тэдгээрийн ID
+
+nso.tables(
+  sector_id="Education, health", subsector_id="Universities, institutes and colleges"
+)[["id","text"]].rename(columns={"id":"ID","text":"Хүснэгт"})
+```
+
+Жагсаалтаас их, дээд сургууль, коллежийг төгсөгчид, мэргэжлийн чиглэлээр гэсэн хүснэгтийн id дугаар нь "DT_NSO_2001_014V1.px" гэж харагдана.
+
+Одоо хүснэгтийн мета мэдээллийг татаж авна.
+
+```{python}
+table_meta_data = nso.table(
+  sector_id="Education, health",
+  subsector_id="Universities, institutes and colleges",
+  table_id="DT_NSO_2001_014V1.px"
+)
+```
+
+Мета мэдээллээс мэргэжлийн чиглэл хувьсагчийн утгууд, тэдгээрийн кодыг дараах байдлаар олж харна.
+
+```{python}
+#| tbl-cap: Мэргэжлийн чиглэл хувьсагчийн утгууд, тэдгээрийн код
+
+table_meta_data["variables"][0]["codes"].rename(columns={"values":"Код","valueTexts":"Мэргэжлийн чиглэл"})
+```
+
+"Байгалийн шинжлэх ухаан, математик, статистик" мэргэжлийн чиглэлийн код "5" байна.
+
+Ийнхүү өгөгдөл татаж авахад шаардлагатай бүх мэдээлэл тодорхой боллоо. Одоо өгөгдөл татаж авна.
+
+```{python}
+data = nso.data(
+  sector_id="Education, health",
+  subsector_id="Universities, institutes and colleges",
+  table_id="DT_NSO_2001_014V1.px",
+  query={
+    "query": [
+      {
+        "code": "Мэргэжлийн чиглэл",
+        "selection": {
+          "filter": "item",
+          "values": ["5"]
+        }
+      }
+    ],
+    "response": {
+      "format": "json-stat2"
+    }
+  }
+)
+```
+
+Тус функц серверээс ирсэн объект доторх өгөгдлийг эцсийн хэрэглэгчдэд таатай байдлаар эмхэлж өгдөг. Тэр нь `df` нэртэй, pandas.DataFrame бүтэцтэй элементэд агуулагдана. Ингээд `data.df` датафреймыг "raw_data.csv" файлд хадгална.
+
+```{python}
+data["df"].to_csv("raw_data.csv", index=False)
+```
+
+Одоо өгөгдлөөс зөвхөн "Он" ба "Хувьсагч" хоёр баганыг ялгаж аваад бусдыг нь гээнэ. Бас хувьсагчдын нэрсийг `year`, `graduates` болгон солино.
+
+```{python}
+import pandas as pd
+
+data = data["df"][["Он","Хувьсагч"]]
+data.rename(columns={"Он":"year","Хувьсагч":"graduates"}, inplace=True)
+data["year"] = pd.to_numeric(data["year"], errors='coerce')
+```
+
+Ийнхүү ҮСХ-ноос мэдээлсэн байгалийн шинжлэх ухаан, математик, статистик мэргэжлээр жил бүр төгсөгчдийн тоог агуулсан өгөгдөлтэй боллоо.
+
+# Төгсөгчдийн тоо
+
+ҮСХ-ны нээлттэй өгөгдлийн сервисээс татан авсан өгөгдлийг @tbl-data дээр харууллаа.
+
+```{python}
+#| label: tbl-data
+#| tbl-cap: Байгалийн шинжлэх ухаан, математик, статистик мэргэжлээр жил бүр төгсөгчдийн тоо
+
+data
+```
+
+Мөн тус өгөгдлийг шугаман диаграммаар дүрслэв. Үүнийг @fig-graduates-per-year дээрээс харж болно.
+
+```{python}
+#| label: fig-graduates-per-year
+#| fig-cap: Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо
+
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(4,3))
+plt.plot(data["year"], data["graduates"], marker='o', linestyle='-', color='b', label='Төгсөгчид')
+plt.xlabel("Он")
+plt.ylabel("Төгсөгчдийн тоо")
+plt.title("Жил бүрийн төгсөгчдийн тоо")
+plt.grid(True)
+plt.legend()
+plt.show()
+```
+
+Шугаман диаграммаас төгсөгчдийн тоо буурах хандлагатай гэсэн таамаглал гарна.
+
+# Төгсөгчдийн тооны хандлага
+
+Өмнөх хэсэгт байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо буурах хандлагатай гэсэн таамаглал дэвшүүлсэн. Одоо түүнийг шалгана. Статистик таамаглал шалгалтын арга зүйн үүднээс хандлага тогтмол гэсэн тэг таамаглалын эсрэг хандлага буурна гэсэн өрсөлдөгч таамаглал дэвшүүлнэ. Улмаар тэг таамаглалыг няцаавал өрсөлдөгч таамаглалыг баталсан явдал болно.
+
+Ийм таамаглалыг корреляц бас регресс гэх мэтчилэн янз бүрийн аргаар шалгаж болохоос корреляцийн коэффициентын тусламжтай шалгах аргыг сонголоо. Энэ тохиолдолд таамаглалыг дараах хэлбэрээр томъёолно.
+
+$$
+\begin{array}{l}
+H_0: \operatorname{cor}(\text{graduates},\text{year}) = 0 \\
+H_1: \operatorname{cor}(\text{graduates},\text{year}) < 0
+\end{array}
+$$
+
+Мөн түүврийн хэмжээ бага бас тархалт нормал биш тул параметрийн бус корреляц @schober2018 ашиглана.
+
+```{python}
+from scipy import stats
+
+rho, p_one_sided = stats.spearmanr(
+  data["year"], data["graduates"],
+  alternative="less"                 # корреляц тэгээс бага
+)
+```
+
+Корреляц -0.771 гэж гарав. Улмаар $p\text{-value}=0.036<\alpha=0.05$ гэж гарсан нь хандлага буурч байна гэсэн өрсөлдөгч таамаглалыг баталж буй явдал юм.
+
+```{python}
+conclusion.append("Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо буурч байна.") 
+```
+
+# Төгсөгчдийн тооны загварчлал
+
+Төгсөгчдийн тооны прогноз гаргахын тулд үүнийг оноос хамааруулан загварчлах шаардлагатай. Прогноз гаргахад хугацаан цувааны загвар эсвэл регрессийн загвар ашигладаг. Ийнхүү төгсөгчдийн тоог жилээс хамааруулсан регрессийн загвар авч үзнэ.
+
+Загвар дахь хамааран хувьсагч нь тоо ширхэг илэрхийлсэн. Энэ байдалд тохирох загвар бол Пуассоны регрессийн загвар @roback2021beyond юм.
+
+```{python}
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+model_poisson = smf.glm(
+  formula="graduates ~ year",
+  data=data,
+  family=sm.families.Poisson()
+).fit()
+```
+
+Гэхдээ Пуассоны регресс overdispersion @roback2021beyond буюу хэт дисперстэй өгөгдөлд тохирохгүй. Өгөгдөл хэт дисперстэй эсэхийг шалгадаг R програмын AER багц дахь `dispersiontest()` @r_aer шиг бэлэн функц байхгүй тул үүнийг "гар аргаар" ажиллуулна.
+
+```{python}
+deviance = model_poisson.deviance
+df_resid = model_poisson.df_resid
+dispersion = deviance / df_resid
+```
+
+Дисперсийн шинжүүрийн утга 17.166 гэж 1.5 гэсэн босгоос их гарсан тул өгөгдлийг хэт дисперстэй гэж дүгнэнэ.
+
+```{python}
+conclusion.append("Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоонд " +
+"хэт дисперстэй тархалтын загвар тохирно.")
+```
+
+Хэт дисперстэй хувьсагчийг загварчлах нэг тархалт бол урвасан бином тархалт бөгөөд ийнхүү урвасан бином загвар @roback2021beyond ашиглана.
+
+```{python}
+model_nb = smf.glm(
+    formula="graduates ~ year",
+    data=data,
+    family=sm.families.NegativeBinomial(alpha=1.0)  # alpha: dispersion parameter
+).fit()
+```
+
+Прогноз гаргахад шаардлагатай регрессийн загвар бэлэн болсон тул одоо ойрын хэдэн жилийн төгсөгчдийн тооны прогноз гаргах руу чиглэнэ.
+
+# Төгсөгчдийн тооны прогноз
+
+ҮСХ-ны мэдээ 2024 оноор дуусгавар болсон байсан. Иймээс 2025 оноос эхлэн гурван жилийн прогноз гаргана.
+
+```{python}
+#| label: tbl-nb-prediction
+#| tbl-cap: Төгсөгчдийн тооны ойрын ирээдүйн прогноз
+
+# Ирээдүйн жилүүд
+future_years = pd.DataFrame({
+  "year": [2025, 2026, 2027]
+})
+
+# Ирээдүйн төгсөгчдийн тоог прогнозлох
+future_years["predicted"] = model_nb.predict(future_years)
+
+round(future_years)
+```
+
+```{python}
+# Ирээдүйн төгсөгчдийн тоо
+pred_2027 = round(future_years.loc[future_years["year"] == 2027, "predicted"].values[0])
+
+conclusion.append("Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо " +
+f"2027 онд {pred_2027} байна гэсэн прогноз гарсан.")
+```
+
+```{python}
+#| label: fig-nb-prediction
+#| fig-cap: Төгсөгчдийн тоо ба урвасан бином регресс
+
+# Бүх жил (2019–2027) дэх прогноз
+all_years = pd.DataFrame({"year": list(range(2019, 2028))})
+all_years["predicted"] = model_nb.predict(all_years)
+
+# Диаграмм
+plt.figure(figsize=(4,3))
+
+# Ажиглагдсан утгууд
+plt.scatter(data["year"], data["graduates"], color="blue", label="Ажиглалт", zorder=3)
+
+# Загвараар гарсан үнэлгээ (2019–2027)
+plt.plot(
+  all_years["year"], all_years["predicted"], 
+  color="darkgreen", linewidth=2, label="Загвар (2019–2027)"
+)
+
+# Ирээдүйн прогноз
+future_preds = model_nb.predict(future_years)
+plt.scatter(future_years["year"], future_preds, color="red", label="Прогноз (2025–2027)", zorder=4)
+
+# Диаграммын тэнхлэгүүд
+plt.xlabel("Он")
+plt.ylabel("Төгсөгчид")
+plt.xlim(2018, 2028)
+plt.ylim(min(data["graduates"].min(), all_years["predicted"].min()) * 0.8,
+         max(data["graduates"].max(), all_years["predicted"].max()) * 1.2)
+
+# Legend
+plt.legend(loc="upper right")
+
+# Grid
+plt.grid(True, linestyle="--", alpha=0.5)
+
+plt.show()
+```
+
+# Дүгнэлт {.unnumbered}
+
+```{python}
+from IPython.display import display_latex, Latex
+
+latex_code = "\\begin{enumerate}\n" + "\n".join(f"\\item {t}" for t in conclusion) + "\n\\end{enumerate}"
+display_latex(Latex(latex_code))
+```
+
+# Ашигласан материал {.unnumbered}
+
+::: {#refs}
+:::
