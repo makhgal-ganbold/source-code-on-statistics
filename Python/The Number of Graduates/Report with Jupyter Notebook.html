@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Г.Махгал">
+
+<title>Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тооны хандлага</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="Report with Jupyter Notebook_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Report with Jupyter Notebook_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Report with Jupyter Notebook_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Report with Jupyter Notebook_files/libs/quarto-html/popper.min.js"></script>
+<script src="Report with Jupyter Notebook_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Report with Jupyter Notebook_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Report with Jupyter Notebook_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Report with Jupyter Notebook_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Report with Jupyter Notebook_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Report with Jupyter Notebook_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Report with Jupyter Notebook_files/libs/bootstrap/bootstrap-9aeb16a00607c3fcedce66f7189d5f3d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Агуулга</h2>
+   
+  <ul>
+  <li><a href="#шаардлагатай-багцууд" id="toc-шаардлагатай-багцууд" class="nav-link active" data-scroll-target="#шаардлагатай-багцууд">Шаардлагатай багцууд</a></li>
+  <li><a href="#өгөгдөл" id="toc-өгөгдөл" class="nav-link" data-scroll-target="#өгөгдөл"><span class="header-section-number">1</span> Өгөгдөл</a></li>
+  <li><a href="#төгсөгчдийн-тоо" id="toc-төгсөгчдийн-тоо" class="nav-link" data-scroll-target="#төгсөгчдийн-тоо"><span class="header-section-number">2</span> Төгсөгчдийн тоо</a></li>
+  <li><a href="#төгсөгчдийн-тооны-хандлага" id="toc-төгсөгчдийн-тооны-хандлага" class="nav-link" data-scroll-target="#төгсөгчдийн-тооны-хандлага"><span class="header-section-number">3</span> Төгсөгчдийн тооны хандлага</a></li>
+  <li><a href="#төгсөгчдийн-тооны-загварчлал" id="toc-төгсөгчдийн-тооны-загварчлал" class="nav-link" data-scroll-target="#төгсөгчдийн-тооны-загварчлал"><span class="header-section-number">4</span> Төгсөгчдийн тооны загварчлал</a></li>
+  <li><a href="#төгсөгчдийн-тооны-прогноз" id="toc-төгсөгчдийн-тооны-прогноз" class="nav-link" data-scroll-target="#төгсөгчдийн-тооны-прогноз"><span class="header-section-number">5</span> Төгсөгчдийн тооны прогноз</a></li>
+  <li><a href="#дүгнэлт" id="toc-дүгнэлт" class="nav-link" data-scroll-target="#дүгнэлт">Дүгнэлт</a></li>
+  <li><a href="#bibliography" id="toc-bibliography" class="nav-link" data-scroll-target="#bibliography">Ашигласан материал</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тооны хандлага</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Зохиогч</div>
+    <div class="quarto-title-meta-contents">
+             <p>Г.Махгал </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Нийтлэгдсэн</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2025 оны 10-р сарын 14</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Энэхүү ажлаар Монгол улсын их, дээд сургуулийг байгалийн ухаан, математик, статистикийн мэргэжлээр төгсөгчдийг тоог Үндэсний статистикийн хорооны албан эх сурвалж дээрх өгөгдөлд тулгуурлан авч үзэх бөгөөд улмаар төгсөгчдийн тооны чиг хандлага ба ойрын жилүүдийн прогноз гаргана.</p>
+<section id="шаардлагатай-багцууд" class="level1 unnumbered">
+<h1 class="unnumbered">Шаардлагатай багцууд</h1>
+<p>Шаардлагатай багцуудыг дараах байдлаар урьдчилан суулгана.</p>
+<p><code>pip install NSO1212v1 tabulate matplotlib scipy statsmodels</code></p>
+</section>
+<section id="өгөгдөл" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Өгөгдөл</h1>
+<p>Үндэсний статистикийн хороо (ҮСХ) нь 1212.mn <span class="citation" data-cites="nso_1212mn"><a href="#ref-nso_1212mn" role="doc-biblioref">[1]</a></span> веб сайтаараа дамжуулан Монгол улсын нийгэм, эдийн засгийн үзүүлэлтийг илэрхийлэх тоон мэдээллийг нээлттэй тархаадаг. Тус веб сайт дээр Монгол улсын их, дээд сургуулийг төгсөгчдийн тоог мэргэжлийн салбар бүрээр, жил жилээр нэгтгэн мэдээлжээ. Бид үүнээс байгалийн ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоог авч үзнэ.</p>
+<p>Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоог ҮСХ-ны 1212.mn <span class="citation" data-cites="nso_education_health_2001"><a href="#ref-nso_education_health_2001" role="doc-biblioref">[2]</a></span> веб сайтаас татаж авна.</p>
+<p>ҮСХ-ны 1212.mn дээрээс өгөгдөл татахад Python хэлний NSO1212v1 багц <span class="citation" data-cites="NSO1212v1"><a href="#ref-NSO1212v1" role="doc-biblioref">[3]</a></span> ашиглана. Багцыг командын мөрөөс <code>pip install NSO1212v1</code> тушаалаар суулгана. Тус багц нь ҮСХ-ны 1212 нээлттэй өгөгдлийн API-ийн хувилбар 1-ийг дэмжинэ.</p>
+<div id="62c7f632" class="cell" data-execution_count="153">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> NSO1212v1 <span class="im">as</span> nso</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>ҮСХ-ны нээлттэй өгөгдлийн APIv1 нь өгөгдөл татахад зөвхөн хүснэгтийн ID төдийгүй сектор болон дэд секторын ID-ийг ч шаарддаг.</p>
+<div class="cell" data-tbl-cap="Үндсэн секторууд, тэдгээрийн ID" data-execution_count="154">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nso.sectors()[[<span class="st">"id"</span>,<span class="st">"text"</span>]].rename(columns<span class="op">=</span>{<span class="st">"id"</span>:<span class="st">"ID"</span>,<span class="st">"text"</span>:<span class="st">"Сектор"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<caption>Үндсэн секторууд, тэдгээрийн ID</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">Сектор</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Education, health</td>
+<td>Боловсрол, эрүүл мэнд</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Regional development</td>
+<td>Бүсчилсэн хөгжлийн үзүүлэлтүүд</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Society, development</td>
+<td>Нийгэм, хөгжил</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Historical data</td>
+<td>Түүхэн Статистик</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Industry, service</td>
+<td>Үйлдвэрлэл, үйлчилгээ</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Labour, business</td>
+<td>Хөдөлмөр, бизнес</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Population, household</td>
+<td>Хүн ам, өрх</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Economy, environment</td>
+<td>Эдийн засаг, байгаль орчин</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Боловсрол, эрүүл мэндийн салбар “Education, health” id-тай байна.</p>
+<div class="cell" data-tbl-cap="Дэд секторууд, тэдгээрийн ID" data-execution_count="155">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nso.subsectors(sector_id<span class="op">=</span><span class="st">"Education, health"</span>)[[<span class="st">"id"</span>,<span class="st">"text"</span>]].rename(columns<span class="op">=</span>{<span class="st">"id"</span>:<span class="st">"ID"</span>,<span class="st">"text"</span>:<span class="st">"Дэд сектор"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<caption>Дэд секторууд, тэдгээрийн ID</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">Дэд сектор</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>General indicators for Education</td>
+<td>Боловсролын ерөнхий үзүүлэлт</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>General educational schools</td>
+<td>Ерөнхий боловсролын сургууль</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Universities, institutes and colleges</td>
+<td>Их дээд сургууль</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Vocational education</td>
+<td>Мэргэжлийн боловсрол</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Disease</td>
+<td>Өвчлөл</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Pre-school education</td>
+<td>Сургуулийн өмнөх боловсрол</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Births, deaths</td>
+<td>Төрөлт, нас баралт</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Health insurance</td>
+<td>Эрүүл мэндийн даатгал</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>Main indicators for Health sector</td>
+<td>Эрүүл мэндийн үндсэн үзүүлэлт</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Их дээд сургууль гэсэн дэд салбарын id нь “Universities, institutes and colleges” байна.</p>
+<p>Одоо дээрх дэд салбарт хамаарах хүснэгтүүдийн жагсаалтыг авна.</p>
+<div class="cell" data-tbl-cap="Хүснэгтүүд, тэдгээрийн ID" data-execution_count="156">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nso.tables(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  sector_id<span class="op">=</span><span class="st">"Education, health"</span>, subsector_id<span class="op">=</span><span class="st">"Universities, institutes and colleges"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>)[[<span class="st">"id"</span>,<span class="st">"text"</span>]].rename(columns<span class="op">=</span>{<span class="st">"id"</span>:<span class="st">"ID"</span>,<span class="st">"text"</span>:<span class="st">"Хүснэгт"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<caption>Хүснэгтүүд, тэдгээрийн ID</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">Хүснэгт</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>DT_NSO_2001_013V1.px</td>
+<td>ИХ, ДЭЭД СУРГУУЛЬ, КОЛЛЕЖИД СУРАЛЦАГЧИД, хүйс,...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>DT_NSO_2001_013V2.px</td>
+<td>ИХ, ДЭЭД СУРГУУЛЬ, КОЛЛЕЖИД СУРАЛЦАГЧИД, мэргэ...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>DT_NSO_2001_014V1.px</td>
+<td>ИХ, ДЭЭД СУРГУУЛЬ, КОЛЛЕЖИЙГ ТӨГСӨГЧИД, мэргэж...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>DT_NSO_2001_015V2.px</td>
+<td>ДЭЭД БОЛОВСРОЛЫН СУРГАЛТЫН БАЙГУУЛЛАГАД СУРАЛЦ...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>DT_NSO_2001_016V1.px</td>
+<td>ИХ, ДЭЭД СУРГУУЛЬ, КОЛЛЕЖИЙН ҮНДСЭН БАГШИЙН ТО...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>DT_NSO_2001_024V1.px</td>
+<td>ИХ, ДЭЭД СУРГУУЛЬ, КОЛЛЕЖИЙГ ТӨГСӨГЧИД, өмчийн...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>DT_NSO_2001_024V2.px</td>
+<td>ДОТООДЫН ИХ, ДЭЭД СУРГУУЛЬ, КОЛЛЕЖИЙГ ТӨГСӨГЧИ...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>DT_NSO_2001_024V3.px</td>
+<td>ДОТООДЫН ИХ, ДЭЭД СУРГУУЛЬ, КОЛЛЕЖИД СУРАЛЦАГЧ...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Жагсаалтаас их, дээд сургууль, коллежийг төгсөгчид, мэргэжлийн чиглэлээр гэсэн хүснэгтийн id дугаар нь “DT_NSO_2001_014V1.px” гэж харагдана.</p>
+<p>Одоо хүснэгтийн мета мэдээллийг татаж авна.</p>
+<div id="619754b9" class="cell" data-execution_count="157">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>table_meta_data <span class="op">=</span> nso.table(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  sector_id<span class="op">=</span><span class="st">"Education, health"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  subsector_id<span class="op">=</span><span class="st">"Universities, institutes and colleges"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  table_id<span class="op">=</span><span class="st">"DT_NSO_2001_014V1.px"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Мета мэдээллээс мэргэжлийн чиглэл хувьсагчийн утгууд, тэдгээрийн кодыг дараах байдлаар олж харна.</p>
+<div class="cell" data-tbl-cap="Мэргэжлийн чиглэл хувьсагчийн утгууд, тэдгээрийн код" data-execution_count="158">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>table_meta_data[<span class="st">"variables"</span>][<span class="dv">0</span>][<span class="st">"codes"</span>].rename(columns<span class="op">=</span>{<span class="st">"values"</span>:<span class="st">"Код"</span>,<span class="st">"valueTexts"</span>:<span class="st">"Мэргэжлийн чиглэл"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<caption>Мэргэжлийн чиглэл хувьсагчийн утгууд, тэдгээрийн код</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Код</th>
+<th data-quarto-table-cell-role="th">Мэргэжлийн чиглэл</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>Бүгд</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>Боловсрол</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2</td>
+<td>Урлаг, хүмүүнлэг</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3</td>
+<td>Нийгмийн шинжлэх ухаан, мэдээлэл, сэтгүүл зүй</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4</td>
+<td>Бизнес, удирдахуй, хууль, эрх зүй</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>5</td>
+<td>Байгалийн шинжлэх ухаан, математик, статистик</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>6</td>
+<td>Мэдээлэл, харилцаа холбооны технологи</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>7</td>
+<td>Инженер, үйлдвэрлэл, барилга угсралт</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>8</td>
+<td>Хөдөө аж ахуй, ой, загасны аж ахуй, мал эмнэлэг</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>9</td>
+<td>Эрүүл мэнд, нийгмийн хамгаалал</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>10</td>
+<td>Үйлчилгээ</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>“Байгалийн шинжлэх ухаан, математик, статистик” мэргэжлийн чиглэлийн код “5” байна.</p>
+<p>Ийнхүү өгөгдөл татаж авахад шаардлагатай бүх мэдээлэл тодорхой боллоо. Одоо өгөгдөл татаж авна.</p>
+<div id="61325db4" class="cell" data-execution_count="159">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> nso.data(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  sector_id<span class="op">=</span><span class="st">"Education, health"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  subsector_id<span class="op">=</span><span class="st">"Universities, institutes and colleges"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  table_id<span class="op">=</span><span class="st">"DT_NSO_2001_014V1.px"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  query<span class="op">=</span>{</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"query"</span>: [</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      {</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"code"</span>: <span class="st">"Мэргэжлийн чиглэл"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"selection"</span>: {</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>          <span class="st">"filter"</span>: <span class="st">"item"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>          <span class="st">"values"</span>: [<span class="st">"5"</span>]</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"response"</span>: {</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">"format"</span>: <span class="st">"json-stat2"</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Тус функц серверээс ирсэн объект доторх өгөгдлийг эцсийн хэрэглэгчдэд таатай байдлаар эмхэлж өгдөг. Тэр нь <code>df</code> нэртэй, pandas.DataFrame бүтэцтэй элементэд агуулагдана. Ингээд <code>data.df</code> датафреймыг “raw_data.csv” файлд хадгална.</p>
+<div id="7ccd6b04" class="cell" data-execution_count="160">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">"df"</span>].to_csv(<span class="st">"raw_data.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Одоо өгөгдлөөс зөвхөн “Он” ба “Хувьсагч” хоёр баганыг ялгаж аваад бусдыг нь гээнэ. Бас хувьсагчдын нэрсийг <code>year</code>, <code>graduates</code> болгон солино.</p>
+<div id="853bd346" class="cell" data-execution_count="161">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data[<span class="st">"df"</span>][[<span class="st">"Он"</span>,<span class="st">"Хувьсагч"</span>]].copy()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>data.rename(columns<span class="op">=</span>{<span class="st">"Он"</span>:<span class="st">"year"</span>,<span class="st">"Хувьсагч"</span>:<span class="st">"graduates"</span>}, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>data[<span class="st">"year"</span>] <span class="op">=</span> pd.to_numeric(data[<span class="st">"year"</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ийнхүү ҮСХ-ноос мэдээлсэн байгалийн шинжлэх ухаан, математик, статистик мэргэжлээр жил бүр төгсөгчдийн тоог агуулсан өгөгдөлтэй боллоо.</p>
+</section>
+<section id="төгсөгчдийн-тоо" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Төгсөгчдийн тоо</h1>
+<p>ҮСХ-ны нээлттэй өгөгдлийн сервисээс татан авсан өгөгдлийг <a href="#tbl-data" class="quarto-xref">Хүснэгт&nbsp;1</a> дээр харууллаа.</p>
+<div class="cell" data-execution_count="162">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-data" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="162">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Хүснэгт&nbsp;1: Байгалийн шинжлэх ухаан, математик, статистик мэргэжлээр жил бүр төгсөгчдийн тоо
+</figcaption>
+<div aria-describedby="tbl-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">graduates</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2024</td>
+<td>424</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2023</td>
+<td>522</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2022</td>
+<td>476</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2021</td>
+<td>767</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2020</td>
+<td>864</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>2019</td>
+<td>745</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Мөн тус өгөгдлийг шугаман диаграммаар дүрслэв. Үүнийг <a href="#fig-graduates-per-year" class="quarto-xref">Зураг&nbsp;1</a> дээрээс харж болно.</p>
+<div id="cell-fig-graduates-per-year" class="cell" data-execution_count="163">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>,<span class="dv">3</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.plot(data[<span class="st">"year"</span>], data[<span class="st">"graduates"</span>], marker<span class="op">=</span><span class="st">'o'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, color<span class="op">=</span><span class="st">'b'</span>, label<span class="op">=</span><span class="st">'Төгсөгчид'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Он"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Төгсөгчдийн тоо"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Жил бүрийн төгсөгчдийн тоо"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-graduates-per-year" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-graduates-per-year-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Зураг&nbsp;1: Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо
+</figcaption>
+<div aria-describedby="fig-graduates-per-year-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Report%20with%20Jupyter%20Notebook_files/figure-html/fig-graduates-per-year-output-1.png" class="img-fluid figure-img">
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>Шугаман диаграммаас төгсөгчдийн тоо буурах хандлагатай гэсэн таамаглал гарна.</p>
+</section>
+<section id="төгсөгчдийн-тооны-хандлага" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Төгсөгчдийн тооны хандлага</h1>
+<p>Өмнөх хэсэгт байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо буурах хандлагатай гэсэн таамаглал дэвшүүлсэн. Одоо түүнийг шалгана. Статистик таамаглал шалгалтын арга зүйн үүднээс хандлага тогтмол гэсэн тэг таамаглалын эсрэг хандлага буурна гэсэн өрсөлдөгч таамаглал дэвшүүлнэ. Улмаар тэг таамаглалыг няцаавал өрсөлдөгч таамаглалыг баталсан явдал болно.</p>
+<p>Ийм таамаглалыг корреляц бас регресс гэх мэтчилэн янз бүрийн аргаар шалгаж болохоос корреляцийн коэффициентын тусламжтай шалгах аргыг сонголоо. Энэ тохиолдолд таамаглалыг дараах хэлбэрээр томъёолно.</p>
+<p><span class="math display">\[
+\begin{array}{l}
+H_0: \operatorname{cor}(\text{graduates},\text{year}) = 0 \\
+H_1: \operatorname{cor}(\text{graduates},\text{year}) &lt; 0
+\end{array}
+\]</span></p>
+<p>Мөн түүврийн хэмжээ бага бас тархалт нормал биш тул параметрийн бус корреляц <span class="citation" data-cites="schober2018"><a href="#ref-schober2018" role="doc-biblioref">[4]</a></span> ашиглана.</p>
+<div id="ef595b09" class="cell" data-execution_count="164">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>rho, p_one_sided <span class="op">=</span> stats.spearmanr(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  data[<span class="st">"year"</span>], data[<span class="st">"graduates"</span>],</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  alternative<span class="op">=</span><span class="st">"less"</span>                 <span class="co"># корреляц тэгээс бага</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Корреляц -0.771 гэж гарав. Улмаар <span class="math inline">\(p\text{-value}=0.036&lt;\alpha=0.05\)</span> гэж гарсан нь хандлага буурч байна гэсэн өрсөлдөгч таамаглалыг баталж буй явдал юм.</p>
+<div id="66c9c091" class="cell" data-execution_count="165">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>conclusion.append(<span class="st">"Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо буурч байна."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="төгсөгчдийн-тооны-загварчлал" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Төгсөгчдийн тооны загварчлал</h1>
+<p>Төгсөгчдийн тооны прогноз гаргахын тулд үүнийг оноос хамааруулан загварчлах шаардлагатай. Прогноз гаргахад хугацаан цувааны загвар эсвэл регрессийн загвар ашигладаг. Ийнхүү төгсөгчдийн тоог жилээс хамааруулсан регрессийн загвар авч үзнэ.</p>
+<p>Загвар дахь хамааран хувьсагч нь тоо ширхэг илэрхийлсэн. Энэ байдалд тохирох загвар бол Пуассоны регрессийн загвар <span class="citation" data-cites="roback2021beyond"><a href="#ref-roback2021beyond" role="doc-biblioref">[5]</a></span> юм.</p>
+<div id="a1f640f5" class="cell" data-execution_count="166">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>model_poisson <span class="op">=</span> smf.glm(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  formula<span class="op">=</span><span class="st">"graduates ~ year"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  data<span class="op">=</span>data,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  family<span class="op">=</span>sm.families.Poisson()</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Гэхдээ Пуассоны регресс overdispersion <span class="citation" data-cites="roback2021beyond"><a href="#ref-roback2021beyond" role="doc-biblioref">[5]</a></span> буюу хэт дисперстэй өгөгдөлд тохирохгүй. Өгөгдөл хэт дисперстэй эсэхийг шалгадаг R програмын AER багц дахь <code>dispersiontest()</code> <span class="citation" data-cites="r_aer"><a href="#ref-r_aer" role="doc-biblioref">[6]</a></span> шиг бэлэн функц байхгүй тул үүнийг “гар аргаар” ажиллуулна.</p>
+<div id="6bc316f2" class="cell" data-execution_count="167">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>deviance <span class="op">=</span> model_poisson.deviance</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_resid <span class="op">=</span> model_poisson.df_resid</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>dispersion <span class="op">=</span> deviance <span class="op">/</span> df_resid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Дисперсийн шинжүүрийн утга 17.166 гэж 1.5 гэсэн босгоос их гарсан тул өгөгдлийг хэт дисперстэй гэж дүгнэнэ.</p>
+<div id="8ec10584" class="cell" data-execution_count="168">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>conclusion.append(<span class="st">"Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоонд "</span> <span class="op">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">"хэт дисперстэй тархалтын загвар тохирно."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Хэт дисперстэй хувьсагчийг загварчлах нэг тархалт бол урвасан бином тархалт бөгөөд ийнхүү урвасан бином загвар <span class="citation" data-cites="roback2021beyond"><a href="#ref-roback2021beyond" role="doc-biblioref">[5]</a></span> ашиглана.</p>
+<div id="27874603" class="cell" data-execution_count="169">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model_nb <span class="op">=</span> smf.glm(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  formula<span class="op">=</span><span class="st">"graduates ~ year"</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  data<span class="op">=</span>data,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  family<span class="op">=</span>sm.families.NegativeBinomial(alpha<span class="op">=</span><span class="fl">1.0</span>)  <span class="co"># alpha: dispersion parameter</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Прогноз гаргахад шаардлагатай регрессийн загвар бэлэн болсон тул одоо ойрын хэдэн жилийн төгсөгчдийн тооны прогноз гаргах руу чиглэнэ.</p>
+</section>
+<section id="төгсөгчдийн-тооны-прогноз" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Төгсөгчдийн тооны прогноз</h1>
+<p>ҮСХ-ны мэдээ 2024 оноор дуусгавар болсон байсан. Иймээс 2025 оноос эхлэн гурван жилийн прогноз гаргана.</p>
+<div class="cell" data-execution_count="170">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ирээдүйн жилүүд</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>future_years <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"year"</span>: [<span class="dv">2025</span>, <span class="dv">2026</span>, <span class="dv">2027</span>]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Ирээдүйн төгсөгчдийн тоог прогнозлох</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>future_years[<span class="st">"predicted"</span>] <span class="op">=</span> model_nb.predict(future_years)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="bu">round</span>(future_years)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-nb-prediction" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="170">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-nb-prediction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Хүснэгт&nbsp;2: Төгсөгчдийн тооны ойрын ирээдүйн прогноз
+</figcaption>
+<div aria-describedby="tbl-nb-prediction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">predicted</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2025</td>
+<td>378.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2026</td>
+<td>329.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2027</td>
+<td>286.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div id="d33e26ce" class="cell" data-execution_count="171">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ирээдүйн төгсөгчдийн тоо</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>pred_2027 <span class="op">=</span> <span class="bu">round</span>(future_years.loc[future_years[<span class="st">"year"</span>] <span class="op">==</span> <span class="dv">2027</span>, <span class="st">"predicted"</span>].values[<span class="dv">0</span>])</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>conclusion.append(<span class="st">"Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо "</span> <span class="op">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="ss">f"2027 онд </span><span class="sc">{</span>pred_2027<span class="sc">}</span><span class="ss"> байна гэсэн прогноз гарсан."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-fig-nb-prediction" class="cell" data-execution_count="172">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Бүх жил (2019–2027) дэх прогноз</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>all_years <span class="op">=</span> pd.DataFrame({<span class="st">"year"</span>: <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">2019</span>, <span class="dv">2028</span>))})</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>all_years[<span class="st">"predicted"</span>] <span class="op">=</span> model_nb.predict(all_years)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Диаграмм</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>,<span class="dv">3</span>))</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Ажиглагдсан утгууд</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>plt.scatter(data[<span class="st">"year"</span>], data[<span class="st">"graduates"</span>], color<span class="op">=</span><span class="st">"blue"</span>, label<span class="op">=</span><span class="st">"Ажиглалт"</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Загвараар гарсан үнэлгээ (2019–2027)</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>plt.plot(</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  all_years[<span class="st">"year"</span>], all_years[<span class="st">"predicted"</span>], </span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  color<span class="op">=</span><span class="st">"darkgreen"</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">"Загвар (2019–2027)"</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Ирээдүйн прогноз</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>future_preds <span class="op">=</span> model_nb.predict(future_years)</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>plt.scatter(future_years[<span class="st">"year"</span>], future_preds, color<span class="op">=</span><span class="st">"red"</span>, label<span class="op">=</span><span class="st">"Прогноз (2025–2027)"</span>, zorder<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Диаграммын тэнхлэгүүд</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Он"</span>)</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Төгсөгчид"</span>)</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">2018</span>, <span class="dv">2028</span>)</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="bu">min</span>(data[<span class="st">"graduates"</span>].<span class="bu">min</span>(), all_years[<span class="st">"predicted"</span>].<span class="bu">min</span>()) <span class="op">*</span> <span class="fl">0.8</span>,</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>         <span class="bu">max</span>(data[<span class="st">"graduates"</span>].<span class="bu">max</span>(), all_years[<span class="st">"predicted"</span>].<span class="bu">max</span>()) <span class="op">*</span> <span class="fl">1.2</span>)</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Legend</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"upper right"</span>)</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Grid</span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-nb-prediction" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-nb-prediction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Зураг&nbsp;2: Төгсөгчдийн тоо ба урвасан бином регресс
+</figcaption>
+<div aria-describedby="fig-nb-prediction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Report%20with%20Jupyter%20Notebook_files/figure-html/fig-nb-prediction-output-1.png" class="img-fluid figure-img">
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="дүгнэлт" class="level1 unnumbered">
+<h1 class="unnumbered">Дүгнэлт</h1>
+<div id="9ec5014e" class="cell" data-execution_count="173">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, Markdown</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>md_text <span class="op">=</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join(<span class="ss">f"</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">. </span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i, t <span class="kw">in</span> <span class="bu">enumerate</span>(conclusion))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>display(Markdown(md_text))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<ol type="1">
+<li>Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо буурч байна.</li>
+<li>Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоонд хэт дисперстэй тархалтын загвар тохирно.</li>
+<li>Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тоо 2027 онд 286 байна гэсэн прогноз гарсан.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="bibliography" class="level1 unnumbered">
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Ашигласан материал</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-nso_1212mn" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">Үндэсний Статистикийн Хороо, <span>“1212.mn — статистикийн мэдээллийн нэгдсэн сан.”</span> Үндэсний Статистикийн Хороо, 2025. Available: <a href="https://www.1212.mn/">https://www.1212.mn/</a></div>
+</div>
+<div id="ref-nso_education_health_2001" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Монгол Улсын Үндэсний Статистикийн Хороо, <span>“Боловсрол, эрүүл мэндийн салбарын статистик мэдээлэл.”</span> 2001. Available: <a href="https://www.nso.mn/mn/statcate/table-view/Education,%20health/Universities%2C%20institutes%20and%20colleges/DT_NSO_2001_014V1.px">https://www.nso.mn/mn/statcate/table-view/Education,%20health/Universities%2C%20institutes%20and%20colleges/DT_NSO_2001_014V1.px</a></div>
+</div>
+<div id="ref-NSO1212v1" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">M. Ganbold, <em>NSO1212v1: National statistical office of mongolia’s open data API v1 handler for python</em>. (Oct. 08, 2025). Available: <a href="https://pypi.org/project/NSO1212v1/">https://pypi.org/project/NSO1212v1/</a></div>
+</div>
+<div id="ref-schober2018" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">P. Schober, T. R. Vetter, and G. Haller, <span>“Correlation coefficients: Appropriate use and interpretation,”</span> <em>Anesthesia &amp; Analgesia</em>, vol. 126, no. 5, pp. 1763–1768, 2018, doi: <a href="https://doi.org/10.1213/ANE.0000000000002864">10.1213/ANE.0000000000002864</a>.</div>
+</div>
+<div id="ref-roback2021beyond" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">P. Roback and J. Legler, <em>Beyond multiple linear regression: Applied generalized linear models and multilevel models in r. Poisson regression</em>. CRC Press, 2021. Available: <a href="https://bookdown.org/roback/bookdown-BeyondMLR/ch-MLRreview.html">https://bookdown.org/roback/bookdown-BeyondMLR/ch-MLRreview.html</a></div>
+</div>
+<div id="ref-r_aer" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">C. Kleiber and A. Zeileis, <em>Applied econometrics with <span>R</span></em>. New York: Springer-Verlag, 2008. doi: <a href="https://doi.org/10.1007/978-0-387-77318-6">10.1007/978-0-387-77318-6</a>.</div>
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

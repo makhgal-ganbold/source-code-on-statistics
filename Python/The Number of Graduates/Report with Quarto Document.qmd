@@ -182,7 +182,7 @@ data["df"].to_csv("raw_data.csv", index=False)
 ```{python}
 import pandas as pd
 
-data = data["df"][["Он","Хувьсагч"]]
+data = data["df"][["Он","Хувьсагч"]].copy()
 data.rename(columns={"Он":"year","Хувьсагч":"graduates"}, inplace=True)
 data["year"] = pd.to_numeric(data["year"], errors='coerce')
 ```
@@ -286,9 +286,9 @@ conclusion.append("Байгалийн шинжлэх ухаан, математ�
 
 ```{python}
 model_nb = smf.glm(
-    formula="graduates ~ year",
-    data=data,
-    family=sm.families.NegativeBinomial(alpha=1.0)  # alpha: dispersion parameter
+  formula="graduates ~ year",
+  data=data,
+  family=sm.families.NegativeBinomial(alpha=1.0)  # alpha: dispersion parameter
 ).fit()
 ```
 
