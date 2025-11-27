@@ -1,0 +1,98 @@
+---
+format: html
+title: "Байгалийн шинжлэх ухаан, математик, статистикийн мэргэжлээр төгсөгчдийн тооны хандлага"
+subtitle: "МУИС-ийн бакалаврын хөтөлбөрийг төгсгөгчид"
+author: "Г.Махгал"
+author-title: "Зохиогч"
+date: 2025-11-14
+published-title: "Нийтлэгдсэн"
+date-format: "YYYY оны M-р сарын D"
+toc: true
+toc-depth: 3
+toc-title: Агуулга
+number-sections: true
+crossref: 
+  fig-title: Зураг
+  fig-prefix: Зураг
+  tbl-title: Хүснэгт
+  tbl-prefix: Хүснэгт
+fig-cap-location: top
+tbl-cap-location: top
+bibliography: references.bib
+csl: ieee.csl
+link-citations: true
+reference-section-title: "Ашигласан материал"
+---
+
+```{r}
+
+```
+
+```{r}
+(\(){
+  fnames <- dir(
+    path = "data",
+    pattern = ".csv$",
+    full.names = TRUE
+  )
+  years <- NULL
+  semesters <- NULL
+  programs <- NULL
+  graduates <- NULL
+  for (fname in fnames) {
+    year <- regmatches(fname, regexpr("-([[:digit:]]{4})-", fname))
+    year <- regmatches(year, regexpr("[[:digit:]]{4}", year))
+    year <- as.integer(year)
+    semester <- regmatches(fname, regexpr("-([[:digit:]]{4})-(autumn|spring).csv", fname))
+    semester <- regmatches(semester, regexpr("(autumn|spring)", semester))
+    if (semester == "autumn") {
+      semester <- "fall"
+    }
+    X <- read.csv(file = fname, header = TRUE)
+    for (program in list(c("Статистик","Статистик, хэрэглээний"),c("Хэрэглээний математик","Математик, хэрэглээний"),"Математик","Физик","Хими")) {
+      years <- c(years, year)
+      semesters <- c(semesters, semester)
+      programs <- c(programs, program[1])
+      graduates <- c(graduates, sum(X$Хөтөлбөр %in% program & X$Зэрэг == "Бакалавр"))
+    }
+  }
+  data.frame(
+    year = years,
+    semester = semesters,
+    program = programs,
+    graduates = graduates
+  )
+})() ->
+  graduated_students
+```
+
+```{r}
+graduated_students <- graduated_students[graduated_students$year > 2017 & graduated_students$year < 2023,-2]
+
+graduated_students |>
+  dplyr::group_by(year, program) |>
+  dplyr::summarise(graduates = sum(graduates)) |>
+  dplyr::arrange(year, program) ->
+  graduated_students
+```
+
+```{r}
+ggplot2::ggplot(
+  graduated_students,
+  ggplot2::aes(
+    x = year,
+    y = graduates,
+    color = program,
+    group = program
+  )
+) +
+  ggplot2::geom_line(linewidth = 1) +
+  ggplot2::geom_point() +
+  ggplot2::labs(
+    x = "Year",
+    y = "Number of Graduates",
+    color = "Program",
+    title = "Graduates by Program Over Years"
+  ) +
+  ggplot2::theme_minimal()
+```

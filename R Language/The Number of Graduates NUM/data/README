@@ -1,0 +1,13 @@
+Source:
+
+https://data.num.edu.mn/dataset/graduation
+
+File name structure:
+
+-2023-autumn.csv
+
+-       :  prefix
+2023    :  the first year of the current graduation year
+-       :  separator
+autumn  :  fall semester
+.csv    :  file name extension
